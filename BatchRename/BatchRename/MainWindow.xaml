@@ -5,8 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BatchRename"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <StackPanel>
+        <StackPanel Height="25" Orientation="Horizontal">
+            <Button  HorizontalAlignment="Center" VerticalAlignment="Center">Refresh</Button>
+            <ComboBox  HorizontalAlignment="Center" VerticalAlignment="Center"></ComboBox>
+            <Button  HorizontalAlignment="Center" VerticalAlignment="Center">START BATCH</Button>
+        </StackPanel>
+        <Grid>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Width="120"></ComboBox> 
+                    <Button>ab</Button>
+                    <Button>ab</Button>
+                    <Button>ab</Button>
+                    <Button>ab</Button>
+                    <Button>ab</Button>
+                    <Button>ab</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button>abc</Button>
+                    <Button>abc</Button>
+                    <Label>Presets:</Label>
+                    <ComboBox Width="120"></ComboBox>
+                </StackPanel>
+                <StackPanel>
+                    <Button Content="abc">
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
 </Window>
