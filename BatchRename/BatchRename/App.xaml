@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:BatchRename"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>
