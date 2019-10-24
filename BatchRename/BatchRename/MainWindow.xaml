@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BatchRename"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="850" Loaded="Window_Loaded">
+        Title="My Rename" Height="500" Width="850" Loaded="Window_Loaded" Background="AliceBlue">
     <StackPanel>
         <StackPanel Height="40" Orientation="Horizontal">
             <Button Width="100" Height="40">
@@ -80,34 +80,56 @@
                 </TabControl>
                 <TextBox Height="228"></TextBox>
             </StackPanel>
-            <Grid Width="592">
-                <TabControl>
-                    <TabItem Header="Rename Files" Height="40">
-                        <ListView>
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Filename" Width="150"/>
-                                    <GridViewColumn Header="New Filename" Width="150"/>
-                                    <GridViewColumn Header="Path" Width="150"/>
-                                    <GridViewColumn Header="Error" Width="150"/>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </TabItem>
-                    <TabItem Header="Rename Folders" Height="40">
-                        <ListView>
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Foldername" Width="150"/>
-                                    <GridViewColumn Header="New Foldername" Width="150"/>
-                                    <GridViewColumn Header="Path" Width="150"/>
-                                    <GridViewColumn Header="Error" Width="150"/>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </TabItem>
-                </TabControl>
-            </Grid>
+            <StackPanel>
+                <Grid Width="592" Height="350">
+                    <TabControl>
+                        <TabItem Header="Rename Files" Height="40">
+                            <ListView>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Filename" Width="150"/>
+                                        <GridViewColumn Header="New Filename" Width="150"/>
+                                        <GridViewColumn Header="Path" Width="150"/>
+                                        <GridViewColumn Header="Error" Width="150"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </TabItem>
+                        <TabItem Header="Rename Folders" Height="40">
+                            <ListView>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Foldername" Width="150"/>
+                                        <GridViewColumn Header="New Foldername" Width="150"/>
+                                        <GridViewColumn Header="Path" Width="150"/>
+                                        <GridViewColumn Header="Error" Width="150"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Width="100" Height="40" Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Image/add.png"/>
+                            <TextBlock Text=" add" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Width="100" Height="40" Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Image/preview.png"/>
+                            <TextBlock Text="Preview" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Width="100" Height="40" Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Image/start.png"/>
+                            <TextBlock Text="Start Batch" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
         
     </StackPanel>
