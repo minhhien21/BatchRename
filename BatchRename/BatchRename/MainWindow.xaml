@@ -23,6 +23,12 @@
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
+            <Button Height="20" Click="Button_up">A</Button>
+            <Button Height="20" Click="Button_up1">B</Button>
+            <Button Height="20">C</Button>
+            <Button Height="20">D</Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
             <StackPanel Width="220">
                 <TabControl Height="264">
                     <TabItem Height="40" Width="100">
@@ -34,40 +40,25 @@
                                 </StackPanel>
                             </DataTemplate>
                         </TabItem.HeaderTemplate>
-                        <ScrollViewer>
-                            <StackPanel>
-                                <Button HorizontalContentAlignment="Stretch" Height="30">
-                                    <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                        <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                        <Button Content="Replace" Margin="30,0,0,0" Height="30"></Button>
-                                    </Grid>
-                                </Button>
-                                <Button HorizontalContentAlignment="Stretch" Height="30">
-                                    <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                        <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                        <Button Content="New case" Margin="30,0,0,0" Height="30"></Button>
-                                    </Grid>
-                                </Button>
-                                <Button HorizontalContentAlignment="Stretch" Height="30">
-                                    <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                        <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                        <Button Content="Fullname normalize" Margin="30,0,0,0" Height="30"></Button>
-                                    </Grid>
-                                </Button>
-                                <Button HorizontalContentAlignment="Stretch" Height="30">
-                                    <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                        <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                        <Button Content="Move" Margin="30,0,0,0" Height="30"></Button>
-                                    </Grid>
-                                </Button>
-                                <Button HorizontalContentAlignment="Stretch" Height="30">
-                                    <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                        <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                        <Button Content="Unique name" Margin="30,0,0,0" Height="30"></Button>
-                                    </Grid>
-                                </Button>
-                            </StackPanel>
-                        </ScrollViewer>
+                        <ListView Name ="ButtonNames" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Button HorizontalContentAlignment="Stretch" Height="30" Width="200">
+                                        <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
+                                            <Label HorizontalAlignment="Left" 
+                                               HorizontalContentAlignment="Center" Width="30" Height="30"
+                                               Content="{Binding CheckName}"/>
+                                            <Button Content="{Binding ButtonName}" Margin="30,0,0,0" Height="30" Click ="Button_Click"/>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TabItem>
                     <TabItem Height="40" Width="100">
                         <TabItem.HeaderTemplate>
@@ -80,7 +71,7 @@
                         </TabItem.HeaderTemplate>
                     </TabItem>
                 </TabControl>
-                <TextBox Height="166" >
+                <TextBox Name="TextBox" Height="146" >
                 </TextBox>
             </StackPanel>
             <StackPanel>
