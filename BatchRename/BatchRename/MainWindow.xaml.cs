@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -23,6 +24,90 @@ namespace BatchRename
     /// </summary>
     public partial class MainWindow : Window
     {
+        BindingList<FileName> _filenames = null;
+
+        BindingList<FolderName> _foldernames = null;
+
+        class FolderName
+        {
+            public string Name { get; set; }
+            public string Prename { get; set; }
+            public string Path { get; set; }
+            public string Error { get; set; }
+        }
+
+        class FileName : FolderName
+        {
+            public string Extension { get; set; }
+        }
+
+
+
+        class NameDao
+        {
+            /// <summary>
+            /// Lấy danh sách tên file / folder
+            /// </summary>
+            /// <returns></returns>
+            public static BindingList<FileName> GetFileName()
+            {
+                BindingList<FileName> result = null;
+                //mở dialog cho người dùng chọn file
+                var screen = new CommonOpenFileDialog();
+                screen.IsFolderPicker = true;
+
+                if (screen.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    var path = screen.FileName;
+                    var files = Directory.GetFiles(path);
+
+                    result = new BindingList<FileName>();
+                    //cắt file path
+                    foreach (var file in files)
+                    {
+                        var fileName = new FileName()
+                        {
+                            Name = System.IO.Path.GetFileNameWithoutExtension(file),
+                            Extension = System.IO.Path.GetExtension(file),
+                            Prename = null,
+                            Path = file,
+                            Error = null
+                        };
+                        result.Add(fileName);
+                    }
+                }
+                return result;
+            }
+
+            public static BindingList<FolderName> GetFolderName()
+            {
+                BindingList<FolderName> result = null;
+                //mở dialog cho người dùng chọn file
+                var screen = new CommonOpenFileDialog();
+                screen.IsFolderPicker = true;
+
+                if (screen.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    var path = screen.FileName;
+                    var folders = Directory.GetDirectories(path);
+
+                    result = new BindingList<FolderName>();
+                    //cắt folder path
+                    foreach (var folder in folders)
+                    {
+                        var folderName = new FolderName()
+                        {
+                            Name = System.IO.Path.GetFileName(folder),
+                            Prename = null,
+                            Path = folder,
+                            Error = null
+                        };
+                        result.Add(folderName);
+                    }
+                }
+                return result;
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -112,6 +197,25 @@ namespace BatchRename
         private void Button_up1(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var index = NameFileTabControl.SelectedIndex;
+            if (index == 0)
+            {
+                _filenames = NameDao.GetFileName();
+
+                //binding 
+                fileNameListView.ItemsSource = _filenames;
+            }
+            else if (index == 1)
+            {
+                _foldernames = NameDao.GetFolderName();
+
+                //binding
+                folderNameListView.ItemsSource = _foldernames;
+            }
         }
     }
 }

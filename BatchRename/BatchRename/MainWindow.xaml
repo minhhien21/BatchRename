@@ -76,27 +76,27 @@
             </StackPanel>
             <StackPanel>
                 <Grid Width="592" Height="350">
-                    <TabControl>
+                    <TabControl Name="NameFileTabControl">
                         <TabItem Header="Rename Files" Height="40">
-                            <ListView>
+                            <ListView Name="fileNameListView">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Filename" Width="150"/>
-                                        <GridViewColumn Header="New Filename" Width="150"/>
-                                        <GridViewColumn Header="Path" Width="150"/>
-                                        <GridViewColumn Header="Error" Width="150"/>
+                                        <GridViewColumn Header="Filename" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="New Filename" Width="150" DisplayMemberBinding="{Binding Prename}"/>
+                                        <GridViewColumn Header="Path" Width="150" DisplayMemberBinding="{Binding Path}"/>
+                                        <GridViewColumn Header="Error" Width="150" DisplayMemberBinding="{Binding Error}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
                         </TabItem>
                         <TabItem Header="Rename Folders" Height="40">
-                            <ListView>
+                            <ListView Name="folderNameListView">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Foldername" Width="150"/>
-                                        <GridViewColumn Header="New Foldername" Width="150"/>
-                                        <GridViewColumn Header="Path" Width="150"/>
-                                        <GridViewColumn Header="Error" Width="150"/>
+                                        <GridViewColumn Header="Foldername" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="New Foldername" Width="150" DisplayMemberBinding="{Binding Prename}"/>
+                                        <GridViewColumn Header="Path" Width="150" DisplayMemberBinding="{Binding Path}"/>
+                                        <GridViewColumn Header="Error" Width="150" DisplayMemberBinding="{Binding Error}"/>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -104,7 +104,7 @@
                     </TabControl>
                 </Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Width="100" Height="40" Margin="10">
+                    <Button Name="btnAdd" Click="BtnAdd_Click"  Width="100" Height="40" Margin="10">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="Image/add.png"/>
                             <TextBlock Text=" add" VerticalAlignment="Center"/>
