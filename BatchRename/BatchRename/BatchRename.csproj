@@ -103,5 +103,17 @@
     <Resource Include="Image\action.png" />
     <Resource Include="Image\addlist.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\preview.png" />
+    <Resource Include="Image\start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ButtonName.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

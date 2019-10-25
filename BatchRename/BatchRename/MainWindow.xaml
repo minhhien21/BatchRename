@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BatchRename"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="850" Loaded="Window_Loaded">
+        Title="My Rename" Height="500" Width="850" Loaded="Window_Loaded" Background="AliceBlue">
     <StackPanel>
         <StackPanel Height="40" Orientation="Horizontal">
             <Button Width="100" Height="40">
@@ -23,8 +23,14 @@
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
+            <Button Height="20" Click="Button_up">A</Button>
+            <Button Height="20" Click="Button_up1">B</Button>
+            <Button Height="20">C</Button>
+            <Button Height="20">D</Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
             <StackPanel Width="220">
-                <TabControl>
+                <TabControl Height="264">
                     <TabItem Height="40" Width="100">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
@@ -34,38 +40,25 @@
                                 </StackPanel>
                             </DataTemplate>
                         </TabItem.HeaderTemplate>
-                        <StackPanel>
-                            <Button HorizontalContentAlignment="Stretch" Height="30">
-                                <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                    <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                    <Button Content="Replace" Margin="30,0,0,0" Height="30"></Button>
-                                </Grid>
-                            </Button>
-                            <Button HorizontalContentAlignment="Stretch" Height="30">
-                                <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                    <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                    <Button Content="New case" Margin="30,0,0,0" Height="30"></Button>
-                                </Grid>
-                            </Button>
-                            <Button HorizontalContentAlignment="Stretch" Height="30">
-                                <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                    <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                    <Button Content="Fullname normalize" Margin="30,0,0,0" Height="30"></Button>
-                                </Grid>
-                            </Button>
-                            <Button HorizontalContentAlignment="Stretch" Height="30">
-                                <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                    <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                    <Button Content="Move" Margin="30,0,0,0" Height="30"></Button>
-                                </Grid>
-                            </Button>
-                            <Button HorizontalContentAlignment="Stretch" Height="30">
-                                <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                    <Button HorizontalAlignment="Left" Width="30" Height="30">+</Button>
-                                    <Button Content="Unique name" Margin="30,0,0,0" Height="30"></Button>
-                                </Grid>
-                            </Button>
-                        </StackPanel>
+                        <ListView Name ="ButtonNames" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Button HorizontalContentAlignment="Stretch" Height="30" Width="200">
+                                        <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
+                                            <Label HorizontalAlignment="Left" 
+                                               HorizontalContentAlignment="Center" Width="30" Height="30"
+                                               Content="{Binding CheckName}"/>
+                                            <Button Content="{Binding ButtonName}" Margin="30,0,0,0" Height="30" Click ="Button_Click"/>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TabItem>
                     <TabItem Height="40" Width="100">
                         <TabItem.HeaderTemplate>
@@ -78,38 +71,61 @@
                         </TabItem.HeaderTemplate>
                     </TabItem>
                 </TabControl>
-                <TextBox Height="228"></TextBox>
+                <TextBox Name="TextBox" Height="146" >
+                </TextBox>
             </StackPanel>
-            <Grid Width="592">
-                <TabControl>
-                    <TabItem Header="Rename Files" Height="40">
-                        <ListView>
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Filename" Width="150"/>
-                                    <GridViewColumn Header="New Filename" Width="150"/>
-                                    <GridViewColumn Header="Path" Width="150"/>
-                                    <GridViewColumn Header="Error" Width="150"/>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </TabItem>
-                    <TabItem Header="Rename Folders" Height="40">
-                        <ListView>
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="Foldername" Width="150"/>
-                                    <GridViewColumn Header="New Foldername" Width="150"/>
-                                    <GridViewColumn Header="Path" Width="150"/>
-                                    <GridViewColumn Header="Error" Width="150"/>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </TabItem>
-                </TabControl>
-            </Grid>
+            <StackPanel>
+                <Grid Width="592" Height="350">
+                    <TabControl>
+                        <TabItem Header="Rename Files" Height="40">
+                            <ListView>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Filename" Width="150"/>
+                                        <GridViewColumn Header="New Filename" Width="150"/>
+                                        <GridViewColumn Header="Path" Width="150"/>
+                                        <GridViewColumn Header="Error" Width="150"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </TabItem>
+                        <TabItem Header="Rename Folders" Height="40">
+                            <ListView>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Foldername" Width="150"/>
+                                        <GridViewColumn Header="New Foldername" Width="150"/>
+                                        <GridViewColumn Header="Path" Width="150"/>
+                                        <GridViewColumn Header="Error" Width="150"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Width="100" Height="40" Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Image/add.png"/>
+                            <TextBlock Text=" add" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Width="100" Height="40" Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Image/preview.png"/>
+                            <TextBlock Text="Preview" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Width="100" Height="40" Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Image/start.png"/>
+                            <TextBlock Text="Start Batch" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
-        
+
     </StackPanel>
 
 </Window>
