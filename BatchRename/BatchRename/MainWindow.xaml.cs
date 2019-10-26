@@ -67,7 +67,7 @@ namespace BatchRename
                     {
                         var fileName = new FileName()
                         {
-                            Name = System.IO.Path.GetFileNameWithoutExtension(file),
+                            Name = System.IO.Path.GetFileName(file),
                             Extension = System.IO.Path.GetExtension(file),
                             Prename = null,
                             Path = System.IO.Path.GetDirectoryName(file),
