@@ -70,7 +70,7 @@ namespace BatchRename
                             Name = System.IO.Path.GetFileNameWithoutExtension(file),
                             Extension = System.IO.Path.GetExtension(file),
                             Prename = null,
-                            Path = file,
+                            Path = System.IO.Path.GetDirectoryName(file),
                             Error = null
                         };
                         result.Add(fileName);
@@ -99,7 +99,7 @@ namespace BatchRename
                         {
                             Name = System.IO.Path.GetFileName(folder),
                             Prename = null,
-                            Path = folder,
+                            Path = System.IO.Path.GetDirectoryName(folder),
                             Error = null
                         };
                         result.Add(folderName);
@@ -204,14 +204,41 @@ namespace BatchRename
             var index = NameFileTabControl.SelectedIndex;
             if (index == 0)
             {
-                _filenames = NameDao.GetFileName();
-
+                var files = NameDao.GetFileName();
+                if (files != null)
+                {
+                    if (_filenames != null)
+                    {
+                        foreach (var file in files)
+                        {
+                            _filenames.Add(file);
+                        }
+                    }
+                    else
+                    {
+                        _filenames = files;
+                    }
+                }
                 //binding 
                 fileNameListView.ItemsSource = _filenames;
             }
             else if (index == 1)
             {
-                _foldernames = NameDao.GetFolderName();
+                var folders = NameDao.GetFolderName();
+                if (folders != null)
+                {
+                    if (_foldernames != null)
+                    {
+                        foreach (var folder in folders)
+                        {
+                            _foldernames.Add(folder);
+                        }
+                    }
+                    else
+                    {
+                        _foldernames = folders;
+                    }
+                }
 
                 //binding
                 folderNameListView.ItemsSource = _foldernames;
