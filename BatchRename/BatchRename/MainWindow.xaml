@@ -43,7 +43,7 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <DockPanel>
-                    <Grid DockPanel.Dock="Bottom" Height="120"></Grid>
+                    <Grid DockPanel.Dock="Bottom" Height="140"></Grid>
                     <ListView Name ="ButtonNames" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  DockPanel.Dock="Top">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -52,7 +52,7 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Button HorizontalContentAlignment="Stretch" Height="30" Width="200">
+                                <Button HorizontalContentAlignment="Stretch" Height="30" Width="220">
                                     <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
                                         <Label HorizontalAlignment="Left" 
                                                HorizontalContentAlignment="Center" Width="30" Height="30"

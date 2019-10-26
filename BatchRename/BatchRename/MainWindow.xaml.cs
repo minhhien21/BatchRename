@@ -178,13 +178,25 @@ namespace BatchRename
         private void BtnAdd_ClickFile(object sender, RoutedEventArgs e)
         {
             var files = NameDao.GetFileName();
+            var flag = 0;
             if (files != null)
             {
                 if (_filenames != null)
                 {
-                    foreach (var file in files)
+                    for(var i=0;i<_filenames.Count;i++)
                     {
-                        _filenames.Add(file);
+                        if (_filenames[i].Path == files[0].Path)
+                        {
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    if (flag == 0)
+                    {
+                        foreach (var file in files)
+                        {
+                            _filenames.Add(file);
+                        }
                     }
                 }
                 else
@@ -209,13 +221,25 @@ namespace BatchRename
         private void BtnAdd_ClickFolder(object sender, RoutedEventArgs e)
         {
             var folders = NameDao.GetFolderName();
+            var flag = 0;
             if (folders != null)
             {
                 if (_foldernames != null)
                 {
-                    foreach (var folder in folders)
+                    for (var i = 0; i < _foldernames.Count; i++)
                     {
-                        _foldernames.Add(folder);
+                        if (_foldernames[i].Path == folders[0].Path)
+                        {
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    if (flag == 0)
+                    {
+                        foreach (var folder in folders)
+                        {
+                            _foldernames.Add(folder);
+                        }
                     }
                 }
                 else
