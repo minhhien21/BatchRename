@@ -79,6 +79,11 @@
                     <TabControl>
                         <TabItem Header="Rename Files" Height="40">
                             <ListView>
+                                <ListView.Resources>
+                                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                    </Style>
+                                </ListView.Resources>
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Filename" Width="150"/>
