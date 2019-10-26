@@ -175,55 +175,25 @@ namespace BatchRename
 
         }
 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            var index = NameFileTabControl.SelectedIndex;
-            if (index == 0)
-            {
-                var files = NameDao.GetFileName();
-                if (files != null)
-                {
-                    if (_filenames != null)
-                    {
-                        foreach (var file in files)
-                        {
-                            _filenames.Add(file);
-                        }
-                    }
-                    else
-                    {
-                        _filenames = files;
-                    }
-                }
-                //binding 
-                fileNameListView.ItemsSource = _filenames;
-            }
-            else if (index == 1)
-            {
-                var folders = NameDao.GetFolderName();
-                if (folders != null)
-                {
-                    if (_foldernames != null)
-                    {
-                        foreach (var folder in folders)
-                        {
-                            _foldernames.Add(folder);
-                        }
-                    }
-                    else
-                    {
-                        _foldernames = folders;
-                    }
-                }
-
-                //binding
-                folderNameListView.ItemsSource = _foldernames;
-            }
-        }
-
         private void BtnAdd_ClickFile(object sender, RoutedEventArgs e)
         {
-
+            var files = NameDao.GetFileName();
+            if (files != null)
+            {
+                if (_filenames != null)
+                {
+                    foreach (var file in files)
+                    {
+                        _filenames.Add(file);
+                    }
+                }
+                else
+                {
+                    _filenames = files;
+                }
+            }
+            //binding 
+            fileNameListView.ItemsSource = _filenames;
         }
 
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
@@ -238,7 +208,24 @@ namespace BatchRename
 
         private void BtnAdd_ClickFolder(object sender, RoutedEventArgs e)
         {
+            var folders = NameDao.GetFolderName();
+            if (folders != null)
+            {
+                if (_foldernames != null)
+                {
+                    foreach (var folder in folders)
+                    {
+                        _foldernames.Add(folder);
+                    }
+                }
+                else
+                {
+                    _foldernames = folders;
+                }
+            }
 
+            //binding
+            folderNameListView.ItemsSource = _foldernames;
         }
 
         private void BtnPreview_ClickFolder(object sender, RoutedEventArgs e)
