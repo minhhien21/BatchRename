@@ -5,134 +5,176 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BatchRename"
         mc:Ignorable="d"
-        Title="My Rename" Height="500" Width="850" Loaded="Window_Loaded" Background="AliceBlue">
-    <StackPanel>
-        <StackPanel Height="40" Orientation="Horizontal">
-            <Button Width="100" Height="40">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Image/refresh.png"/>
-                    <TextBlock Text="Refersh" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-            <ComboBox Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"></ComboBox>
-            <Button Width="100" Height="40">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="Image/help.png"/>
-                    <TextBlock Text="Help" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Button Height="20" Click="Button_up">A</Button>
-            <Button Height="20" Click="Button_up1">B</Button>
-            <Button Height="20">C</Button>
-            <Button Height="20">D</Button>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Width="220">
-                <TabControl Height="264">
-                    <TabItem Height="40" Width="100">
-                        <TabItem.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Image/action.png"/>
-                                    <TextBlock Text=" Action" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </TabItem.HeaderTemplate>
-                        <ListView Name ="ButtonNames" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel></StackPanel>
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Button HorizontalContentAlignment="Stretch" Height="30" Width="200">
-                                        <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                            <Label HorizontalAlignment="Left" 
-                                               HorizontalContentAlignment="Center" Width="30" Height="30"
-                                               Content="{Binding CheckName}"/>
-                                            <Button Content="{Binding ButtonName}" Margin="30,0,0,0" Height="30" Click ="Button_Click"/>
-                                        </Grid>
-                                    </Button>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </TabItem>
-                    <TabItem Height="40" Width="100">
-                        <TabItem.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="Image/addlist.png"/>
-                                    <TextBlock Text=" Addlist" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </TabItem.HeaderTemplate>
-                    </TabItem>
-                </TabControl>
-                <TextBox Name="TextBox" Height="146" >
-                </TextBox>
+        Title="My Rename" Height="500" Width="900" Loaded="Window_Loaded" Background="AliceBlue">
+  
+    <DockPanel>
+        <StackPanel  DockPanel.Dock="Top" Height="60">
+            <StackPanel Orientation="Horizontal">
+                <Button Width="100" Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Image/refresh.png"/>
+                        <TextBlock Text="Refersh" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <ComboBox Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"></ComboBox>
+                <Button Width="100" Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Image/help.png"/>
+                        <TextBlock Text="Help" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
-            <StackPanel>
-                <Grid Width="592" Height="350">
-                    <TabControl Name="NameFileTabControl">
-                        <TabItem Header="Rename Files" Height="40">
-                            <ListView>
-                                <ListView.Resources>
-                                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                                        <Setter Property="HorizontalContentAlignment" Value="Left" />
-                                    </Style>
-                                </ListView.Resources>
-                                <ListView Name="fileNameListView">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Filename" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                            <GridViewColumn Header="New Filename" Width="150" DisplayMemberBinding="{Binding Prename}"/>
-                                            <GridViewColumn Header="Path" Width="150" DisplayMemberBinding="{Binding Path}"/>
-                                            <GridViewColumn Header="Error" Width="150" DisplayMemberBinding="{Binding Error}"/>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                            </ListView>
-                        </TabItem>
-                        <TabItem Header="Rename Folders" Height="40">
-                            <ListView Name="folderNameListView">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Foldername" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                                        <GridViewColumn Header="New Foldername" Width="150" DisplayMemberBinding="{Binding Prename}"/>
-                                        <GridViewColumn Header="Path" Width="150" DisplayMemberBinding="{Binding Path}"/>
-                                        <GridViewColumn Header="Error" Width="150" DisplayMemberBinding="{Binding Error}"/>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </TabItem>
-                    </TabControl>
-                </Grid>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Name="btnAdd" Click="BtnAdd_Click"  Width="100" Height="40" Margin="10">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="Image/add.png"/>
-                            <TextBlock Text=" add" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Width="100" Height="40" Margin="10">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="Image/preview.png"/>
-                            <TextBlock Text="Preview" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button Width="100" Height="40" Margin="10">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="Image/start.png"/>
-                            <TextBlock Text="Start Batch" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Height="20" Click="Button_up">A</Button>
+                <Button Height="20" Click="Button_up1">B</Button>
+                <Button Height="20">C</Button>
+                <Button Height="20">D</Button>
             </StackPanel>
         </StackPanel>
 
-    </StackPanel>
+        <TabControl DockPanel.Dock="Left" Margin="0,0,30,0" Width="250">
+            <TabItem Height="40" Width="100">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Image/action.png"/>
+                            <TextBlock Text=" Action" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <DockPanel>
+                    <Grid DockPanel.Dock="Bottom" Height="120"></Grid>
+                    <ListView Name ="ButtonNames" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  DockPanel.Dock="Top">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Button HorizontalContentAlignment="Stretch" Height="30" Width="200">
+                                    <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
+                                        <Label HorizontalAlignment="Left" 
+                                               HorizontalContentAlignment="Center" Width="30" Height="30"
+                                               Content="{Binding CheckName}"/>
+                                        <Button Content="{Binding ButtonName}" Margin="30,0,0,0" Height="30"/>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+            <TabItem Height="40" Width="100">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Image/addlist.png"/>
+                            <TextBlock Text=" Addlist" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <DockPanel>
+                    <StackPanel Orientation="Horizontal" Height="25"
+                                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                        DockPanel.Dock="Bottom" Margin="0,10,0,0">
+                        <Button Width="80" Height="25" Margin="0,0,5,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/refresh.png"/>
+                                <TextBlock Text=" Open" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Width="80" Height="25" Margin="0,0,5,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/refresh.png"/>
+                                <TextBlock Text=" Save" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+        <TabControl Name="NameFileTabControl" DockPanel.Dock="Right" Margin="0">
+            <TabItem Header="Rename Files" Height="40">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Bottom" Height="60" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Name="BtnAddFile" Click="BtnAdd_ClickFile"  Width="100" Height="40" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/add.png"/>
+                                <TextBlock Text=" add" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Name="BtnPreviewFile" Click="BtnPreview_ClickFile" Width="100" Height="40" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/preview.png"/>
+                                <TextBlock Text="Preview" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Name="BtnStartBatchFile" Click="BtnStartBatch_File" Width="100" Height="40" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/start.png"/>
+                                <TextBlock Text="Start Batch" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <ListView  Name="fileNameListView">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Filename" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="New Filename" Width="150" DisplayMemberBinding="{Binding Prename}"/>
+                                <GridViewColumn Header="Path" Width="150" DisplayMemberBinding="{Binding Path}"/>
+                                <GridViewColumn Header="Error" Width="150" DisplayMemberBinding="{Binding Error}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+
+            <TabItem Header="Rename Folders" Height="40">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Bottom" Height="60" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Name="BtnAddFolder" Click="BtnAdd_ClickFolder"  Width="100" Height="40" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/add.png"/>
+                                <TextBlock Text=" add" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Name="BtnPreviewFolder" Click="BtnPreview_ClickFolder" Width="100" Height="40" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/preview.png"/>
+                                <TextBlock Text="Preview" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Name="BtnStartBatchFolder" Click="BtnStartPatch_ClickFolder" Width="100" Height="40" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/start.png"/>
+                                <TextBlock Text="Start Batch" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <ListView Name="folderNameListView">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Foldername" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="New Foldername" Width="150" DisplayMemberBinding="{Binding Prename}"/>
+                                <GridViewColumn Header="Path" Width="150" DisplayMemberBinding="{Binding Path}"/>
+                                <GridViewColumn Header="Error" Width="150" DisplayMemberBinding="{Binding Error}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
 
 </Window>

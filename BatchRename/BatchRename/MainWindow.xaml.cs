@@ -162,30 +162,6 @@ namespace BatchRename
             ButtonNames.ItemsSource = _buttonitem;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "0";
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "1";
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "2";
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "3";
-        }
-
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "4";
-        }
 
         private void Button_up(object sender, RoutedEventArgs e)
         {
@@ -216,6 +192,36 @@ namespace BatchRename
                 //binding
                 folderNameListView.ItemsSource = _foldernames;
             }
+        }
+
+        private void BtnAdd_ClickFile(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnStartBatch_File(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnAdd_ClickFolder(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnPreview_ClickFolder(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnStartPatch_ClickFolder(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
