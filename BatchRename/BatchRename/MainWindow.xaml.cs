@@ -41,8 +41,6 @@ namespace BatchRename
             public string Extension { get; set; }
         }
 
-
-
         class NameDao
         {
             /// <summary>
@@ -110,7 +108,9 @@ namespace BatchRename
         }
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
+            MoveControl a = new MoveControl();
+            a.Show();
         }
 
         BindingList<ButtonItem> _buttonitem = null;
@@ -159,7 +159,7 @@ namespace BatchRename
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _buttonitem = ButtonItemDao.GetAll();
-            ButtonNames.ItemsSource = _buttonitem;
+            ActionsListView.ItemsSource = _buttonitem;
         }
 
 
@@ -260,6 +260,11 @@ namespace BatchRename
         private void BtnStartPatch_ClickFolder(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
