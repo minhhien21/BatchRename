@@ -108,9 +108,18 @@ namespace BatchRename
         }
         public MainWindow()
         {
-            //InitializeComponent();
-            MoveControl a = new MoveControl();
-            a.Show();
+
+            //MoveControl a = new MoveControl();
+            //ReplaceControl b = new ReplaceControl();
+            //NewCaseControl c = new NewCaseControl();
+            //FullnameNormalizeControl d = new FullnameNormalizeControl();
+            //UniqueNameControl e = new UniqueNameControl();
+            //a.Show();
+            //b.Show();
+            //c.Show();
+            //d.Show();
+            //e.Show();
+            InitializeComponent();
         }
 
         BindingList<ButtonItem> _buttonitem = null;

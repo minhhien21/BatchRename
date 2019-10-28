@@ -5,29 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BatchRename"
         mc:Ignorable="d"
-        Title="MoveControl" Height="160" Width="250" WindowStartupLocation="Manual" WindowStyle="None">
-    <StackPanel Background="AliceBlue">
-        <TextBlock Text="Move" FontWeight="Bold" Margin="10,0,0,0"/>
-        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-            <TextBlock Text="Start at" />
-            <TextBox Text="0" Width="100" Margin="20,0,0,0"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="10,5,0,0">
-            <TextBlock Text="End"/>
-            <TextBox Text="13" Width="100" Margin="38,0,0,0"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="10,5,0,0">
-            <TextBlock Text="Move to"/>
-            <ListView Name="MainListView" SelectedIndex="0" Height="40"
-                      Width="100" Margin="14,0,0,0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Value}"></TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
-        <Button HorizontalAlignment="Right" Width="80" Height="20" 
-                Content="Add to list" Margin="5,5,20,0"/>
-    </StackPanel>
+        Title="MoveControl" Height="160" Width="250" WindowStyle="None">
+    <Canvas Background="AliceBlue">
+        <TextBlock Text="Move" FontWeight="Bold" Canvas.Left="10" Canvas.Top="10"/>
+        <TextBlock Text="Start at" Canvas.Left="11" Canvas.Top="32" />
+        <TextBox Text="0" Width="100" Canvas.Left="76" Canvas.Top="30"/>
+        <TextBlock Text="Length" Canvas.Left="11" Canvas.Top="57"/>
+        <TextBox Text="13" Width="100" Canvas.Left="76" Canvas.Top="55"/>
+        <TextBlock Text="Move to" Canvas.Top="95" Canvas.Left="11"/>
+        <ListView x:Name="MainListView" SelectedIndex="0" Height="32"
+                      Width="100" RenderTransformOrigin="0.675,1.12" Canvas.Left="76" Canvas.Top="79" Focusable="False">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Value}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button  Width="80" Height="25" 
+                Content="Add to list" Canvas.Left="146" Canvas.Top="118"/>
+    </Canvas>
 </Window>

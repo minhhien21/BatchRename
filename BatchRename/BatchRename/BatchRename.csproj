@@ -61,6 +61,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FullnameNormalizeControl.xaml.cs">
+      <DependentUpon>FullnameNormalizeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewCaseControl.xaml.cs">
+      <DependentUpon>NewCaseControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReplaceControl.xaml.cs">
+      <DependentUpon>ReplaceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UniqueNameControl.xaml.cs">
+      <DependentUpon>UniqueNameControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="FullnameNormalizeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,6 +90,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MoveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewCaseControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReplaceControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UniqueNameControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
