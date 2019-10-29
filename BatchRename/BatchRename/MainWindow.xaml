@@ -46,7 +46,7 @@
                     <Grid DockPanel.Dock="Bottom" Height="160">
                         <TextBox Name="textbox"></TextBox>
                     </Grid>
-                    <ListView Name="ActionsListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  DockPanel.Dock="Top">
+                    <ListView Name="ActionsListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  DockPanel.Dock="Top" SelectionChanged="ChooseOptionClick">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel></StackPanel>

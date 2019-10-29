@@ -275,5 +275,12 @@ namespace BatchRename
         {
             
         }
+
+        private void ChooseOptionClick(object sender, SelectionChangedEventArgs e)
+        {
+            var item = (ListView)sender;
+            var selectedItem = item.SelectedItem;
+            MessageBox.Show($"Clicked on: {selectedItem.GetHashCode()}");
+        }
     }
 }
