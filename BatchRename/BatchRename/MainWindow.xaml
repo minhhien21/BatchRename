@@ -51,9 +51,7 @@
                                 <Style.Triggers>
                                     <Trigger Property="IsKeyboardFocusWithin" Value="True">
                                         <Setter Property="IsSelected" Value="True"/>
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="True" >
-                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="FontWeight" Value="Bold"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
