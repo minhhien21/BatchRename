@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -23,8 +24,101 @@ namespace BatchRename
     /// </summary>
     public partial class MainWindow : Window
     {
+        BindingList<FileName> _filenames = null;
+
+        BindingList<FolderName> _foldernames = null;
+
+        class FolderName
+        {
+            public string Name { get; set; }
+            public string Prename { get; set; }
+            public string Path { get; set; }
+            public string Error { get; set; }
+        }
+
+        class FileName : FolderName
+        {
+            public string Extension { get; set; }
+        }
+
+        class NameDao
+        {
+            /// <summary>
+            /// Lấy danh sách tên file / folder
+            /// </summary>
+            /// <returns></returns>
+            public static BindingList<FileName> GetFileName()
+            {
+                BindingList<FileName> result = null;
+                //mở dialog cho người dùng chọn file
+                var screen = new CommonOpenFileDialog();
+                screen.IsFolderPicker = true;
+
+                if (screen.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    var path = screen.FileName;
+                    var files = Directory.GetFiles(path);
+
+                    result = new BindingList<FileName>();
+                    //cắt file path
+                    foreach (var file in files)
+                    {
+                        var fileName = new FileName()
+                        {
+                            Name = System.IO.Path.GetFileName(file),
+                            Extension = System.IO.Path.GetExtension(file),
+                            Prename = null,
+                            Path = System.IO.Path.GetDirectoryName(file),
+                            Error = null
+                        };
+                        result.Add(fileName);
+                    }
+                }
+                return result;
+            }
+
+            public static BindingList<FolderName> GetFolderName()
+            {
+                BindingList<FolderName> result = null;
+                //mở dialog cho người dùng chọn file
+                var screen = new CommonOpenFileDialog();
+                screen.IsFolderPicker = true;
+
+                if (screen.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    var path = screen.FileName;
+                    var folders = Directory.GetDirectories(path);
+
+                    result = new BindingList<FolderName>();
+                    //cắt folder path
+                    foreach (var folder in folders)
+                    {
+                        var folderName = new FolderName()
+                        {
+                            Name = System.IO.Path.GetFileName(folder),
+                            Prename = null,
+                            Path = System.IO.Path.GetDirectoryName(folder),
+                            Error = null
+                        };
+                        result.Add(folderName);
+                    }
+                }
+                return result;
+            }
+        }
         public MainWindow()
         {
+
+            //MoveControl a = new MoveControl();
+            //ReplaceControl b = new ReplaceControl();
+            //NewCaseControl c = new NewCaseControl();
+            //FullnameNormalizeControl d = new FullnameNormalizeControl();
+            //UniqueNameControl e = new UniqueNameControl();
+            //a.Show();
+            //b.Show();
+            //c.Show();
+            //d.Show();
+            //e.Show();
             InitializeComponent();
         }
 
@@ -74,33 +168,9 @@ namespace BatchRename
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _buttonitem = ButtonItemDao.GetAll();
-            ButtonNames.ItemsSource = _buttonitem;
+            ActionsListView.ItemsSource = _buttonitem;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "0";
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "1";
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "2";
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "3";
-        }
-
-        private void Button_Click_4(object sender, RoutedEventArgs e)
-        {
-            TextBox.Text = "4";
-        }
 
         private void Button_up(object sender, RoutedEventArgs e)
         {
@@ -112,6 +182,98 @@ namespace BatchRename
         private void Button_up1(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void BtnAdd_ClickFile(object sender, RoutedEventArgs e)
+        {
+            var files = NameDao.GetFileName();
+            var flag = 0;
+            if (files != null)
+            {
+                if (_filenames != null)
+                {
+                    for(var i=0;i<_filenames.Count;i++)
+                    {
+                        if (_filenames[i].Path == files[0].Path)
+                        {
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    if (flag == 0)
+                    {
+                        foreach (var file in files)
+                        {
+                            _filenames.Add(file);
+                        }
+                    }
+                }
+                else
+                {
+                    _filenames = files;
+                }
+            }
+            //binding 
+            fileNameListView.ItemsSource = _filenames;
+        }
+
+        private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnStartBatch_File(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnAdd_ClickFolder(object sender, RoutedEventArgs e)
+        {
+            var folders = NameDao.GetFolderName();
+            var flag = 0;
+            if (folders != null)
+            {
+                if (_foldernames != null)
+                {
+                    for (var i = 0; i < _foldernames.Count; i++)
+                    {
+                        if (_foldernames[i].Path == folders[0].Path)
+                        {
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    if (flag == 0)
+                    {
+                        foreach (var folder in folders)
+                        {
+                            _foldernames.Add(folder);
+                        }
+                    }
+                }
+                else
+                {
+                    _foldernames = folders;
+                }
+            }
+
+            //binding
+            folderNameListView.ItemsSource = _foldernames;
+        }
+
+        private void BtnPreview_ClickFolder(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnStartPatch_ClickFolder(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
