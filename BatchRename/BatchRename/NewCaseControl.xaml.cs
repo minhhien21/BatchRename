@@ -17,7 +17,7 @@ namespace BatchRename
     /// <summary>
     /// Interaction logic for NewCaseControl.xaml
     /// </summary>
-    public partial class NewCaseControl : Window
+    public partial class NewCaseControl : Control
     {
         public NewCaseControl()
         {

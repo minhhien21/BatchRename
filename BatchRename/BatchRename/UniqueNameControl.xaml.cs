@@ -17,7 +17,7 @@ namespace BatchRename
     /// <summary>
     /// Interaction logic for UniqueNameControl.xaml
     /// </summary>
-    public partial class UniqueNameControl : Window
+    public partial class UniqueNameControl : Control
     {
         public UniqueNameControl()
         {

@@ -62,15 +62,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Action.cs" />
+    <Compile Include="Control.cs" />
+    <Compile Include="FullnameNormalizeAction.cs" />
     <Compile Include="FullnameNormalizeControl.xaml.cs">
       <DependentUpon>FullnameNormalizeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ActionMain.cs" />
+    <Compile Include="MoveAction.cs" />
+    <Compile Include="NewCaseAction.cs" />
     <Compile Include="NewCaseControl.xaml.cs">
       <DependentUpon>NewCaseControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReplaceAction.cs" />
     <Compile Include="ReplaceControl.xaml.cs">
       <DependentUpon>ReplaceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UniqueNameAction.cs" />
     <Compile Include="UniqueNameControl.xaml.cs">
       <DependentUpon>UniqueNameControl.xaml</DependentUpon>
     </Compile>

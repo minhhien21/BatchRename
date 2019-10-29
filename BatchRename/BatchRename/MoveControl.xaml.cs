@@ -17,7 +17,7 @@ namespace BatchRename
     /// <summary>
     /// Interaction logic for MoveControl.xaml
     /// </summary>
-    public partial class MoveControl : Window
+    public partial class MoveControl : Control
     {
         public MoveControl()
         {

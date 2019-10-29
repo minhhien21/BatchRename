@@ -1,6 +1,6 @@
 ﻿5
-Repalce / Button_Click / +
-New case / Button_Click_1 / +
-Fullname normalize / Button_Click_2 / +
-Move / Button_Click_3 / +
-Unique name / Button_Click_4 / +
+Repalce / +
+New case / +
+Fullname normalize / +
+Move / +
+Unique name / +

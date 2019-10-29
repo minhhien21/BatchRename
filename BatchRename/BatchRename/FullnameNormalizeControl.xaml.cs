@@ -17,7 +17,7 @@ namespace BatchRename
     /// <summary>
     /// Interaction logic for FullnameNormalizeControl.xaml
     /// </summary>
-    public partial class FullnameNormalizeControl : Window
+    public partial class FullnameNormalizeControl : Control
     {
         public FullnameNormalizeControl()
         {

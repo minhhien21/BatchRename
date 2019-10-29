@@ -25,8 +25,8 @@
                 </Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button Height="20" Click="Button_up">A</Button>
-                <Button Height="20" Click="Button_up1">B</Button>
+                <Button Height="20">A</Button>
+                <Button Height="20">B</Button>
                 <Button Height="20">C</Button>
                 <Button Height="20">D</Button>
             </StackPanel>
@@ -43,23 +43,29 @@
                     </DataTemplate>
                 </TabItem.HeaderTemplate>
                 <DockPanel>
-                    <Grid DockPanel.Dock="Bottom" Height="160">
-                        <TextBox Name="textbox"></TextBox>
+                    <Grid x:Name="UserControlGrid" DockPanel.Dock="Bottom" Height="160">
                     </Grid>
                     <ListView Name="ActionsListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  DockPanel.Dock="Top" SelectionChanged="ChooseOptionClick">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel></StackPanel>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
+                        <ListView.Resources>
+                            <Style TargetType="ListViewItem">
+                                <Style.Triggers>
+                                    <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                        <Setter Property="IsSelected" Value="True"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True" >
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Button HorizontalContentAlignment="Stretch" Height="30" Width="220" Click="Button_Click">
+                                <Button HorizontalContentAlignment="Stretch" Height="30" Width="220" Click="ButtonAction_Click">
                                     <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                        <Label HorizontalAlignment="Left"
+                                        <Button HorizontalAlignment="Left"
                                                HorizontalContentAlignment="Center" Width="30" Height="30"
-                                               Content="{Binding CheckName}"/>
-                                        <Button Content="{Binding ButtonName}" Margin="30,0,0,0" Height="30"/>
+                                               Content="{Binding Extend}" Click="Button_ShowControl"/>
+                                        <Label Content="{Binding ClassName}" Margin="30,0,0,0" Height="30"/>
                                     </Grid>
                                 </Button>
                             </DataTemplate>

@@ -17,7 +17,7 @@ namespace BatchRename
     /// <summary>
     /// Interaction logic for ReplaceControl.xaml
     /// </summary>
-    public partial class ReplaceControl : Window
+    public partial class ReplaceControl : Control
     {
         public ReplaceControl()
         {

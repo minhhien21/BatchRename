@@ -120,69 +120,64 @@ namespace BatchRename
             //d.Show();
             //e.Show();
             InitializeComponent();
-        }
-
-        BindingList<ButtonItem> _buttonitem = null;
-        public class ButtonItem
-        {
-            public string ButtonName { get; set; }
-
-            public string ClickButtonName { get; set; }
-
-            public string CheckName { get; set; }
 
         }
 
-        class ButtonItemDao
-        {
-            /// <summary>
-            /// Lấy danh sách laptop từ cơ sở dữ liệu
-            /// </summary>
-            /// <returns></returns>
-            public static BindingList<ButtonItem> GetAll()
-            {
-                BindingList<ButtonItem> result = null;
-                var lines = File.ReadAllLines("ButtonName.txt");
-                var count = int.Parse(lines[0]);
-                if (count > 0)
-                {
-                    result = new BindingList<ButtonItem>();
-                    const string Separator = " / ";
-                    for (int i = 0; i < count; i++)
-                    {
-                        var tokens = lines[i + 1].Split(new string[]
-                            { Separator }, StringSplitOptions.RemoveEmptyEntries);
-                        var buttonitem = new ButtonItem()
-                        {
-                            ButtonName = tokens[0],
-                            ClickButtonName = tokens[1],
-                            CheckName = tokens[2]
-                        };
-                        result.Add(buttonitem);
-                    }
-                }
-                return result;
-            }
-        }
+        BindingList<ActionMain> _actionlist;
+        //public class ButtonItem
+        //{
+        //    public string ButtonName { get; set; }
+
+        //    public string CheckName { get; set; }
+
+        //}
+
+        //class ButtonItemDao
+        //{
+        //    /// <summary>
+        //    /// Lấy danh sách button name từ cơ sở dữ liệu
+        //    /// </summary>
+        //    /// <returns></returns>
+        //    public static BindingList<ButtonItem> GetAll()
+        //    {
+        //        BindingList<ButtonItem> result = null;
+        //        var lines = File.ReadAllLines("ButtonName.txt");
+        //        var count = int.Parse(lines[0]);
+        //        if (count > 0)
+        //        {
+        //            result = new BindingList<ButtonItem>();
+        //            const string Separator = " / ";
+        //            for (int i = 0; i < count; i++)
+        //            {
+        //                var tokens = lines[i + 1].Split(new string[]
+        //                    { Separator }, StringSplitOptions.RemoveEmptyEntries);
+        //                var buttonitem = new ButtonItem()
+        //                {
+        //                    ButtonName = tokens[0],
+        //                    CheckName = tokens[1]
+        //                };
+        //                result.Add(buttonitem);
+        //            }
+        //        }
+        //        return result;
+        //    }
+        //}
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _buttonitem = ButtonItemDao.GetAll();
-            ActionsListView.ItemsSource = _buttonitem;
-        }
-
-
-        private void Button_up(object sender, RoutedEventArgs e)
-        {
-            var x = _buttonitem[1];
-            _buttonitem[1] = _buttonitem[0];
-            _buttonitem[0] = x;
-        }
-
-        private void Button_up1(object sender, RoutedEventArgs e)
-        {
+            //_buttonitem = ButtonItemDao.GetAll();
+            _actionlist = new BindingList<ActionMain>
+            {
+                new ActionMain(new ReplaceAction(){ }, new ReplaceControl()),
+                new ActionMain(new NewCaseAction(){ }, new NewCaseControl()),
+                new ActionMain(new FullnameNormalizeAction(){ }, new FullnameNormalizeControl()),
+                new ActionMain(new MoveAction(){ }, new MoveControl()),
+                new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
+            };
+            ActionsListView.ItemsSource = _actionlist;
 
         }
+
 
         private void BtnAdd_ClickFile(object sender, RoutedEventArgs e)
         {
@@ -271,16 +266,24 @@ namespace BatchRename
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void ChooseOptionClick(object sender, SelectionChangedEventArgs e)
         {
-            var item = (ListView)sender;
-            var selectedItem = item.SelectedItem;
-            MessageBox.Show($"Clicked on: {selectedItem.GetHashCode()}");
+            //var item = (ListView)sender;
+            //var selectedItem = item.SelectedItem;
+            //MessageBox.Show($"Clicked on: {selectedItem.GetHashCode()}");
+        }
+
+        private void Button_ShowControl(object sender, RoutedEventArgs e)
+        {
+            ActionMain actionMain = ActionsListView.SelectedItem as ActionMain;
+            int result = actionMain.ShowControl();
+        }
+
+        private void ButtonAction_Click(object sender, RoutedEventArgs e)
+        {
+            ActionMain actionMain = ActionsListView.SelectedItem as ActionMain;
+            UserControlGrid.Children.Remove(actionMain.control);
+            UserControlGrid.Children.Add(actionMain.control);
         }
     }
 }
