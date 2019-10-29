@@ -9,7 +9,7 @@ namespace BatchRename
     public interface Action
     {
         String Classname { get; }
-        String Extend { get; }
+
         String Description { get; }
     }
 }

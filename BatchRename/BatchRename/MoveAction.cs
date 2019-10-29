@@ -11,7 +11,5 @@ namespace BatchRename
         string Action.Classname => "Move";
 
         string Action.Description => throw new NotImplementedException();
-
-        string Action.Extend => "+";
     }
 }

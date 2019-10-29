@@ -276,7 +276,7 @@ namespace BatchRename
         private void Button_ShowControl(object sender, RoutedEventArgs e)
         {
             ActionMain actionMain = ActionsListView.SelectedItem as ActionMain;
-            int result = actionMain.ShowControl();
+            actionMain.ShowControl();
         }
 
         private void ButtonAction_Click(object sender, RoutedEventArgs e)

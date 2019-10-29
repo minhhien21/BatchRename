@@ -10,27 +10,46 @@ namespace BatchRename
 {
     class ActionMain : INotifyPropertyChanged
     {
-        private Action action;
-        public Control control;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        private Action action { get; }
+        public Control control { get; }
         public string ClassName => action.Classname;
-        public string Extend => action.Extend;
-
+        private string expand;
+        private int count { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ActionMain(Action action, Control control)
         {
             this.action = action;
-            this.control= control;
+            this.control = control;
             this.control.Visibility = Visibility.Hidden;
-            //Extend = "+";
+            expand = "+";
+            count = 0;
         }
+        public string Expand { get => expand; set {
+                expand = value;
+                Notify("Expand");
+            } }
 
-        public int ShowControl()
+        public void Notify(string Expand)
         {
-            control.Visibility = Visibility.Visible;
-            return 1;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Expand));
+        }
+        
+
+        public void ShowControl()
+        {
+            count++;
+            if (count % 2 == 1)
+            {
+                Expand = "-";
+                control.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Expand = "+";
+                control.Visibility = Visibility.Hidden;
+            }
+            //return 1;
         }
     }
 }

@@ -59,12 +59,12 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Button HorizontalContentAlignment="Stretch" Height="30" Width="220" Click="ButtonAction_Click">
-                                    <Grid HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
-                                        <Button HorizontalAlignment="Left"
-                                               HorizontalContentAlignment="Center" Width="30" Height="30"
-                                               Content="{Binding Extend}" Click="Button_ShowControl"/>
-                                        <Label Content="{Binding ClassName}" Margin="30,0,0,0" Height="30"/>
-                                    </Grid>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="-2,-2,-2,-2">
+                                        <Button HorizontalContentAlignment="Center" Width="30"
+                                               Content="{Binding Expand, UpdateSourceTrigger=PropertyChanged}" Click="Button_ShowControl"
+                                                FontSize="15" VerticalContentAlignment="Center"/>
+                                        <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="{Binding ClassName}" Margin="30,0,0,0" Height="30"/>
+                                    </StackPanel>
                                 </Button>
                             </DataTemplate>
                         </ListView.ItemTemplate>
