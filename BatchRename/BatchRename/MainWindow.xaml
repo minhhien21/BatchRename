@@ -63,7 +63,8 @@
                                         <Button HorizontalContentAlignment="Center" Width="30"
                                                Content="{Binding Expand, UpdateSourceTrigger=PropertyChanged}" Click="Button_ShowControl"
                                                 FontSize="15" VerticalContentAlignment="Center"/>
-                                        <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="{Binding ClassName}" Margin="30,0,0,0" Height="30"/>
+                                        <Button VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="{Binding ClassName}"
+                                                Height="30" Width="190" Click="Button_ShowControl"/>
                                     </StackPanel>
                                 </Button>
                             </DataTemplate>
