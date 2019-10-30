@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace BatchRename
 {
+<<<<<<< HEAD
     public class NewCaseArgs : StringArgs
     {
         public int type { get; set; }
     }
+=======
+>>>>>>> b571cbd9ce80739c397c1964041005dfc9593005
     public class NewCaseAction : Action
     {
         public override string Classname => "New Case";
