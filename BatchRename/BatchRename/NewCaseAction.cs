@@ -9,6 +9,7 @@ namespace BatchRename
 {
     public class NewCaseArgs : StringArgs
     {
+        public int type { get; set; }
     }
     public class NewCaseAction : Action
     {
@@ -36,10 +37,5 @@ namespace BatchRename
             else
                 return myTI.ToTitleCase(origin);
         }
-    }
-
-    public class NewCaseArgs : StringArgs
-    {
-        public int type { get; set; }
     }
 }
