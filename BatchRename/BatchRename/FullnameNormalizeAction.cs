@@ -22,7 +22,7 @@ namespace BatchRename
             throw new NotImplementedException();
         }
 
-        public override string Operate(string origin)
+        public override string Operate(ref string name ,ref string extension)
         {
             var args = Args as FullnameNormalizeArgs;
             var choosenOption = args.option;
