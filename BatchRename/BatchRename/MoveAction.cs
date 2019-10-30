@@ -24,7 +24,7 @@ namespace BatchRename
             throw new NotImplementedException();
         }
 
-        public override string Operate(string origin)
+        public override string Operate(ref string name, ref string extension)
         {
             var args = Args as MoveArgs;
             var startAt = args.startAt;
@@ -32,14 +32,14 @@ namespace BatchRename
             var moveAt = args.moveAt;
             var ISBN = "";
 
-            ISBN = origin.Substring(startAt, length);// lấy chuỗi ISBN tại vị trí startAt với độ dài Length
+            ISBN = name.Substring(startAt, length);// lấy chuỗi ISBN tại vị trí startAt với độ dài Length
 
-            origin = origin.Replace(ISBN, "").Trim();// xóa khoảng trắng thừa ở đầu hoặc cuối
+            name = name.Replace(ISBN, "").Trim();// xóa khoảng trắng thừa ở đầu hoặc cuối
 
-            if (moveAt == "begin")
-                return ISBN + " " + origin;
+            if (moveAt == "Begin")
+                return ISBN + " " + name;
             else
-                return origin + " " + ISBN;
+                return name + " " + ISBN;
         }
     }
 

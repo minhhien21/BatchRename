@@ -38,7 +38,6 @@ namespace BatchRename
             if (Global.action == null)
             {
                 Global.action = new List<Action>();
-
             }
             Global.action.Add(newCase);
         }

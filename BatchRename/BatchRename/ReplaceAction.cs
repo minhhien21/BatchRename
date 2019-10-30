@@ -10,6 +10,7 @@ namespace BatchRename
     {
         public string From { get; set; }
         public string To { get; set; }
+        public string StringChange { get; set; }
     }
 
     public class ReplaceAction : Action
@@ -26,17 +27,28 @@ namespace BatchRename
                 Args = new ReplaceArgs()
                 {
                     From = oldArgs.From,
-                    To = oldArgs.To
+                    To = oldArgs.To,
+                    StringChange = oldArgs.StringChange
                 }
             };
         }
 
-        public override string Operate(string origin)
+        public override string Operate(ref string name, ref string extension)
         {
             var args = Args as ReplaceArgs;
             var from = args.From;
             var to = args.To;
-            return origin.Replace(from, to);
+            var stringchange = args.StringChange;
+            if (stringchange == "Name")
+            {
+                name = name.Replace(from, to);
+                return name;
+            }
+            else
+            {
+                extension = extension.Replace(from, to);
+                return extension;
+            }
         }
     }
 }

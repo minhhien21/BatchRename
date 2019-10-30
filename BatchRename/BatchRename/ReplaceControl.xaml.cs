@@ -27,20 +27,28 @@ namespace BatchRename
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
-            replace = new ReplaceAction()
+            if (CbbApplyTo.SelectedIndex > -1)
             {
-                Args = new ReplaceArgs()
+                ComboBoxItem typeItem = (ComboBoxItem)CbbApplyTo.SelectedItem;
+                replace = new ReplaceAction()
                 {
-                    From = TextBoxFrom.Text,
-                    To = TextBoxTo.Text
+                    Args = new ReplaceArgs()
+                    {
+                        From = TextBoxFrom.Text,
+                        To = TextBoxTo.Text,
+                        StringChange = typeItem.Content.ToString()
+                    }
+                };
+                if (Global.action == null)
+                {
+                    Global.action = new List<Action>();
                 }
-            };
-            if (Global.action == null)
-            {
-                Global.action = new List<Action>();
-
+                Global.action.Add(replace);
             }
-            Global.action.Add(replace);
+            else
+            {
+                MessageBox.Show("Ban chua setting");
+            }
         }
     }
 }

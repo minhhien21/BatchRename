@@ -22,7 +22,7 @@ namespace BatchRename
             throw new NotImplementedException();
         }
 
-        public override string Operate(string origin)
+        public override string Operate(ref string name, ref string extension)
         {
             var args = Args as NewCaseArgs;
             var type = args.type;
@@ -31,11 +31,20 @@ namespace BatchRename
             TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
 
             if (type == "UpperCase")
-                return myTI.ToUpper(origin);
+            {
+                name = myTI.ToUpper(name);
+                return name;
+            }
             else if (type == "LowerCase")
-                return myTI.ToLower(origin);
+            {
+                name = myTI.ToLower(name);
+                return name;
+            }
             else
-                return myTI.ToTitleCase(origin);
+            {
+                name = myTI.ToTitleCase(name);
+                return name;
+            }
         }
     }
 }
