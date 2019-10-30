@@ -118,14 +118,7 @@ namespace BatchRename
                 new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
             };
             ActionsListView.ItemsSource = _actionlist;
-            //var screen = new ReplaceControl();
-            //screen.DimensionChanged += Screen_DimensionChanged;
 
-        }
-
-        private void Screen_DimensionChanged(Action newaction)
-        {
-            ActionList.Add(newaction);
         }
 
         BindingList<ActionMain> _actionlist;

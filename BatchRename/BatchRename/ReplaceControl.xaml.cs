@@ -19,12 +19,7 @@ namespace BatchRename
     /// </summary>
     public partial class ReplaceControl : Control
     {
-        public delegate void DimensionDelegate(Action newaction);
-        public event DimensionDelegate DimensionChanged = null;
-        ReplaceArgs myArgs;
         public ReplaceAction replace;
-        
-
         public ReplaceControl()
         {
             InitializeComponent();
@@ -32,7 +27,6 @@ namespace BatchRename
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
-            var x = TextBoxFrom.Text;
             replace = new ReplaceAction()
             {
                 Args = new ReplaceArgs()
@@ -41,8 +35,6 @@ namespace BatchRename
                     To = TextBoxTo.Text
                 }
             };
-            //replace.Clone();            
-            //DimensionChanged?.Invoke(replace);
             if (Global.action == null)
             {
                 Global.action = new List<Action>();
