@@ -109,15 +109,6 @@ namespace BatchRename
         public MainWindow()
         {
             InitializeComponent();
-            _actionlist = new BindingList<ActionMain>
-            {
-                new ActionMain(new ReplaceAction(){ }, new ReplaceControl()),
-                new ActionMain(new NewCaseAction(){ }, new NewCaseControl()),
-                new ActionMain(new FullnameNormalizeAction(){ }, new FullnameNormalizeControl()),
-                new ActionMain(new MoveAction(){ }, new MoveControl()),
-                new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
-            };
-            ActionsListView.ItemsSource = _actionlist;
             var screen = new ReplaceControl();
             screen.DimensionChanged += Screen_DimensionChanged;
 
@@ -133,7 +124,15 @@ namespace BatchRename
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            _actionlist = new BindingList<ActionMain>
+            {
+                new ActionMain(new ReplaceAction(){ }, new ReplaceControl()),
+                new ActionMain(new NewCaseAction(){ }, new NewCaseControl()),
+                new ActionMain(new FullnameNormalizeAction(){ }, new FullnameNormalizeControl()),
+                new ActionMain(new MoveAction(){ }, new MoveControl()),
+                new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
+            };
+            ActionsListView.ItemsSource = _actionlist;
         }
 
         private void BtnAdd_ClickFile(object sender, RoutedEventArgs e)
