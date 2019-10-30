@@ -194,18 +194,13 @@ namespace BatchRename
                 int j = ActionList.Count;
                 for (int i = 0; i < ActionList.Count; i++) 
                 {
-<<<<<<< HEAD
-                    item.Prename = ActionList[i].Operate(item.Name);
-                    //Notify("_filenames");
-=======
                     // cắt extension ra khỏi tên file: abc.txt -> abc
                     item.Name = item.Name.Replace(item.Extension, "");
                     // thực thi action đồng thời gắn extension vô prename
                     item.Prename = ActionList[i].Operate(item.Name) + item.Extension;
                     // gắn lại extension cho tên file
                     item.Name += item.Extension;
->>>>>>> 999a3295482eb1d571cb04fbb946465ba15aa12b
-                    MessageBox.Show(item.Prename);
+                    //MessageBox.Show(item.Prename);
                 }
             }
         }
