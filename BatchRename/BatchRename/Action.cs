@@ -14,5 +14,7 @@ namespace BatchRename
         public abstract String Classname { get; }
 
         public abstract String Description { get; }
+
+        public abstract Action Clone();
     }
 }

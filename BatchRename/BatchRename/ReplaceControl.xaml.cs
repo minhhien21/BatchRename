@@ -19,9 +19,29 @@ namespace BatchRename
     /// </summary>
     public partial class ReplaceControl : Control
     {
+        public delegate void DimensionDelegate(Action newaction);
+        public event DimensionDelegate DimensionChanged = null;
+        ReplaceArgs myArgs;
+        public ReplaceAction replace;
+
         public ReplaceControl()
         {
             InitializeComponent();
+        }
+
+        private void Add_to_list(object sender, RoutedEventArgs e)
+        {
+            var x = TextBoxFrom.Text;
+            replace = new ReplaceAction()
+            {
+                Args = new ReplaceArgs()
+                {
+                    From = TextBoxFrom.Text,
+                    To = TextBoxTo.Text
+                }
+            };
+            replace.Clone();            
+            DimensionChanged?.Invoke(replace);
         }
     }
 }
