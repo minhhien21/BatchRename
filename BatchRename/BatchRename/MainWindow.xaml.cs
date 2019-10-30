@@ -109,15 +109,6 @@ namespace BatchRename
         public MainWindow()
         {
             InitializeComponent();
-
-        }
-
-        BindingList<ActionMain> _actionlist;
-        public List<Action> action = new List<Action>();
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //_buttonitem = ButtonItemDao.GetAll();
             _actionlist = new BindingList<ActionMain>
             {
                 new ActionMain(new ReplaceAction(){ }, new ReplaceControl()),
@@ -127,9 +118,23 @@ namespace BatchRename
                 new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
             };
             ActionsListView.ItemsSource = _actionlist;
+            var screen = new ReplaceControl();
+            screen.DimensionChanged += Screen_DimensionChanged;
 
         }
 
+        private void Screen_DimensionChanged(Action newaction)
+        {
+            ActionList.Add(newaction);
+        }
+
+        BindingList<ActionMain> _actionlist;
+        public List<Action> ActionList = new List<Action>();
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void BtnAdd_ClickFile(object sender, RoutedEventArgs e)
         {
@@ -164,13 +169,15 @@ namespace BatchRename
             fileNameListView.ItemsSource = _filenames;
         }
 
+
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
             foreach(var item in _filenames)
             {
-                for (int i = 0; i < action.Count; i++) 
+                int j = ActionList.Count;
+                for (int i = 0; i < ActionList.Count; i++) 
                 {
-                    item.Prename = action[i].Operate(item.Prename);
+                    item.Prename = ActionList[i].Operate(item.Name);
                 }
             }
         }
@@ -222,13 +229,6 @@ namespace BatchRename
         private void BtnStartPatch_ClickFolder(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void ChooseOptionClick(object sender, SelectionChangedEventArgs e)
-        {
-            //var item = (ListView)sender;
-            //var selectedItem = item.SelectedItem;
-            //MessageBox.Show($"Clicked on: {selectedItem.GetHashCode()}");
         }
 
         private void Button_ShowControl(object sender, RoutedEventArgs e)

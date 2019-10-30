@@ -45,7 +45,7 @@
                 <DockPanel>
                     <Grid x:Name="UserControlGrid" DockPanel.Dock="Bottom" Height="160">
                     </Grid>
-                    <ListView Name="ActionsListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  DockPanel.Dock="Top" SelectionChanged="ChooseOptionClick">
+                    <ListView Name="ActionsListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  DockPanel.Dock="Top">
                         <ListView.Resources>
                             <Style TargetType="ListViewItem">
                                 <Style.Triggers>

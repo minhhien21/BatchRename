@@ -9,10 +9,12 @@ namespace BatchRename
     public abstract class Action
     {
         public abstract string Operate(string origin);
-        public String Args { get; set; }
+        public StringArgs Args { get; set; }
 
         public abstract String Classname { get; }
 
         public abstract String Description { get; }
+
+        public abstract Action Clone();
     }
 }
