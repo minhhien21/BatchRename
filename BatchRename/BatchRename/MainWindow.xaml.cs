@@ -113,7 +113,12 @@ namespace BatchRename
         }
 
         BindingList<ActionMain> _actionlist;
-        public List<Action> action = new List<Action>();
+        class Global
+        {
+            public Action _action { get; set; }
+        }
+
+        public static BindingList<Action> ActionList = new BindingList<Action>();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -168,9 +173,9 @@ namespace BatchRename
         {
             foreach(var item in _filenames)
             {
-                for (int i = 0; i < action.Count; i++) 
+                for (int i = 0; i < ActionList.Count; i++) 
                 {
-                    item.Prename = action[i].Operate(item.Prename);
+                    item.Prename = ActionList[i].Operate(item.Prename);
                 }
             }
         }

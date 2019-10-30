@@ -16,7 +16,7 @@
         <ComboBox Canvas.Left="76" Canvas.Top="79" 
                        Height="25" Width="100">
             <ComboBoxItem Content="Begin"/>
-            <ComboBoxItem Content="end"/>
+            <ComboBoxItem Content="End"/>
         </ComboBox>
         <Button  Width="80" Height="25" 
                 Content="Add to list" Canvas.Left="146" Canvas.Top="118"/>
