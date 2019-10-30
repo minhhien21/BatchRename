@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace BatchRename
 {
-    class MoveAction : Action
+    public class MoveAction : Action
     {
-        string Action.Classname => "Move";
+        public override string Classname => "Move";
 
-        string Action.Description => throw new NotImplementedException();
+        public override string Description => throw new NotImplementedException();
+
+        public override string Operate(string origin)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class MoveArgs : StringArgs
+    {
+
     }
 }

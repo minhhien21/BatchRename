@@ -1,6 +1,0 @@
-﻿5
-Repalce / +
-New case / +
-Fullname normalize / +
-Move / +
-Unique name / +

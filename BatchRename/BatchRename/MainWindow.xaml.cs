@@ -108,60 +108,12 @@ namespace BatchRename
         }
         public MainWindow()
         {
-
-            //MoveControl a = new MoveControl();
-            //ReplaceControl b = new ReplaceControl();
-            //NewCaseControl c = new NewCaseControl();
-            //FullnameNormalizeControl d = new FullnameNormalizeControl();
-            //UniqueNameControl e = new UniqueNameControl();
-            //a.Show();
-            //b.Show();
-            //c.Show();
-            //d.Show();
-            //e.Show();
             InitializeComponent();
 
         }
 
         BindingList<ActionMain> _actionlist;
-        //public class ButtonItem
-        //{
-        //    public string ButtonName { get; set; }
-
-        //    public string CheckName { get; set; }
-
-        //}
-
-        //class ButtonItemDao
-        //{
-        //    /// <summary>
-        //    /// Lấy danh sách button name từ cơ sở dữ liệu
-        //    /// </summary>
-        //    /// <returns></returns>
-        //    public static BindingList<ButtonItem> GetAll()
-        //    {
-        //        BindingList<ButtonItem> result = null;
-        //        var lines = File.ReadAllLines("ButtonName.txt");
-        //        var count = int.Parse(lines[0]);
-        //        if (count > 0)
-        //        {
-        //            result = new BindingList<ButtonItem>();
-        //            const string Separator = " / ";
-        //            for (int i = 0; i < count; i++)
-        //            {
-        //                var tokens = lines[i + 1].Split(new string[]
-        //                    { Separator }, StringSplitOptions.RemoveEmptyEntries);
-        //                var buttonitem = new ButtonItem()
-        //                {
-        //                    ButtonName = tokens[0],
-        //                    CheckName = tokens[1]
-        //                };
-        //                result.Add(buttonitem);
-        //            }
-        //        }
-        //        return result;
-        //    }
-        //}
+        public List<Action> action = new List<Action>();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -214,7 +166,13 @@ namespace BatchRename
 
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
-
+            foreach(var item in _filenames)
+            {
+                for (int i = 0; i < action.Count; i++) 
+                {
+                    item.Prename = action[i].Operate(item.Prename);
+                }
+            }
         }
 
         private void BtnStartBatch_File(object sender, RoutedEventArgs e)

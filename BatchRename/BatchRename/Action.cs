@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace BatchRename
 {
-    public interface Action
+    public abstract class Action
     {
-        String Classname { get; }
+        public abstract string Operate(string origin);
+        public String Args { get; set; }
 
-        String Description { get; }
+        public abstract String Classname { get; }
+
+        public abstract String Description { get; }
     }
 }

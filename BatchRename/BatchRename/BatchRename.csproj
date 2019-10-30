@@ -78,6 +78,7 @@
     <Compile Include="ReplaceControl.xaml.cs">
       <DependentUpon>ReplaceControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StringArgs.cs" />
     <Compile Include="UniqueNameAction.cs" />
     <Compile Include="UniqueNameControl.xaml.cs">
       <DependentUpon>UniqueNameControl.xaml</DependentUpon>
@@ -159,11 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ButtonName.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

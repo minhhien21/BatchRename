@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace BatchRename
 {
-    class UniqueNameAction : Action
+    public class UniqueNameAction : Action
     {
-        string Action.Classname => "Unique Name";
+        public override string Classname => "Unique Name";
 
-        string Action.Description => throw new NotImplementedException();
+        public override string Description => throw new NotImplementedException();
+
+        public override string Operate(string origin)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class UniqueNameArgs : StringArgs
+    {
+
     }
 }
