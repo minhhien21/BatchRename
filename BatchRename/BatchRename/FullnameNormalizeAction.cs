@@ -14,14 +14,19 @@ namespace BatchRename
     {
         public override string Classname => "Fullname Normalize";
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => "Fullname Normalize";
 
         public override Action Clone()
         {
             throw new NotImplementedException();
         }
 
-        public override string Operate(ref string name ,ref string extension)
+        public override string GetStringName()
+        {
+            return "";
+        }
+
+        public override string Operate(string name , string extension)
         {
             throw new NotImplementedException();
         }

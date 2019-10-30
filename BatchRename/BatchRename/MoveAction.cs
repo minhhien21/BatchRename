@@ -15,16 +15,29 @@ namespace BatchRename
 
     public class MoveAction : Action
     {
+
         public override string Classname => "Move";
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => getDescription();
+
+        public string getDescription()
+        {
+            var args = Args as MoveArgs;
+            var result = $"Move {args.length} character(s) from index {args.startAt} to the {args.moveAt}";
+            return result;
+        }
 
         public override Action Clone()
         {
             throw new NotImplementedException();
         }
 
-        public override string Operate(ref string name, ref string extension)
+        public override string GetStringName()
+        {
+            return "";
+        }
+
+        public override string Operate(string name, string extension)
         {
             var args = Args as MoveArgs;
             var startAt = args.startAt;
