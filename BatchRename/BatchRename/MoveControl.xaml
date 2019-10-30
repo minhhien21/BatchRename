@@ -12,15 +12,12 @@
         <TextBox Text="0" Width="100" Canvas.Left="76" Canvas.Top="30"/>
         <TextBlock Text="Length" Canvas.Left="11" Canvas.Top="57"/>
         <TextBox Text="13" Width="100" Canvas.Left="76" Canvas.Top="55"/>
-        <TextBlock Text="Move to" Canvas.Top="95" Canvas.Left="11"/>
-        <ListView x:Name="MainListView" SelectedIndex="0" Height="32"
-                      Width="100" RenderTransformOrigin="0.675,1.12" Canvas.Left="76" Canvas.Top="79" Focusable="False">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Value}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <TextBlock Text="Move to" Canvas.Top="88" Canvas.Left="11"/>
+        <ComboBox Canvas.Left="76" Canvas.Top="79" 
+                       Height="25" Width="100">
+            <ComboBoxItem Content="Begin"/>
+            <ComboBoxItem Content="end"/>
+        </ComboBox>
         <Button  Width="80" Height="25" 
                 Content="Add to list" Canvas.Left="146" Canvas.Top="118"/>
     </Canvas>
