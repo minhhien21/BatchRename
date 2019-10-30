@@ -23,6 +23,7 @@ namespace BatchRename
         public event DimensionDelegate DimensionChanged = null;
         ReplaceArgs myArgs;
         public ReplaceAction replace;
+        
 
         public ReplaceControl()
         {
@@ -41,7 +42,13 @@ namespace BatchRename
                 }
             };
             //replace.Clone();            
-            DimensionChanged?.Invoke(replace);
+            //DimensionChanged?.Invoke(replace);
+            if (Global.action == null)
+            {
+                Global.action = new List<Action>();
+
+            }
+            Global.action.Add(replace);
         }
     }
 }
