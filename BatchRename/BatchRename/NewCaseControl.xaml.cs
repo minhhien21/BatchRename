@@ -19,22 +19,22 @@ namespace BatchRename
     /// </summary>
     public partial class NewCaseControl : Control
     {
-        NewCaseArgs myArgs;
+        //NewCaseArgs myArgs;
         public NewCaseControl()
         {
             InitializeComponent();
-            myArgs.type = 2; //default: FirstUppercase
+            //myArgs.type = 2; //default: FirstUppercase
         }
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
-            var item = newCaseCombobox.SelectedItem as string;
-            if (item == "UpperCase")
-                myArgs.type = 0;
-            else if (item == "LowerCase")
-                myArgs.type = 1;
-            else
-                myArgs.type = 2;
+            //var item = newCaseCombobox.SelectedItem as string;
+            //if (item == "UpperCase")
+            //    myArgs.type = 0;
+            //else if (item == "LowerCase")
+            //    myArgs.type = 1;
+            //else
+            //    myArgs.type = 2;
             
             
             
