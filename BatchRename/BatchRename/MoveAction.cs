@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace BatchRename
 {
+    public class MoveArgs : StringArgs
+    {
+        public int startAt { get; set; }
+        public int length { get; set; }
+        public string moveAt { get; set; }
+    }
+
     public class MoveAction : Action
     {
         public override string Classname => "Move";
@@ -35,11 +42,6 @@ namespace BatchRename
                 return origin + " " + ISBN;
         }
     }
-    public class MoveArgs : StringArgs
-    {
-        public int startAt { get; set; }
-        public int length { get; set; }
-        public string moveAt { get; set; }
-    }
+
 
 }
