@@ -40,7 +40,7 @@ namespace BatchRename
                     To = TextBoxTo.Text
                 }
             };
-            replace.Clone();            
+            //replace.Clone();            
             DimensionChanged?.Invoke(replace);
         }
     }
