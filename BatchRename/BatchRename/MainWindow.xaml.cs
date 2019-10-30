@@ -189,20 +189,18 @@ namespace BatchRename
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
             ActionList = new List<Action>(Global.action);
-            foreach(var item in _filenames)
+            string newName;
+            foreach (var item in _filenames)
             {
-                int j = ActionList.Count;
+                // cắt extension ra khỏi tên file: abc.txt -> abc
+                newName = item.Name.Replace(item.Extension, "");
                 for (int i = 0; i < ActionList.Count; i++) 
-                {
-                    item.Prename = ActionList[i].Operate(item.Name);
-                    //Notify("_filenames");
-                    // cắt extension ra khỏi tên file: abc.txt -> abc
-                    item.Name = item.Name.Replace(item.Extension, "");
+                {            
                     // thực thi action đồng thời gắn extension vô prename
-                    item.Prename = ActionList[i].Operate(item.Name) + item.Extension;
-                    // gắn lại extension cho tên file
-                    item.Name += item.Extension;
-                    MessageBox.Show(item.Prename);
+                    item.Prename = ActionList[i].Operate(newName) + item.Extension;
+                    // cập nhật lại newname mới
+                    newName = item.Prename + item.Extension;
+                    //MessageBox.Show(item.Prename);
                 }
             }
         }
