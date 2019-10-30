@@ -49,7 +49,6 @@ namespace BatchRename
                 Expand = "+";
                 control.Visibility = Visibility.Hidden;
             }
-            //return 1;
         }
     }
 }

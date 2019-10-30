@@ -27,18 +27,38 @@ namespace BatchRename
         BindingList<FileName> _filenames = null;
 
         BindingList<FolderName> _foldernames = null;
+        
 
-        class FolderName
+        class FolderName : INotifyPropertyChanged
         {
             public string Name { get; set; }
-            public string Prename { get; set; }
+            public string prename;
+            public string Prename {
+                get => prename; set
+                {
+                    prename = value;
+                    Notify("Prename");
+                }
+            }
             public string Path { get; set; }
             public string Error { get; set; }
+            public event PropertyChangedEventHandler PropertyChanged;
+            public void Notify(string Prename)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Prename));
+            }
         }
 
         class FileName : FolderName
         {
-            public string Extension { get; set; }
+            public string extension;
+            public string Extension{
+                get => extension; set
+                {
+                    extension = value;
+                    Notify("Extension");
+                }
+            }
         }
 
         class NameDao
@@ -124,6 +144,7 @@ namespace BatchRename
         BindingList<ActionMain> _actionlist;
         public List<Action> ActionList = new List<Action>();
 
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -159,9 +180,11 @@ namespace BatchRename
                 }
             }
             //binding 
+            //Binding binding = new Binding("_filenames");
+            //binding.Source = _filenames;
+            //fileNameListView.SetBinding(ListView.ItemsSourceProperty, binding);
             fileNameListView.ItemsSource = _filenames;
         }
-
 
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
@@ -172,6 +195,7 @@ namespace BatchRename
                 for (int i = 0; i < ActionList.Count; i++) 
                 {
                     item.Prename = ActionList[i].Operate(item.Name);
+                    //Notify("_filenames");
                     MessageBox.Show(item.Prename);
                 }
             }
