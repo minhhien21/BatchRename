@@ -19,9 +19,30 @@ namespace BatchRename
     /// </summary>
     public partial class MoveControl : Control
     {
+        public MoveAction move;
         public MoveControl()
         {
             InitializeComponent();
+        }
+
+        private void Add_to_list(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem typeItem = (ComboBoxItem)moveCombobox.SelectedItem;
+            move = new MoveAction()
+            {
+                Args = new MoveArgs()
+                {
+                    startAt = int.Parse(txtStartAt.Text),
+                    length = int.Parse(txtLength.Text),
+                    moveAt = typeItem.Content.ToString()
+                }
+            };
+            if (Global.action == null)
+            {
+                Global.action = new List<Action>();
+
+            }
+            Global.action.Add(move);
         }
     }
 }

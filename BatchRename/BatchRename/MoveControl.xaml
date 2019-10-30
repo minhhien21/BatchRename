@@ -9,16 +9,16 @@
     <Canvas Background="AliceBlue">
         <TextBlock Text="Move" FontWeight="Bold" Canvas.Left="10" Canvas.Top="10"/>
         <TextBlock Text="Start at" Canvas.Left="11" Canvas.Top="32" />
-        <TextBox Text="0" Width="100" Canvas.Left="76" Canvas.Top="30"/>
+        <TextBox Name="txtStartAt" Text="0" Width="100" Canvas.Left="76" Canvas.Top="30"/>
         <TextBlock Text="Length" Canvas.Left="11" Canvas.Top="57"/>
-        <TextBox Text="13" Width="100" Canvas.Left="76" Canvas.Top="55"/>
+        <TextBox Name="txtLength" Text="13" Width="100" Canvas.Left="76" Canvas.Top="55"/>
         <TextBlock Text="Move to" Canvas.Top="88" Canvas.Left="11"/>
-        <ComboBox Canvas.Left="76" Canvas.Top="79" 
+        <ComboBox Name="moveCombobox" Canvas.Left="76" Canvas.Top="79" 
                        Height="25" Width="100">
             <ComboBoxItem Content="Begin"/>
             <ComboBoxItem Content="End"/>
         </ComboBox>
-        <Button  Width="80" Height="25" 
+        <Button  Width="80" Height="25" Click="Add_to_list"
                 Content="Add to list" Canvas.Left="146" Canvas.Top="118"/>
     </Canvas>
 </local:Control>

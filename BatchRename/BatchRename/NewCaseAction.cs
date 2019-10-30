@@ -9,7 +9,7 @@ namespace BatchRename
 {
     public class NewCaseArgs : StringArgs
     {
-        public int type { get; set; }
+        public string type { get; set; }
     }
     public class NewCaseAction : Action
     {
@@ -26,13 +26,13 @@ namespace BatchRename
         {
             var args = Args as NewCaseArgs;
             var type = args.type;
-
+            
             // Creates a TextInfo based on the "en-US" culture.
             TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
 
-            if (type == 0)
+            if (type == "UpperCase")
                 return myTI.ToUpper(origin);
-            else if (type == 1)
+            else if (type == "LowerCase")
                 return myTI.ToLower(origin);
             else
                 return myTI.ToTitleCase(origin);
