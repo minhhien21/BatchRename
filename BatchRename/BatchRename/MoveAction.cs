@@ -18,9 +18,9 @@ namespace BatchRename
 
         public override string Classname => "Move";
 
-        public override string Description => getDescription();
+        public override string Description => GetDescription();
 
-        public string getDescription()
+        public string GetDescription()
         {
             var args = Args as MoveArgs;
             var result = $"Move {args.length} character(s) from index {args.startAt} to the {args.moveAt}";

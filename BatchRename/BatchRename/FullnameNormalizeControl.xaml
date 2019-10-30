@@ -11,7 +11,7 @@
         <ComboBox Height="25" Canvas.Left="10" Canvas.Top="36" Width="122">
             <ComboBoxItem Content="Fullname normalize"/>
         </ComboBox>
-        <Button  Width="80" Height="25" 
+        <Button  Width="80" Height="25" Click="Add_to_list"
                 Content="Add to list" Canvas.Left="146" Canvas.Top="118"/>
     </Canvas>
 </local:Control>

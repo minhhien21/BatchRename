@@ -23,5 +23,10 @@ namespace BatchRename
         {
             InitializeComponent();
         }
+
+        private void Add_to_list(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
