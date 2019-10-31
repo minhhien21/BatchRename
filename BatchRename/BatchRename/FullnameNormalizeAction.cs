@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
-
+using System.Text.RegularExpressions;
 namespace BatchRename
 {
     public class FullnameNormalizeArgs : StringArgs
@@ -15,14 +15,19 @@ namespace BatchRename
     {
         public override string Classname => "Fullname Normalize";
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => "Fullname Normalize";
 
         public override Action Clone()
         {
             throw new NotImplementedException();
         }
 
-        public override string Operate(ref string name ,ref string extension)
+        public override string GetStringName()
+        {
+            return "";
+        }
+
+        public override string Operate(string name , string extension)
         {
             var args = Args as FullnameNormalizeArgs;
             var choosenOption = args.option;
@@ -37,7 +42,10 @@ namespace BatchRename
                 return result;
             }
             else
+            {
+                result = Regex.Replace(name, @"\s+", " ");
                 return result;
+            }
         }
     }
 

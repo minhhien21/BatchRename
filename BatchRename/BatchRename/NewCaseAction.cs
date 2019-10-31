@@ -15,14 +15,25 @@ namespace BatchRename
     {
         public override string Classname => "New Case";
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => getDescription();
+
+        public string getDescription()
+        {
+            var args = Args as NewCaseArgs;
+            return $"Make string {args.type}";
+        }
 
         public override Action Clone()
         {
             throw new NotImplementedException();
         }
 
-        public override string Operate(ref string name, ref string extension)
+        public override string GetStringName()
+        {
+            return "";
+        }
+
+        public override string Operate(string name, string extension)
         {
             var args = Args as NewCaseArgs;
             var type = args.type;
@@ -31,20 +42,11 @@ namespace BatchRename
             TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
 
             if (type == "UpperCase")
-            {
-                name = myTI.ToUpper(name);
-                return name;
-            }
+                return myTI.ToUpper(name);
             else if (type == "LowerCase")
-            {
-                name = myTI.ToLower(name);
-                return name;
-            }
+                return myTI.ToLower(name);
             else
-            {
-                name = myTI.ToTitleCase(name);
-                return name;
-            }
+                return myTI.ToTitleCase(name);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace BatchRename
     /// </summary>
     public partial class ReplaceControl : Control
     {
+        public delegate void DimensionDelegate(Action action);
+        public event DimensionDelegate DimensionChanged = null;
+
+
         public ReplaceAction replace;
         public ReplaceControl()
         {
@@ -42,8 +47,11 @@ namespace BatchRename
                 if (Global.action == null)
                 {
                     Global.action = new List<Action>();
+                    Global.addlist = new BindingList<Action>();
                 }
                 Global.action.Add(replace);
+                Global.addlist.Add(replace);
+                DimensionChanged?.Invoke(replace);
             }
             else
             {

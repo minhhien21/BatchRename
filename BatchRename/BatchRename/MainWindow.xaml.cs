@@ -137,12 +137,13 @@ namespace BatchRename
                 new ActionMain(new MoveAction(){ }, new MoveControl()),
                 new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
             };
-            ActionsListView.ItemsSource = _actionlist;
+            ActionsListView.ItemsSource = _actionlist;            
 
         }
 
         BindingList<ActionMain> _actionlist;
-        public List<Action> ActionList = new List<Action>();
+        BindingList<Action> _addlist = new BindingList<Action>();
+        List<Action> ActionList = new List<Action>();
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -188,34 +189,44 @@ namespace BatchRename
 
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
-            ActionList = new List<Action>(Global.action);
-            foreach (var item in _filenames)
+            if (Global.action != null)
             {
-                // cắt extension ra khỏi tên file: abc.txt -> abc
-                var oldName = item.Name.Replace(item.Extension, "");
-                var newName = oldName;
-                var oldExtension = item.Extension.Replace(".", "");
-                var newExtension = oldExtension;
-                
-                for (int i = 0; i < ActionList.Count; i++) 
+                ActionList = new List<Action>(Global.action);
+            }
+            if (Global.addlist != null)
+            {
+                _addlist = new BindingList<Action>(Global.addlist);
+            }
+            AddlistListView.ItemsSource = _addlist;
+            if (_filenames != null)
+            {
+                foreach (var item in _filenames)
                 {
-                    // thực thi action vô prename
-                    var changeName = ActionList[i].Operate(ref newName,ref newExtension);
-                    // cập nhật lại newName mới nếu có sự thay đổi
-                    if (newName != oldName)
+                    // cắt extension ra khỏi tên file: abc.txt -> abc và txt
+                    var newName = item.Name.Replace(item.Extension, "");
+                    var newExtension = item.Extension.Replace(".", "");
+
+                    for (int i = 0; i < ActionList.Count; i++)
                     {
-                        newName = changeName;
-                        oldName = changeName;
+                        // thực thi action vô prename
+                        var changeName = ActionList[i].Operate(newName, newExtension);
+                        var x = ActionList[i].GetStringName();
+                        // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
+                        if (ActionList[i].GetStringName() == "Extension")
+                        {
+                            // cập nhật lại newName mới nếu có sự thay đổi
+                            newExtension = changeName;
+                        }
+                        else
+                        {
+                            // cập nhật lại newExtension mới nếu có sự thay đổi
+                            newName = changeName;
+                        }
+
+                        //MessageBox.Show(item.Prename);
                     }
-                    // cập nhật lại newExtension mới nếu có sự thay đổi
-                    if (newExtension != oldExtension)
-                    {
-                        newExtension = changeName;
-                        oldExtension = changeName;
-                    }
-                    //MessageBox.Show(item.Prename);
+                    item.Prename = newName + "." + newExtension;
                 }
-                item.Prename = newName + "." + newExtension;
             }
         }
 
@@ -279,6 +290,7 @@ namespace BatchRename
             ActionMain actionMain = ActionsListView.SelectedItem as ActionMain;
             UserControlGrid.Children.Remove(actionMain.control);
             UserControlGrid.Children.Add(actionMain.control);
+
         }
     }
 }

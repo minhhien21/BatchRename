@@ -9,15 +9,18 @@
     <Canvas>
         <TextBlock Text="Fullname normalize" FontWeight="Bold" Canvas.Left="10" Canvas.Top="10"/>
         <ComboBox Height="25" Name="normalizefullnameCombobox"
-                  Canvas.Left="10" Canvas.Top="36" Width="168"
+                  Canvas.Left="10" Canvas.Top="36" Width="170"
                   >
             <ComboBoxItem Content="No space at two endings"/>
             <ComboBoxItem Content="Capitalize first letter"/>
-            <ComboBoxItem Content="No space between two words"/>
+            <ComboBoxItem Content="No extra spaces among words"/>
         </ComboBox>
+
         <Button  Width="80" Height="25" 
                 Content="Add to list" 
                 Click="Add_to_list"
                 Canvas.Left="146" Canvas.Top="118"/>
+        <Button  Width="80" Height="25" Click="Add_to_list"
+                Content="Add to list" Canvas.Left="146" Canvas.Top="118"/>
     </Canvas>
 </local:Control>

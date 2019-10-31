@@ -17,7 +17,15 @@ namespace BatchRename
     {
         public override string Classname => "Replace";
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => GetDesciption();
+
+        public string GetDesciption()
+        {
+            var args = Args as ReplaceArgs;
+            return $"Replace '{args.From}' to '{args.To}' in '{args.StringChange}'";
+        }
+
+        public string StringChange { get; set; }
 
         public override Action Clone()
         {
@@ -33,7 +41,12 @@ namespace BatchRename
             };
         }
 
-        public override string Operate(ref string name, ref string extension)
+        public override string GetStringName()
+        {
+            return StringChange;
+        }
+
+        public override string Operate(string name, string extension)
         {
             var args = Args as ReplaceArgs;
             var from = args.From;
@@ -41,13 +54,13 @@ namespace BatchRename
             var stringchange = args.StringChange;
             if (stringchange == "Name")
             {
-                name = name.Replace(from, to);
-                return name;
+                this.StringChange = "Name";
+                return name.Replace(from, to);
             }
             else
             {
-                extension = extension.Replace(from, to);
-                return extension;
+                this.StringChange = "Extension";
+                return extension.Replace(from, to);
             }
         }
     }
