@@ -10,7 +10,7 @@
     <DockPanel>
         <StackPanel  DockPanel.Dock="Top" Height="60">
             <StackPanel Orientation="Horizontal">
-                <Button Width="100" Height="40">
+                <Button Width="100" Height="40" Click="refresh_Clicked">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Image/refresh.png"/>
                         <TextBlock Text="Refersh" VerticalAlignment="Center"/>

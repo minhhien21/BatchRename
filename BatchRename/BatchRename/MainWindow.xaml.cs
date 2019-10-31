@@ -266,5 +266,16 @@ namespace BatchRename
             UserControlGrid.Children.Remove(actionMain.control);
             UserControlGrid.Children.Add(actionMain.control);
         }
+
+        private void refresh_Clicked(object sender, RoutedEventArgs e)
+        {
+            _filenames = null;
+
+            _foldernames = null;
+
+            _actionlist = null;
+
+            Global.action = null;
+        }
     }
 }
