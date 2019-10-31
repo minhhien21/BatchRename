@@ -28,23 +28,31 @@ namespace BatchRename
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
-            ComboBoxItem typeItem = (ComboBoxItem)CbbApplyTo.SelectedItem;
-            replace = new ReplaceAction()
+            var from = TextBoxFrom.Text;
+            if (from != "")
             {
-                Args = new ReplaceArgs()
+                ComboBoxItem typeItem = (ComboBoxItem)CbbApplyTo.SelectedItem;
+                replace = new ReplaceAction()
                 {
-                    From = TextBoxFrom.Text,
-                    To = TextBoxTo.Text,
-                    StringChange = typeItem.Content.ToString()
+                    Args = new ReplaceArgs()
+                    {
+                        From = TextBoxFrom.Text,
+                        To = TextBoxTo.Text,
+                        StringChange = typeItem.Content.ToString()
+                    }
+                };
+                if (Global.action == null)
+                {
+                    Global.action = new BindingList<Action>();
                 }
-            };
-            if (Global.action == null)
-            {
-                Global.action = new BindingList<Action>();
+                Global.action.Add(replace);
+
+                FireDimensionChangedEvent(Global.action);
             }
-            Global.action.Add(replace);
-            
-            FireDimensionChangedEvent(Global.arguments);
+            else
+            {
+                MessageBox.Show("Ô From không được để trống");
+            }
         }
     }
 }

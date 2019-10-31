@@ -117,10 +117,10 @@
                     <ListView Name="AddlistListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <CheckBox HorizontalAlignment="Right" Margin="210,0,0,0"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox/>
                                     <TextBlock Text="{Binding Description}"/>
-                                </Grid>
+                                </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

@@ -10,6 +10,6 @@ namespace BatchRename
     public class Global
     {
         public static BindingList<Action> action = null;
-        public static List<string> arguments = null;
+        //public static List<string> arguments = null;
     }
 }
