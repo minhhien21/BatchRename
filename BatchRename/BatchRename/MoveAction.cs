@@ -45,6 +45,9 @@ namespace BatchRename
             var moveAt = args.moveAt;
             var ISBN = "";
 
+            if (name.Length < startAt + length)
+                return name; //không thực hiện
+
             ISBN = name.Substring(startAt, length);// lấy chuỗi ISBN tại vị trí startAt với độ dài Length
 
             name = name.Replace(ISBN, "").Trim();// xóa khoảng trắng thừa ở đầu hoặc cuối
