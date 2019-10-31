@@ -9,6 +9,14 @@ namespace BatchRename
 {
     public abstract class Control: UserControl
     {
+        //private List<string> arguments;
+
+        public delegate void DimensionDelegate(List<string> arguments);
+        public event DimensionDelegate DimensionChanged = null;
+        public void FireDimensionChangedEvent(List<string> arguments)
+        {
+            DimensionChanged?.Invoke(Global.arguments);
+        }
         virtual public void Clear() { }
     }
 }

@@ -142,8 +142,8 @@ namespace BatchRename
         }
 
         BindingList<ActionMain> _actionlist;
-        BindingList<Action> _addlist = new BindingList<Action>();
-        List<Action> ActionList = new List<Action>();
+        //BindingList<Action> _addlist = new BindingList<Action>();
+        BindingList<Action> ActionList = new BindingList<Action>();
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -191,11 +191,12 @@ namespace BatchRename
         {
             if (Global.action != null)
             {
-                ActionList = new List<Action>(Global.action);
-                _addlist = new BindingList<Action>(Global.action);
+                ActionList = new BindingList<Action>(Global.action);
+                //_addlist = new BindingList<Action>(Global.action);
             }
 
-            AddlistListView.ItemsSource = _addlist;
+            //AddlistListView.ItemsSource = ActionList;
+            AddlistListView.ItemsSource = Global.action;
             if (_filenames != null)
             {
                 foreach (var item in _filenames)
@@ -293,13 +294,21 @@ namespace BatchRename
 
         private void refresh_Clicked(object sender, RoutedEventArgs e)
         {
-            _filenames = null;
-
-            _foldernames = null;
-
-            _actionlist = null;
-
-            Global.action = null;
+            if (_filenames != null)
+            {
+                _filenames.Clear();
+            }
+            if (_foldernames != null)
+            {
+                _foldernames.Clear();
+            }
+            //if (_actionlist != null)
+            //{
+            //    _actionlist.Clear();
+            //}
+            ActionList = new BindingList<Action>();
+            AddlistListView.ItemsSource = ActionList;
+            Global.action = new BindingList<Action>();
         }
     }
 }

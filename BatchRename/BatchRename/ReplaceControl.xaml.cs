@@ -20,10 +20,6 @@ namespace BatchRename
     /// </summary>
     public partial class ReplaceControl : Control
     {
-        //public delegate void DimensionDelegate(Action action);
-        //public event DimensionDelegate DimensionChanged = null;
-
-
         public ReplaceAction replace;
         public ReplaceControl()
         {
@@ -47,17 +43,8 @@ namespace BatchRename
                 Global.action = new BindingList<Action>();
             }
             Global.action.Add(replace);
-
-
-            //this.Visibility = Visibility.Hidden;
-            //ActionMain action = new ActionMain(replace, this);
-            //ActionMain.count = 0;
-
-            //action.Expand = "+";
-            //ActionMain.expand = "+";
-            //action.Notify("Expand");
-            //DimensionChanged?.Invoke(replace);
-
+            
+            FireDimensionChangedEvent(Global.arguments);
         }
     }
 }
