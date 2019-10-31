@@ -8,10 +8,16 @@
         d:DesignHeight="160" d:DesignWidth="250" Background="AliceBlue">
     <Canvas>
         <TextBlock Text="Unique Name" FontWeight="Bold" Canvas.Left="10" Canvas.Top="10"/>
-        <ComboBox Height="25" Canvas.Left="10" Canvas.Top="36" Width="148">
+        <ComboBox Height="25" Width="148"
+                  Name="uniquenameCombobox"
+                  Canvas.Left="10" Canvas.Top="36" >
             <ComboBoxItem Content="Change to UniqueName"/>
         </ComboBox>
-        <Button  Width="80" Height="25" Click="Add_to_list"
-                Content="Add to list" Canvas.Left="146" Canvas.Top="118"/>
+        <Button  Width="80" Height="25"
+                 Click="Add_to_list"
+              
+                 Content="Add to list"
+                 Canvas.Left="146" Canvas.Top="118"
+                 />
     </Canvas>
 </local:Control>

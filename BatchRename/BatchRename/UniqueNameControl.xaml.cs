@@ -19,6 +19,7 @@ namespace BatchRename
     /// </summary>
     public partial class UniqueNameControl : Control
     {
+        public UniqueNameAction changetoUniqueName;
         public UniqueNameControl()
         {
             InitializeComponent();
@@ -26,6 +27,22 @@ namespace BatchRename
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
+            ComboBoxItem selectedItem = (ComboBoxItem)uniquenameCombobox.SelectedItem;
+            changetoUniqueName = new UniqueNameAction()
+            {
+                Args = new UniqueNameArgs()
+                {
+                    option = selectedItem.Content.ToString()
+                }
+            };
+
+            if (Global.action == null)
+            {
+                Global.action = new List<Action>();
+
+            }
+            Global.action.Add(changetoUniqueName);
+
 
         }
     }
