@@ -26,14 +26,14 @@ namespace BatchRename
         {
             var args = Args as FullnameNormalizeArgs;
             var choosenOption = args.option;
-            var result = origin;
+            var result = name;
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
 
             if (choosenOption == "No space at two endings")
                 return result.Trim();
             else if (choosenOption == "Capitalize first letter")
             {
-                result = textInfo.ToTitleCase(origin);
+                result = textInfo.ToTitleCase(name);
                 return result;
             }
             else
