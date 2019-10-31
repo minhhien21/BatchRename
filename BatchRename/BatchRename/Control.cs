@@ -17,6 +17,6 @@ namespace BatchRename
         {
             DimensionChanged?.Invoke(Global.arguments);
         }
-        virtual public void Clear() { }
+        
     }
 }

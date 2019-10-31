@@ -77,10 +77,26 @@
                 </TabItem.HeaderTemplate>
                 <DockPanel LastChildFill="True">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <Button Height="20">A</Button>
-                        <Button Height="20">B</Button>
-                        <Button Height="20">C</Button>
-                        <Button Height="20">D</Button>
+                        <Button Height="20" Click="upall_Clicked">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/upall.png"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Height="20" Click="up_Clicked">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/up.png"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Height="20" Click="downall_Clicked">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/downall.png"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Height="20" Click="down_Clicked">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Image/down.png"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="40" HorizontalAlignment="Right"
                                        VerticalAlignment="Bottom"
@@ -101,7 +117,10 @@
                     <ListView Name="AddlistListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Description}"/>
+                                <Grid>
+                                    <CheckBox HorizontalAlignment="Right" Margin="210,0,0,0"/>
+                                    <TextBlock Text="{Binding Description}"/>
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

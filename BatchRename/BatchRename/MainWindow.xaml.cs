@@ -310,5 +310,30 @@ namespace BatchRename
             AddlistListView.ItemsSource = ActionList;
             Global.action = new BindingList<Action>();
         }
+
+        private void up_Clicked(object sender, RoutedEventArgs e)
+        {
+            var select = AddlistListView.SelectedItem; 
+            if(select != null)
+            {
+
+            }
+
+        }
+
+        private void upall_Clicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void down_Clicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void downall_Clicked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
