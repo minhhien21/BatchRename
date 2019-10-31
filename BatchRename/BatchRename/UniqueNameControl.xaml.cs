@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace BatchRename
 
             if (Global.action == null)
             {
-                Global.action = new List<Action>();
+                Global.action = new BindingList<Action>();
 
             }
             Global.action.Add(changetoUniqueName);

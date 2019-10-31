@@ -13,8 +13,8 @@ namespace BatchRename
         private Action action { get; }
         public Control control { get; }
         public string ClassName => action.Classname;
-        private string expand;
-        private int count { get; set; }
+        public string expand { get; set; }
+        public int count { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ActionMain(Action action, Control control)

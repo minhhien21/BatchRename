@@ -192,11 +192,9 @@ namespace BatchRename
             if (Global.action != null)
             {
                 ActionList = new List<Action>(Global.action);
+                _addlist = new BindingList<Action>(Global.action);
             }
-            if (Global.addlist != null)
-            {
-                _addlist = new BindingList<Action>(Global.addlist);
-            }
+
             AddlistListView.ItemsSource = _addlist;
             if (_filenames != null)
             {

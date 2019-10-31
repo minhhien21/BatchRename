@@ -9,7 +9,7 @@
     <Canvas>
         <TextBlock Text="NewCase" FontWeight="Bold" Canvas.Left="10" Canvas.Top="10"/>
         <ComboBox Name="newCaseCombobox" Height="25" Canvas.Left="10" Canvas.Top="37" Width="123">
-            <ComboBoxItem Content="UpperCase"/>
+            <ComboBoxItem Content="UpperCase" IsSelected="True"/>
             <ComboBoxItem Content="LowerCase"/>
             <ComboBoxItem Content="FirstUppercase"/>
         </ComboBox>

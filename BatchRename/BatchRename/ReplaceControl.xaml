@@ -13,7 +13,7 @@
         <TextBox Name="TextBoxFrom" Width="90" Height="22" Canvas.Left="10" Canvas.Top="50"/>
         <TextBlock Text="Apply to" Canvas.Left="139" Canvas.Top="27"/>
         <ComboBox Name="CbbApplyTo" Width="94" Canvas.Left="139" Canvas.Top="49">
-            <ComboBoxItem Content="Name"/>
+            <ComboBoxItem Content="Name" IsSelected="True"/>
             <ComboBoxItem Content="Extension"/>
         </ComboBox>
         <TextBlock Text="To" Canvas.Left="10" Canvas.Top="87" RenderTransformOrigin="-1.032,-0.129"/>

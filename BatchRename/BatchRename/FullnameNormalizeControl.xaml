@@ -11,7 +11,7 @@
         <ComboBox Height="25" Name="normalizefullnameCombobox"
                   Canvas.Left="10" Canvas.Top="36" Width="170"
                   >
-            <ComboBoxItem Content="No space at two endings"/>
+            <ComboBoxItem Content="No space at two endings" IsSelected="True"/>
             <ComboBoxItem Content="Capitalize first letter"/>
             <ComboBoxItem Content="No extra spaces among words"/>
         </ComboBox>

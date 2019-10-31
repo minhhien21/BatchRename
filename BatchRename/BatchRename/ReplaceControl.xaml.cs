@@ -20,8 +20,8 @@ namespace BatchRename
     /// </summary>
     public partial class ReplaceControl : Control
     {
-        public delegate void DimensionDelegate(Action action);
-        public event DimensionDelegate DimensionChanged = null;
+        //public delegate void DimensionDelegate(Action action);
+        //public event DimensionDelegate DimensionChanged = null;
 
 
         public ReplaceAction replace;
@@ -32,31 +32,32 @@ namespace BatchRename
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
-            if (CbbApplyTo.SelectedIndex > -1)
+            ComboBoxItem typeItem = (ComboBoxItem)CbbApplyTo.SelectedItem;
+            replace = new ReplaceAction()
             {
-                ComboBoxItem typeItem = (ComboBoxItem)CbbApplyTo.SelectedItem;
-                replace = new ReplaceAction()
+                Args = new ReplaceArgs()
                 {
-                    Args = new ReplaceArgs()
-                    {
-                        From = TextBoxFrom.Text,
-                        To = TextBoxTo.Text,
-                        StringChange = typeItem.Content.ToString()
-                    }
-                };
-                if (Global.action == null)
-                {
-                    Global.action = new List<Action>();
-                    Global.addlist = new BindingList<Action>();
+                    From = TextBoxFrom.Text,
+                    To = TextBoxTo.Text,
+                    StringChange = typeItem.Content.ToString()
                 }
-                Global.action.Add(replace);
-                Global.addlist.Add(replace);
-                DimensionChanged?.Invoke(replace);
-            }
-            else
+            };
+            if (Global.action == null)
             {
-                MessageBox.Show("Ban chua setting");
+                Global.action = new BindingList<Action>();
             }
+            Global.action.Add(replace);
+
+
+            //this.Visibility = Visibility.Hidden;
+            //ActionMain action = new ActionMain(replace, this);
+            //ActionMain.count = 0;
+
+            //action.Expand = "+";
+            //ActionMain.expand = "+";
+            //action.Notify("Expand");
+            //DimensionChanged?.Invoke(replace);
+
         }
     }
 }

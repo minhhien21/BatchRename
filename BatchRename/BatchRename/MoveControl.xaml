@@ -15,7 +15,7 @@
         <TextBlock Text="Move to" Canvas.Top="88" Canvas.Left="11"/>
         <ComboBox Name="moveCombobox" Canvas.Left="76" Canvas.Top="79" 
                        Height="25" Width="100">
-            <ComboBoxItem Content="Begin"/>
+            <ComboBoxItem Content="Begin" IsSelected="True"/>
             <ComboBoxItem Content="End"/>
         </ComboBox>
         <Button  Width="80" Height="25" Click="Add_to_list"

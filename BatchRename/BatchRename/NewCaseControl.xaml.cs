@@ -38,11 +38,9 @@ namespace BatchRename
             };
             if (Global.action == null)
             {
-                Global.action = new List<Action>();
-                Global.addlist = new BindingList<Action>();
+                Global.action = new BindingList<Action>();
             }
             Global.action.Add(newCase);
-            Global.addlist.Add(newCase);
         }
     }
 }

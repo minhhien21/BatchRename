@@ -9,5 +9,6 @@ namespace BatchRename
 {
     public abstract class Control: UserControl
     {
+        virtual public void Clear() { }
     }
 }
