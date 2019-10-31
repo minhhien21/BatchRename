@@ -8,6 +8,7 @@ namespace BatchRename
 {
     public class UniqueNameArgs : StringArgs
     {
+        public string option { get; set; }
 
     }
     public class UniqueNameAction : Action
@@ -28,7 +29,9 @@ namespace BatchRename
 
         public override string Operate(string name, string extension)
         {
-            throw new NotImplementedException();
+            Guid id = Guid.NewGuid();
+            name = id.ToString();
+            return name;
         }
     }
 
