@@ -14,14 +14,19 @@ namespace BatchRename
     {
         public override string Classname => "Unique Name";
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => "Unique Name";
 
         public override Action Clone()
         {
             throw new NotImplementedException();
         }
 
-        public override string Operate(string origin)
+        public override string GetStringName()
+        {
+            return "";
+        }
+
+        public override string Operate(string name, string extension)
         {
             throw new NotImplementedException();
         }

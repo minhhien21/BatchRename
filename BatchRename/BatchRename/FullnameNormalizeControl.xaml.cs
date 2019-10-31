@@ -19,9 +19,29 @@ namespace BatchRename
     /// </summary>
     public partial class FullnameNormalizeControl : Control
     {
+        public FullnameNormalizeAction normalizeFullFileName;
         public FullnameNormalizeControl()
         {
             InitializeComponent();
+        }
+
+        private void Add_to_list(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem selectedItem = (ComboBoxItem)normalizefullnameCombobox.SelectedItem;
+            normalizeFullFileName = new FullnameNormalizeAction()
+            {
+                Args = new FullnameNormalizeArgs()
+                {
+                    option = selectedItem.Content.ToString()
+                }
+
+            };
+            if (Global.action == null)
+            {
+                Global.action = new List<Action>();
+
+            }
+            Global.action.Add(normalizeFullFileName);
         }
     }
 }

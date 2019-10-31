@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace BatchRename
     /// </summary>
     public partial class ReplaceControl : Control
     {
+        public delegate void DimensionDelegate(Action action);
+        public event DimensionDelegate DimensionChanged = null;
+
+
         public ReplaceAction replace;
         public ReplaceControl()
         {
@@ -27,20 +32,31 @@ namespace BatchRename
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
-            replace = new ReplaceAction()
+            if (CbbApplyTo.SelectedIndex > -1)
             {
-                Args = new ReplaceArgs()
+                ComboBoxItem typeItem = (ComboBoxItem)CbbApplyTo.SelectedItem;
+                replace = new ReplaceAction()
                 {
-                    From = TextBoxFrom.Text,
-                    To = TextBoxTo.Text
+                    Args = new ReplaceArgs()
+                    {
+                        From = TextBoxFrom.Text,
+                        To = TextBoxTo.Text,
+                        StringChange = typeItem.Content.ToString()
+                    }
+                };
+                if (Global.action == null)
+                {
+                    Global.action = new List<Action>();
+                    Global.addlist = new BindingList<Action>();
                 }
-            };
-            if (Global.action == null)
-            {
-                Global.action = new List<Action>();
-
+                Global.action.Add(replace);
+                Global.addlist.Add(replace);
+                DimensionChanged?.Invoke(replace);
             }
-            Global.action.Add(replace);
+            else
+            {
+                MessageBox.Show("Ban chua setting");
+            }
         }
     }
 }

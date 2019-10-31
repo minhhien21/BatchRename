@@ -8,7 +8,10 @@ namespace BatchRename
 {
     public abstract class Action
     {
-        public abstract string Operate(string origin);
+        public abstract string Operate(string Name, string extension);
+
+        public abstract string GetStringName();
+
         public StringArgs Args { get; set; }
 
         public abstract String Classname { get; }

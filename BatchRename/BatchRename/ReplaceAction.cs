@@ -10,13 +10,22 @@ namespace BatchRename
     {
         public string From { get; set; }
         public string To { get; set; }
+        public string StringChange { get; set; }
     }
 
     public class ReplaceAction : Action
     {
         public override string Classname => "Replace";
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => GetDesciption();
+
+        public string GetDesciption()
+        {
+            var args = Args as ReplaceArgs;
+            return $"Replace '{args.From}' to '{args.To}' in '{args.StringChange}'";
+        }
+
+        public string StringChange { get; set; }
 
         public override Action Clone()
         {
@@ -26,17 +35,33 @@ namespace BatchRename
                 Args = new ReplaceArgs()
                 {
                     From = oldArgs.From,
-                    To = oldArgs.To
+                    To = oldArgs.To,
+                    StringChange = oldArgs.StringChange
                 }
             };
         }
 
-        public override string Operate(string origin)
+        public override string GetStringName()
+        {
+            return StringChange;
+        }
+
+        public override string Operate(string name, string extension)
         {
             var args = Args as ReplaceArgs;
             var from = args.From;
             var to = args.To;
-            return origin.Replace(from, to);
+            var stringchange = args.StringChange;
+            if (stringchange == "Name")
+            {
+                this.StringChange = "Name";
+                return name.Replace(from, to);
+            }
+            else
+            {
+                this.StringChange = "Extension";
+                return extension.Replace(from, to);
+            }
         }
     }
 }

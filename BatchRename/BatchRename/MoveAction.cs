@@ -15,16 +15,29 @@ namespace BatchRename
 
     public class MoveAction : Action
     {
+
         public override string Classname => "Move";
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => GetDescription();
+
+        public string GetDescription()
+        {
+            var args = Args as MoveArgs;
+            var result = $"Move {args.length} character(s) from index {args.startAt} to the {args.moveAt}";
+            return result;
+        }
 
         public override Action Clone()
         {
             throw new NotImplementedException();
         }
 
-        public override string Operate(string origin)
+        public override string GetStringName()
+        {
+            return "";
+        }
+
+        public override string Operate(string name, string extension)
         {
             var args = Args as MoveArgs;
             var startAt = args.startAt;
@@ -32,14 +45,14 @@ namespace BatchRename
             var moveAt = args.moveAt;
             var ISBN = "";
 
-            ISBN = origin.Substring(startAt, length);// lấy chuỗi ISBN tại vị trí startAt với độ dài Length
+            ISBN = name.Substring(startAt, length);// lấy chuỗi ISBN tại vị trí startAt với độ dài Length
 
-            origin = origin.Replace(ISBN, "").Trim();// xóa khoảng trắng thừa ở đầu hoặc cuối
+            name = name.Replace(ISBN, "").Trim();// xóa khoảng trắng thừa ở đầu hoặc cuối
 
-            if (moveAt == "begin")
-                return ISBN + " " + origin;
+            if (moveAt == "Begin")
+                return ISBN + " " + name;
             else
-                return origin + " " + ISBN;
+                return name + " " + ISBN;
         }
     }
 
