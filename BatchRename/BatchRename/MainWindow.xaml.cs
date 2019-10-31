@@ -310,5 +310,13 @@ namespace BatchRename
             AddlistListView.ItemsSource = ActionList;
             Global.action = new BindingList<Action>();
         }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl)
+            {
+                AddlistListView.ItemsSource = Global.action;
+            }
+        }
     }
 }

@@ -43,6 +43,9 @@ namespace BatchRename
 
             }
             Global.action.Add(normalizeFullFileName);
+
+
+
         }
     }
 }
