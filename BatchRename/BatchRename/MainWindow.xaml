@@ -26,7 +26,7 @@
             </StackPanel>
         </StackPanel>
 
-        <TabControl DockPanel.Dock="Left" Margin="0,0,30,0" Width="250">
+        <TabControl DockPanel.Dock="Left" Margin="0,0,30,0" Width="250" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Height="40" Width="100">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>

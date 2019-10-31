@@ -311,6 +311,7 @@ namespace BatchRename
             Global.action = new BindingList<Action>();
         }
 
+<<<<<<< HEAD
         private void up_Clicked(object sender, RoutedEventArgs e)
         {
             var select = AddlistListView.SelectedItem; 
@@ -334,6 +335,14 @@ namespace BatchRename
         private void downall_Clicked(object sender, RoutedEventArgs e)
         {
 
+=======
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is TabControl)
+            {
+                AddlistListView.ItemsSource = Global.action;
+            }
+>>>>>>> 8a47ec3e9dbc0799d4d1541d4e3b515b2fd9c775
         }
     }
 }
