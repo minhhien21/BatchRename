@@ -11,7 +11,7 @@
         <ComboBox Height="25" Width="148"
                   Name="uniquenameCombobox"
                   Canvas.Left="10" Canvas.Top="36" >
-            <ComboBoxItem Content="Change to UniqueName"/>
+            <ComboBoxItem Content="Change to UniqueName" IsSelected="True"/>
         </ComboBox>
         <Button  Width="80" Height="25"
                  Click="Add_to_list"
