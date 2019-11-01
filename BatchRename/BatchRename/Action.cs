@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace BatchRename
 {
-    public abstract class Action
+    public abstract class Action:INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public abstract string Operate(string Name, string extension, ref string Error);
 

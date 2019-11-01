@@ -14,7 +14,7 @@ namespace BatchRename
         public string moveAt { get; set; }
     }
 
-    public class MoveAction : Action, INotifyPropertyChanged
+    public class MoveAction : Action
     {
 
         public override string Classname => "Move";
@@ -77,6 +77,4 @@ namespace BatchRename
                 return name + " " + ISBN;
         }
     }
-
-
 }

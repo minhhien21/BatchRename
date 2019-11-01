@@ -27,7 +27,7 @@ namespace BatchRename
         BindingList<FileName> _filenames = null;
 
         BindingList<FolderName> _foldernames = null;
-        
+
 
         class FolderName : INotifyPropertyChanged
         {
@@ -66,7 +66,7 @@ namespace BatchRename
         class FileName : FolderName
         {
             public string extension;
-            public string Extension{
+            public string Extension {
                 get => extension; set
                 {
                     extension = value;
@@ -153,7 +153,7 @@ namespace BatchRename
                 new ActionMain(new MoveAction(){ }, new MoveControl()),
                 new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
             };
-            ActionsListView.ItemsSource = _actionlist;            
+            ActionsListView.ItemsSource = _actionlist;
 
         }
 
@@ -174,7 +174,7 @@ namespace BatchRename
             {
                 if (_filenames != null)
                 {
-                    for(var i=0;i<_filenames.Count;i++)
+                    for (var i = 0; i < _filenames.Count; i++)
                     {
                         if (_filenames[i].Path == files[0].Path)
                         {
@@ -204,7 +204,7 @@ namespace BatchRename
 
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
-            
+
             if (Global.action != null)
             {
                 ActionList = new BindingList<Action>(Global.action);
@@ -391,25 +391,32 @@ namespace BatchRename
                 new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
             };
             ActionsListView.ItemsSource = _actionlist;
-
             ActionList = new BindingList<Action>();
             AddlistListView.ItemsSource = ActionList;
             Global.action = new BindingList<Action>();
+
+            actionSeleted.control.Visibility = Visibility.Hidden;
+            actionSeleted.count = 0;
+            actionSeleted.Expand = "+";
+
         }
+
         private void up_Clicked(object sender, RoutedEventArgs e)
         {
-            var select = AddlistListView.SelectedItem; 
-            if(select != null)
-            {
-                var index = AddlistListView.SelectedIndex;
-                var size = AddlistListView.Items.Count;
-                if(index >= 1)
+            var size = AddlistListView.Items.Count;
+            int x = indexSelect;
+                if (indexSelect >= 1)
                 {
-                    var temp = Global.action[index];
-                    Global.action[index] = Global.action[index - 1];
-                    Global.action[index - 1] = temp;
+                    var temp = Global.action[indexSelect];
+                    var temp1 = Global.action[indexSelect - 1];
+                    Global.action[indexSelect] = Global.action[indexSelect - 1];
                 }
-            }
+                for(int i=0;i<Global.action.Count;i++)
+                {
+                    MessageBox.Show(Global.action[i].Description);
+                    MessageBox.Show(Global.action[i].Check.ToString());
+                }
+                AddlistListView.ItemsSource = Global.action;
 
         }
 
@@ -445,6 +452,7 @@ namespace BatchRename
                     Global.action[index] = Global.action[index + 1];
                     Global.action[index + 1] = temp;
                 }
+                AddlistListView.ItemsSource = Global.action;
             }
         }
 
@@ -498,6 +506,14 @@ namespace BatchRename
         {
             var item = folderNameListView.SelectedItem as FolderName;
             MessageBox.Show(item?.errorDetail, "ErrorDetail");
+        }
+        
+        int indexSelect = 0;
+        
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            indexSelect = AddlistListView.SelectedIndex;
+            var index = AddlistListView.SelectedIndex;
         }
     }
 }

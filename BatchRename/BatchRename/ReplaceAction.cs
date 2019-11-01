@@ -14,7 +14,7 @@ namespace BatchRename
         public string StringChange { get; set; }
     }
 
-    public class ReplaceAction : Action, INotifyPropertyChanged
+    public class ReplaceAction : Action
     {
         public override string Classname => "Replace";
 

@@ -121,17 +121,21 @@
                                 <Style.Triggers>
                                     <Trigger Property="IsKeyboardFocusWithin" Value="True">
                                         <Setter Property="IsSelected" Value="True"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </ListView.Resources>
                         <ListView.ItemTemplate>
                             <DataTemplate>
+                                <TextBlock>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Unchecked="CheckBox_Unchecked" Checked="Checkbox_Checked" 
-                                                   IsChecked="{Binding Check}"/>
-                                    <TextBlock Text="{Binding Description}"/>
+                                                  IsChecked="{Binding Check, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" 
+                                               MouseLeftButtonDown="OnMouseLeftButtonDown"/>
                                 </StackPanel>
+                                </TextBlock>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
