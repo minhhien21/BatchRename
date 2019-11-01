@@ -312,7 +312,6 @@ namespace BatchRename
             {
                 foreach (var item in _foldernames)
                 {
-                    // cắt extension ra khỏi tên file: abc.txt -> abc và txt
                     var newName = item.Name;
                     string Error = "";
                     for (int i = 0; i < ActionList.Count; i++)
