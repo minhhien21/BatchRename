@@ -409,10 +409,14 @@ namespace BatchRename
                 new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
             };
             ActionsListView.ItemsSource = _actionlist;
-
             ActionList = new BindingList<Action>();
             AddlistListView.ItemsSource = ActionList;
             Global.action = new BindingList<Action>();
+
+            actionSeleted.control.Visibility = Visibility.Hidden;
+            actionSeleted.count = 0;
+            actionSeleted.Expand = "+";
+
         }
         private void up_Clicked(object sender, RoutedEventArgs e)
         {

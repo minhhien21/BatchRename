@@ -74,6 +74,4 @@ namespace BatchRename
                 return name + " " + ISBN;
         }
     }
-
-
 }
