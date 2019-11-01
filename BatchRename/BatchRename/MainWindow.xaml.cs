@@ -217,30 +217,24 @@ namespace BatchRename
                     // cắt extension ra khỏi tên file: abc.txt -> abc và txt
                     var newName = item.Name.Replace(item.Extension, "");
                     var newExtension = item.Extension.Replace(".", "");
-                    string Error ="";
+                    //string Error ="";
+                    item.errorDetail = "";
+
                     for (int i = 0; i < ActionList.Count; i++)
                     {
                         if (ActionList[i].Check == true)
                         {
                             // thực thi action vô prename
-                            var changeName = ActionList[i].Operate(newName, newExtension);
+                            var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);
 
                             // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
                             if (ActionList[i].GetStringName() == "Extension")
                             {
-                                if (changeName == newExtension)
-                                {
-                                    Error += ActionList[i].Description + "\n";
-                                }
                                 // cập nhật lại newExtension mới nếu có sự thay đổi
                                 newExtension = changeName;
                             }
                             else
                             {
-                                if (changeName == newName)
-                                {
-                                    Error += ActionList[i].Description + "\n";
-                                }
                                 // cập nhật lại newName mới nếu có sự thay đổi
                                 newName = changeName;
                             }
@@ -248,10 +242,9 @@ namespace BatchRename
 
                     }
                     item.Prename = newName + "." + newExtension;
-                    if (Error != "")
+                    if (item.errorDetail != "")
                     {
                         item.Error = "Fail";
-                        item.errorDetail = Error;
                     }
                     else
                     {
@@ -313,35 +306,24 @@ namespace BatchRename
                 foreach (var item in _foldernames)
                 {
                     var newName = item.Name;
-                    string Error = "";
+                    item.errorDetail = "";
+
                     for (int i = 0; i < ActionList.Count; i++)
                     {
                         if (ActionList[i].Check == true)
                         {
                             // thực thi action vô prename
-                            var changeName = ActionList[i].Operate(newName, "");
+                            var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
 
-                            if (ActionList[i].GetStringName() == "Name")
-                            {
-                                if (changeName == newName)
-                                {
-                                    Error += ActionList[i].Description + "\n";
-                                }
-                                // cập nhật lại newName mới nếu có sự thay đổi
-                                newName = changeName;
-                            }
-                            else
-                            {
-                                Error += ActionList[i].Description + "\n";
-                            }
+                            // cập nhật lại newName mới nếu có sự thay đổi
+                            newName = changeName;
                         }
 
                     }
                     item.Prename = newName;
-                    if (Error != "")
+                    if (item.errorDetail != "")
                     {
                         item.Error = "Fail";
-                        item.errorDetail = Error;
                     }
                     else
                     {
@@ -491,12 +473,6 @@ namespace BatchRename
                 AddlistListView.ItemsSource = Global.action;
             }
         }
-
-        private void ErrorDetailMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var item = fileNameListView.SelectedItem as FileName;
-            MessageBox.Show(item?.errorDetail, "ErrorDetail");
-        }
         
         private void Checkbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -510,6 +486,18 @@ namespace BatchRename
             var index = AddlistListView.SelectedIndex;
             Global.action[index].Check = false;
             AddlistListView.ItemsSource = Global.action;
+        }
+
+        private void ErrorDetailFileMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            MessageBox.Show(item?.errorDetail, "ErrorDetail");
+        }
+
+        private void ErrorDetailFolderMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = folderNameListView.SelectedItem as FolderName;
+            MessageBox.Show(item?.errorDetail, "ErrorDetail");
         }
     }
 }

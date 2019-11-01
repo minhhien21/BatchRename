@@ -10,7 +10,7 @@ namespace BatchRename
     public abstract class Action
     {
 
-        public abstract string Operate(string Name, string extension);
+        public abstract string Operate(string Name, string extension, ref string Error);
 
         public abstract string GetStringName();
 

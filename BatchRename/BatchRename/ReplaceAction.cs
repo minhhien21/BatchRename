@@ -63,19 +63,47 @@ namespace BatchRename
             return StringChange;
         }
 
-        public override string Operate(string name, string extension)
+        public override string Operate(string name, string extension, ref string Error)
         {
             var args = Args as ReplaceArgs;
             var from = args.From;
             var to = args.To;
             var stringchange = args.StringChange;
+            bool flag = true;
             if (stringchange == "Name")
             {
                 this.StringChange = "Name";
+                //không chứa from trong name
+                if (!name.Contains(from))
+                    flag = false;
+
+                //to chứa kí tự không được đặt tên file: \/:*?"<>|
+                if (to.Contains(@"\") || to.Contains("/") || to.Contains(":") || to.Contains("*") || to.Contains("?") || to.Contains('"') || to.Contains("<")
+                    || to.Contains(">") || to.Contains("|"))
+                {
+                    flag = false;
+                }
+
+                if (!flag)
+                {
+                    Error += this.Description + "\n";
+                    return name;
+                }
+
                 return name.Replace(from, to);
             }
             else
             {
+                //không chứa from trong extension
+                if (!extension.Contains(from))
+                    flag = false;
+                
+                if(!flag)
+                {
+                    Error += this.Description + "\n";
+                    return extension;
+                }
+
                 this.StringChange = "Extension";
                 return extension.Replace(from, to);
             }
