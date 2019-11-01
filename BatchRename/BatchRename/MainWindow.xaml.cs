@@ -322,11 +322,7 @@ namespace BatchRename
                             // thực thi action vô prename
                             var changeName = ActionList[i].Operate(newName, "");
 
-                            // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
-                            if (ActionList[i].GetStringName() == "Extension")
-                            {
-                            }
-                            else
+                            if (ActionList[i].GetStringName() == "Name")
                             {
                                 if (changeName == newName)
                                 {
@@ -334,6 +330,10 @@ namespace BatchRename
                                 }
                                 // cập nhật lại newName mới nếu có sự thay đổi
                                 newName = changeName;
+                            }
+                            else
+                            {
+                                Error += ActionList[i].Description + "\n";
                             }
                         }
 
