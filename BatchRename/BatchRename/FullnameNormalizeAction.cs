@@ -13,7 +13,7 @@ namespace BatchRename
     {
         public string option { get; set; }
     }
-    public class FullnameNormalizeAction : Action, INotifyPropertyChanged
+    public class FullnameNormalizeAction : Action
     {
         public override string Classname => "Fullname Normalize";
 

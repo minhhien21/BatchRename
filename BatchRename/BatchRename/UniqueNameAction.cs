@@ -12,7 +12,7 @@ namespace BatchRename
         public string option { get; set; }
 
     }
-    public class UniqueNameAction : Action, INotifyPropertyChanged
+    public class UniqueNameAction : Action
     {
         public override string Classname => "Unique Name";
 

@@ -12,7 +12,7 @@ namespace BatchRename
     {
         public string type { get; set; }
     }
-    public class NewCaseAction : Action, INotifyPropertyChanged
+    public class NewCaseAction : Action
     {
         public override string Classname => "New Case";
 
