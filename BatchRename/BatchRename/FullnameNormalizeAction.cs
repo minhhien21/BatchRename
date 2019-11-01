@@ -15,7 +15,15 @@ namespace BatchRename
     {
         public override string Classname => "Fullname Normalize";
 
-        public override string Description => "Fullname Normalize";
+        public override string Description => getDescription();
+
+        public override bool Check => true;
+
+        public string getDescription()
+        {
+            var args = Args as FullnameNormalizeArgs;
+            return $"{args.option}";
+        }
 
         public override Action Clone()
         {

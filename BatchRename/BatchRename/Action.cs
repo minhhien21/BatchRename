@@ -14,9 +14,11 @@ namespace BatchRename
 
         public StringArgs Args { get; set; }
 
-        public abstract String Classname { get; }
+        public abstract string Classname { get; }
 
-        public abstract String Description { get; }
+        public abstract string Description { get; }
+
+        public abstract bool Check { get; }
 
         public abstract Action Clone();
     }

@@ -17,6 +17,8 @@ namespace BatchRename
 
         public override string Description => "Unique Name";
 
+        public override bool Check => true;
+
         public override Action Clone()
         {
             throw new NotImplementedException();

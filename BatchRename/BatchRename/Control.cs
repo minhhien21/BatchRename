@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +10,11 @@ namespace BatchRename
 {
     public abstract class Control: UserControl
     {
-        //private List<string> arguments;
-
-        public delegate void DimensionDelegate(List<string> arguments);
+        public delegate void DimensionDelegate(BindingList<Action> action);
         public event DimensionDelegate DimensionChanged = null;
-        public void FireDimensionChangedEvent(List<string> arguments)
+        public void FireDimensionChangedEvent(BindingList<Action> action)
         {
-            DimensionChanged?.Invoke(Global.arguments);
+            DimensionChanged?.Invoke(Global.action);
         }
         
     }

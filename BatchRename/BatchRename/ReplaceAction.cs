@@ -19,6 +19,8 @@ namespace BatchRename
 
         public override string Description => GetDesciption();
 
+        public override bool Check => true;
+
         public string GetDesciption()
         {
             var args = Args as ReplaceArgs;

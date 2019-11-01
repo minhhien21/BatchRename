@@ -20,6 +20,8 @@ namespace BatchRename
 
         public override string Description => GetDescription();
 
+        public override bool Check => true;
+
         public string GetDescription()
         {
             var args = Args as MoveArgs;

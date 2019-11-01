@@ -21,7 +21,7 @@ namespace BatchRename
         {
             this.action = action;
             this.control = control;
-            this.control.Visibility = Visibility.Hidden;
+            this.control.Visibility = Visibility.Visible;
             expand = "+";
             count = 0;
         }

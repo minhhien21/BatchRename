@@ -142,7 +142,6 @@ namespace BatchRename
         }
 
         BindingList<ActionMain> _actionlist;
-        //BindingList<Action> _addlist = new BindingList<Action>();
         BindingList<Action> ActionList = new BindingList<Action>();
 
 
@@ -192,10 +191,7 @@ namespace BatchRename
             if (Global.action != null)
             {
                 ActionList = new BindingList<Action>(Global.action);
-                //_addlist = new BindingList<Action>(Global.action);
             }
-
-            //AddlistListView.ItemsSource = ActionList;
             AddlistListView.ItemsSource = Global.action;
             if (_filenames != null)
             {
@@ -213,12 +209,12 @@ namespace BatchRename
                         // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
                         if (ActionList[i].GetStringName() == "Extension")
                         {
-                            // cập nhật lại newName mới nếu có sự thay đổi
+                            // cập nhật lại newExtension mới nếu có sự thay đổi
                             newExtension = changeName;
                         }
                         else
                         {
-                            // cập nhật lại newExtension mới nếu có sự thay đổi
+                            // cập nhật lại newName mới nếu có sự thay đổi
                             newName = changeName;
                         }
 
@@ -321,36 +317,90 @@ namespace BatchRename
             //{
             //    _actionlist.Clear();
             //}
+            _actionlist = new BindingList<ActionMain>
+            {
+                new ActionMain(new ReplaceAction(){ }, new ReplaceControl()),
+                new ActionMain(new NewCaseAction(){ }, new NewCaseControl()),
+                new ActionMain(new FullnameNormalizeAction(){ }, new FullnameNormalizeControl()),
+                new ActionMain(new MoveAction(){ }, new MoveControl()),
+                new ActionMain(new UniqueNameAction(){ }, new UniqueNameControl()),
+            };
+            ActionsListView.ItemsSource = _actionlist;
+
             ActionList = new BindingList<Action>();
             AddlistListView.ItemsSource = ActionList;
             Global.action = new BindingList<Action>();
         }
-
         private void up_Clicked(object sender, RoutedEventArgs e)
         {
             var select = AddlistListView.SelectedItem; 
             if(select != null)
             {
-
+                var index = AddlistListView.SelectedIndex;
+                var size = AddlistListView.Items.Count;
+                if(index >= 1)
+                {
+                    var temp = Global.action[index];
+                    Global.action[index] = Global.action[index - 1];
+                    Global.action[index - 1] = temp;
+                }
             }
 
         }
 
         private void upall_Clicked(object sender, RoutedEventArgs e)
         {
-
+            var select = AddlistListView.SelectedItem;
+            if (select != null)
+            {
+                var index = AddlistListView.SelectedIndex;
+                var size = AddlistListView.Items.Count;
+                if (index >= 1)
+                {
+                    var temp = Global.action[index];
+                    for (int i = index - 1; i >= 0; i--) 
+                    {
+                        Global.action[i + 1] = Global.action[i];
+                    }
+                    Global.action[0] = temp;
+                }
+            }
         }
 
         private void down_Clicked(object sender, RoutedEventArgs e)
         {
-
+            var select = AddlistListView.SelectedItem;
+            if (select != null)
+            {
+                var index = AddlistListView.SelectedIndex;
+                var size = AddlistListView.Items.Count;
+                if(index < size - 1)
+                {
+                    var temp = Global.action[index];
+                    Global.action[index] = Global.action[index + 1];
+                    Global.action[index + 1] = temp;
+                }
+            }
         }
 
         private void downall_Clicked(object sender, RoutedEventArgs e)
         {
-
+            var select = AddlistListView.SelectedItem;
+            if (select != null)
+            {
+                var index = AddlistListView.SelectedIndex;
+                var size = AddlistListView.Items.Count;
+                if (index < size - 1)
+                {
+                    var temp = Global.action[index];
+                    for (int i = index; i < size - 1; i++) 
+                    {
+                        Global.action[i] = Global.action[i + 1];
+                    }
+                    Global.action[size - 1] = temp;
+                }
+            }
         }
-
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.Source is TabControl)
