@@ -77,13 +77,6 @@ namespace BatchRename
                 if (!name.Contains(from))
                     flag = false;
 
-                //to chứa kí tự không được đặt tên file: \/:*?"<>|
-                if (to.Contains(@"\") || to.Contains("/") || to.Contains(":") || to.Contains("*") || to.Contains("?") || to.Contains('"') || to.Contains("<")
-                    || to.Contains(">") || to.Contains("|"))
-                {
-                    flag = false;
-                }
-
                 if (!flag)
                 {
                     Error += this.Description + "\n";
@@ -94,6 +87,7 @@ namespace BatchRename
             }
             else
             {
+                this.StringChange = "Extension";
                 //không chứa from trong extension
                 if (!extension.Contains(from))
                     flag = false;
@@ -104,9 +98,14 @@ namespace BatchRename
                     return extension;
                 }
 
-                this.StringChange = "Extension";
                 return extension.Replace(from, to);
             }
         }
     }
 }
+                ////to chứa kí tự không được đặt tên file: \/:*?"<>|
+                //if (to.Contains(@"\") || to.Contains("/") || to.Contains(":") || to.Contains("*") || to.Contains("?") || to.Contains('"') || to.Contains("<")
+                //    || to.Contains(">") || to.Contains("|"))
+                //{
+                //    flag = false;
+                //}

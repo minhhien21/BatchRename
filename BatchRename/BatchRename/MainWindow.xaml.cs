@@ -378,10 +378,6 @@ namespace BatchRename
             {
                 _foldernames.Clear();
             }
-            //if (_actionlist != null)
-            //{
-            //    _actionlist.Clear();
-            //}
             _actionlist = new BindingList<ActionMain>
             {
                 new ActionMain(new ReplaceAction(){ }, new ReplaceControl()),
@@ -401,22 +397,23 @@ namespace BatchRename
 
         }
 
+        int indexSelect = 0;
+
         private void up_Clicked(object sender, RoutedEventArgs e)
         {
             var size = AddlistListView.Items.Count;
-            int x = indexSelect;
-                if (indexSelect >= 1)
-                {
-                    var temp = Global.action[indexSelect];
-                    var temp1 = Global.action[indexSelect - 1];
-                    Global.action[indexSelect] = Global.action[indexSelect - 1];
-                }
-                for(int i=0;i<Global.action.Count;i++)
-                {
-                    MessageBox.Show(Global.action[i].Description);
-                    MessageBox.Show(Global.action[i].Check.ToString());
-                }
-                AddlistListView.ItemsSource = Global.action;
+            if (indexSelect >= 1)
+            {
+                var temp = Global.action[indexSelect];
+                Global.action[indexSelect] = Global.action[indexSelect - 1];
+                Global.action[indexSelect - 1] = temp;
+            }
+            if (AddlistListView != null)
+            {
+                var newActionList = new BindingList<Action>();
+                AddlistListView.ItemsSource = newActionList;
+            }
+            AddlistListView.ItemsSource = Global.action;
 
         }
 
@@ -488,7 +485,6 @@ namespace BatchRename
             Global.action[index].Check = true;
             AddlistListView.ItemsSource = Global.action;
             indexSelect = index;
-            MessageBox.Show($"clicked on item {indexSelect}");
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -496,6 +492,7 @@ namespace BatchRename
             var index = AddlistListView.SelectedIndex;
             Global.action[index].Check = false;
             AddlistListView.ItemsSource = Global.action;
+            indexSelect = index;
         }
 
         private void ErrorDetailFileMenuItem_Click(object sender, RoutedEventArgs e)
@@ -508,14 +505,11 @@ namespace BatchRename
         {
             var item = folderNameListView.SelectedItem as FolderName;
             MessageBox.Show(item?.errorDetail, "ErrorDetail");
-        }
-        
-        int indexSelect = 0;
-        
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        } 
+
+        private void listView_Click(object sender, MouseButtonEventArgs e)
         {
-            //indexSelect = AddlistListView.SelectedIndex;
-            //var index = AddlistListView.SelectedIndex;
+            indexSelect = AddlistListView.SelectedIndex;
         }
     }
 }

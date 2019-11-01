@@ -115,7 +115,7 @@
                         </Button>
                     </StackPanel>
                     <ListView Name="AddlistListView" ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                              ScrollViewer.VerticalScrollBarVisibility="Visible">
+                              ScrollViewer.VerticalScrollBarVisibility="Visible" PreviewMouseLeftButtonUp="listView_Click">
                         <ListView.Resources>
                             <Style TargetType="ListViewItem">
                                 <Style.Triggers>
@@ -132,8 +132,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox Unchecked="CheckBox_Unchecked" Checked="Checkbox_Checked" 
                                                   IsChecked="{Binding Check, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" 
-                                               MouseLeftButtonDown="OnMouseLeftButtonDown"/>
+                                    <TextBlock Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 </TextBlock>
                             </DataTemplate>
