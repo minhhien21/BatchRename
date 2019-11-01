@@ -22,7 +22,5 @@ namespace BatchRename
         public abstract string Description { get; }
 
         public abstract bool Check { get; set; }
-
-        public abstract Action Clone();
     }
 }

@@ -397,78 +397,75 @@ namespace BatchRename
 
         }
 
-        int indexSelect = 0;
+        int indexSelect = -1;
 
         private void up_Clicked(object sender, RoutedEventArgs e)
         {
             var size = AddlistListView.Items.Count;
-            if (indexSelect >= 1)
+            if (indexSelect >= 1 && indexSelect != -1) 
             {
                 var temp = Global.action[indexSelect];
                 Global.action[indexSelect] = Global.action[indexSelect - 1];
                 Global.action[indexSelect - 1] = temp;
-            }
-            if (AddlistListView != null)
-            {
+
                 var newActionList = new BindingList<Action>();
                 AddlistListView.ItemsSource = newActionList;
+                AddlistListView.ItemsSource = Global.action;
+                indexSelect--;
             }
-            AddlistListView.ItemsSource = Global.action;
-
         }
 
         private void upall_Clicked(object sender, RoutedEventArgs e)
         {
-            var select = AddlistListView.SelectedItem;
-            if (select != null)
+            var size = AddlistListView.Items.Count;
+            if (indexSelect >= 1 && indexSelect != -1)
             {
-                var index = AddlistListView.SelectedIndex;
-                var size = AddlistListView.Items.Count;
-                if (index >= 1)
+                var temp = Global.action[indexSelect];
+                for (int i = indexSelect - 1; i >= 0; i--)
                 {
-                    var temp = Global.action[index];
-                    for (int i = index - 1; i >= 0; i--) 
-                    {
-                        Global.action[i + 1] = Global.action[i];
-                    }
-                    Global.action[0] = temp;
+                    Global.action[i + 1] = Global.action[i];
                 }
+                Global.action[0] = temp;
+
+                var newActionList = new BindingList<Action>();
+                AddlistListView.ItemsSource = newActionList;
+                AddlistListView.ItemsSource = Global.action;
+                indexSelect = 0;
             }
         }
 
         private void down_Clicked(object sender, RoutedEventArgs e)
         {
-            var select = AddlistListView.SelectedItem;
-            if (select != null)
+            var size = AddlistListView.Items.Count;
+            if (indexSelect < size - 1 && indexSelect != -1)
             {
-                var index = AddlistListView.SelectedIndex;
-                var size = AddlistListView.Items.Count;
-                if(index < size - 1)
-                {
-                    var temp = Global.action[index];
-                    Global.action[index] = Global.action[index + 1];
-                    Global.action[index + 1] = temp;
-                }
+                var temp = Global.action[indexSelect];
+                Global.action[indexSelect] = Global.action[indexSelect + 1];
+                Global.action[indexSelect + 1] = temp;
+
+                var newActionList = new BindingList<Action>();
+                AddlistListView.ItemsSource = newActionList;
                 AddlistListView.ItemsSource = Global.action;
+                indexSelect++;
             }
         }
 
         private void downall_Clicked(object sender, RoutedEventArgs e)
         {
-            var select = AddlistListView.SelectedItem;
-            if (select != null)
+            var size = AddlistListView.Items.Count;
+            if (indexSelect < size - 1 && indexSelect != -1)
             {
-                var index = AddlistListView.SelectedIndex;
-                var size = AddlistListView.Items.Count;
-                if (index < size - 1)
+                var temp = Global.action[indexSelect];
+                for (int i = indexSelect; i < size - 1; i++)
                 {
-                    var temp = Global.action[index];
-                    for (int i = index; i < size - 1; i++) 
-                    {
-                        Global.action[i] = Global.action[i + 1];
-                    }
-                    Global.action[size - 1] = temp;
+                    Global.action[i] = Global.action[i + 1];
                 }
+                Global.action[size - 1] = temp;
+
+                var newActionList = new BindingList<Action>();
+                AddlistListView.ItemsSource = newActionList;
+                AddlistListView.ItemsSource = Global.action;
+                indexSelect = size - 1;
             }
         }
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

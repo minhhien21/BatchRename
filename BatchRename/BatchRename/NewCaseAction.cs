@@ -40,11 +40,6 @@ namespace BatchRename
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Check));
         }
 
-        public override Action Clone()
-        {
-            throw new NotImplementedException();
-        }
-
         public override string GetStringName()
         {
             return "";

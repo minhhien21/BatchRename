@@ -29,6 +29,7 @@ namespace BatchRename
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
             var from = TextBoxFrom.Text;
+            var to = TextBoxTo.Text;
             if (from != "")
             {
                 ComboBoxItem typeItem = (ComboBoxItem)CbbApplyTo.SelectedItem;
@@ -47,9 +48,15 @@ namespace BatchRename
                 }
                 Global.action.Add(replace);
             }
-            else
+            if(from == "")
             {
                 MessageBox.Show("Ô From không được để trống");
+            }
+            else if(to == "/" || to == ":" || to == "*" || to == "?" || to == "<" || to == ">" || to == "|" || (int)to[0] == 34 || (int)to[0] == 92)
+            {
+                
+                //to chứa kí tự không được đặt tên file: \/:*?"<>|
+                MessageBox.Show($"Tên file không chứa kí tự {(char)92} / : * ? {(char)34} < > |");
             }
         }
     }

@@ -44,20 +44,6 @@ namespace BatchRename
 
         public string StringChange { get; set; }
 
-        public override Action Clone()
-        {
-            var oldArgs = Args as ReplaceArgs;
-            return new ReplaceAction
-            {
-                Args = new ReplaceArgs()
-                {
-                    From = oldArgs.From,
-                    To = oldArgs.To,
-                    StringChange = oldArgs.StringChange
-                }
-            };
-        }
-
         public override string GetStringName()
         {
             return StringChange;
@@ -102,9 +88,3 @@ namespace BatchRename
         }
     }
 }
-                ////to chứa kí tự không được đặt tên file: \/:*?"<>|
-                //if (to.Contains(@"\") || to.Contains("/") || to.Contains(":") || to.Contains("*") || to.Contains("?") || to.Contains('"') || to.Contains("<")
-                //    || to.Contains(">") || to.Contains("|"))
-                //{
-                //    flag = false;
-                //}
