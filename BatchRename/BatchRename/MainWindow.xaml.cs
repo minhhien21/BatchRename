@@ -142,7 +142,6 @@ namespace BatchRename
         }
 
         BindingList<ActionMain> _actionlist;
-        //BindingList<Action> _addlist = new BindingList<Action>();
         BindingList<Action> ActionList = new BindingList<Action>();
 
 
@@ -192,10 +191,7 @@ namespace BatchRename
             if (Global.action != null)
             {
                 ActionList = new BindingList<Action>(Global.action);
-                //_addlist = new BindingList<Action>(Global.action);
             }
-
-            //AddlistListView.ItemsSource = ActionList;
             AddlistListView.ItemsSource = Global.action;
             if (_filenames != null)
             {
@@ -333,7 +329,6 @@ namespace BatchRename
                     Global.action[index] = Global.action[index - 1];
                     Global.action[index - 1] = temp;
                 }
-
             }
 
         }

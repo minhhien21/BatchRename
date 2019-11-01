@@ -118,7 +118,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <CheckBox/>
+                                    <CheckBox IsChecked="{Binding ElementName=window1, Path=Check}"/>
                                     <TextBlock Text="{Binding Description}"/>
                                 </StackPanel>
                             </DataTemplate>

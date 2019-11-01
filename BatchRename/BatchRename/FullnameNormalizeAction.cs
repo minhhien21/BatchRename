@@ -17,6 +17,8 @@ namespace BatchRename
 
         public override string Description => getDescription();
 
+        public override bool Check => true;
+
         public string getDescription()
         {
             var args = Args as FullnameNormalizeArgs;
