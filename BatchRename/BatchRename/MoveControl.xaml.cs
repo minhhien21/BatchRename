@@ -30,18 +30,29 @@ namespace BatchRename
         {
             var n = 0;
             var m = 0;
-            bool flag = true;
+            bool flag1 = true;
+            bool flag2 = true;
             if (!int.TryParse(txtStartAt.Text, out n))
             {
-                flag = false;
+                flag1 = false;
                 MessageBox.Show("gia tri start at khong la so nguyen!");
             }
             if (!int.TryParse(txtLength.Text, out m))
             {
-                flag = false;
+                flag2 = false;
                 MessageBox.Show("Gia tri Length khong la so nguyen!");
             }
-            if (flag)
+            if(flag1 && int.Parse(txtStartAt.Text) < 0)
+            {
+                flag1 = false;
+                MessageBox.Show("Gia tri start at phai duong!");
+            }
+            if (flag2 && int.Parse(txtLength.Text) < 0)
+            {
+                flag2 = false;
+                MessageBox.Show("Gia tri length phai duong!");
+            }
+            if (flag1 && flag2)
             {
                 ComboBoxItem typeItem = (ComboBoxItem)moveCombobox.SelectedItem;
 

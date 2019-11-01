@@ -97,7 +97,6 @@ namespace BatchRename
                     Error += this.Description + "\n";
                     return extension;
                 }
-
                 return extension.Replace(from, to);
             }
         }
