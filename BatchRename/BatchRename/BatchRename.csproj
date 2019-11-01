@@ -163,13 +163,13 @@
     <Resource Include="Image\add.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="preset\" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Image\down.png" />
     <Resource Include="Image\downall.png" />
     <Resource Include="Image\up.png" />
     <Resource Include="Image\upall.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="preset\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

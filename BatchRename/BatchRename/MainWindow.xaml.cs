@@ -303,7 +303,54 @@ namespace BatchRename
 
         private void BtnPreview_ClickFolder(object sender, RoutedEventArgs e)
         {
+            if (Global.action != null)
+            {
+                ActionList = new BindingList<Action>(Global.action);
+            }
+            AddlistListView.ItemsSource = Global.action;
+            if (_foldernames != null)
+            {
+                foreach (var item in _foldernames)
+                {
+                    // cắt extension ra khỏi tên file: abc.txt -> abc và txt
+                    var newName = item.Name;
+                    string Error = "";
+                    for (int i = 0; i < ActionList.Count; i++)
+                    {
+                        if (ActionList[i].Check == true)
+                        {
+                            // thực thi action vô prename
+                            var changeName = ActionList[i].Operate(newName, "");
 
+                            // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
+                            if (ActionList[i].GetStringName() == "Extension")
+                            {
+                            }
+                            else
+                            {
+                                if (changeName == newName)
+                                {
+                                    Error += ActionList[i].Description + "\n";
+                                }
+                                // cập nhật lại newName mới nếu có sự thay đổi
+                                newName = changeName;
+                            }
+                        }
+
+                    }
+                    item.Prename = newName;
+                    if (Error != "")
+                    {
+                        item.Error = "Fail";
+                        item.errorDetail = Error;
+                    }
+                    else
+                    {
+                        item.Error = "Success";
+                        item.errorDetail = "Success";
+                    }
+                }
+            }
         }
 
         private void BtnStartPatch_ClickFolder(object sender, RoutedEventArgs e)
