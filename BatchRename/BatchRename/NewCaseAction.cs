@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -11,18 +12,32 @@ namespace BatchRename
     {
         public string type { get; set; }
     }
-    public class NewCaseAction : Action
+    public class NewCaseAction : Action, INotifyPropertyChanged
     {
         public override string Classname => "New Case";
 
         public override string Description => getDescription();
 
-        public override bool Check => true;
-
         public string getDescription()
         {
             var args = Args as NewCaseArgs;
             return $"Make string {args.type}";
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public bool check = true;
+        public override bool Check
+        {
+            get => check; set
+            {
+                check = value;
+                Notify("Check");
+            }
+        }
+
+        public void Notify(String Check)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Check));
         }
 
         public override Action Clone()

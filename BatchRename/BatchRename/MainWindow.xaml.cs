@@ -230,13 +230,20 @@ namespace BatchRename
                         // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
                         if (ActionList[i].GetStringName() == "Extension")
                         {
-                            // cập nhật lại newExtension mới nếu có sự thay đổi
-                            newExtension = changeName;
-                        }
-                        else
-                        {
-                            // cập nhật lại newName mới nếu có sự thay đổi
-                            newName = changeName;
+                            // thực thi action vô prename
+                            var changeName = ActionList[i].Operate(newName, newExtension);
+                            var x = ActionList[i].GetStringName();
+                            // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
+                            if (ActionList[i].GetStringName() == "Extension")
+                            {
+                                // cập nhật lại newExtension mới nếu có sự thay đổi
+                                newExtension = changeName;
+                            }
+                            else
+                            {
+                                // cập nhật lại newName mới nếu có sự thay đổi
+                                newName = changeName;
+                            }
                         }
 
                         //MessageBox.Show(item.Prename);
@@ -441,6 +448,21 @@ namespace BatchRename
         {
             var item = fileNameListView.SelectedItem as FileName;
             MessageBox.Show(item?.errorDetail, "ErrorDetail");
+        }
+        
+        private void Checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            var index = AddlistListView.SelectedIndex;
+            Global.action[index].Check = true;
+            AddlistListView.ItemsSource = Global.action;
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var index = AddlistListView.SelectedIndex;
+            Global.action[index].Check = false;
+            //ActionList = new BindingList<Action>(Global.action);
+            AddlistListView.ItemsSource = Global.action;
         }
     }
 }
