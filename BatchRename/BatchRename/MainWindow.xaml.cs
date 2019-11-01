@@ -220,30 +220,32 @@ namespace BatchRename
                     string Error ="";
                     for (int i = 0; i < ActionList.Count; i++)
                     {
-                        // thực thi action vô prename
-                        var changeName = ActionList[i].Operate(newName, newExtension);
-
-                        if (changeName == newName || changeName == newExtension)
-                            Error += ActionList[i].Description + "\n";
-
-                        var x = ActionList[i].GetStringName();
-                        // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
-                        if (ActionList[i].GetStringName() == "Extension")
+                        if (ActionList[i].Check == true)
                         {
+                            // thực thi action vô prename
+                            var changeName = ActionList[i].Operate(newName, newExtension);
+
                             // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
                             if (ActionList[i].GetStringName() == "Extension")
                             {
+                                if (changeName == newExtension)
+                                {
+                                    Error += ActionList[i].Description + "\n";
+                                }
                                 // cập nhật lại newExtension mới nếu có sự thay đổi
                                 newExtension = changeName;
                             }
                             else
                             {
+                                if (changeName == newName)
+                                {
+                                    Error += ActionList[i].Description + "\n";
+                                }
                                 // cập nhật lại newName mới nếu có sự thay đổi
                                 newName = changeName;
                             }
                         }
 
-                        //MessageBox.Show(item.Prename);
                     }
                     item.Prename = newName + "." + newExtension;
                     if (Error != "")
@@ -252,7 +254,10 @@ namespace BatchRename
                         item.errorDetail = Error;
                     }
                     else
+                    {
                         item.Error = "Success";
+                        item.errorDetail = "Success";
+                    }
                 }
             }
         }
@@ -458,7 +463,6 @@ namespace BatchRename
         {
             var index = AddlistListView.SelectedIndex;
             Global.action[index].Check = false;
-            //ActionList = new BindingList<Action>(Global.action);
             AddlistListView.ItemsSource = Global.action;
         }
     }
