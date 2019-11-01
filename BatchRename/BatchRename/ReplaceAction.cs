@@ -94,6 +94,7 @@ namespace BatchRename
             }
             else
             {
+                this.StringChange = "Extension";
                 //không chứa from trong extension
                 if (!extension.Contains(from))
                     flag = false;
@@ -103,8 +104,6 @@ namespace BatchRename
                     Error += this.Description + "\n";
                     return extension;
                 }
-
-                this.StringChange = "Extension";
                 return extension.Replace(from, to);
             }
         }
