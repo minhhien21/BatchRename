@@ -28,23 +28,40 @@ namespace BatchRename
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
-            ComboBoxItem typeItem = (ComboBoxItem)moveCombobox.SelectedItem;
-            move = new MoveAction()
+            var n = 0;
+            var m = 0;
+            bool flag = true;
+            if (!int.TryParse(txtStartAt.Text, out n))
             {
-                Args = new MoveArgs()
-                {
-                    startAt = int.Parse(txtStartAt.Text),
-                    length = int.Parse(txtLength.Text),
-                    moveAt = typeItem.Content.ToString()
-                }
-            };
-            if (Global.action == null)
-            {
-                Global.action = new BindingList<Action>();
+                flag = false;
+                MessageBox.Show("gia tri start at khong la so nguyen!");
             }
-            Global.action.Add(move);
+            if (!int.TryParse(txtLength.Text, out m))
+            {
+                flag = false;
+                MessageBox.Show("Gia tri Length khong la so nguyen!");
+            }
+            if (flag)
+            {
+                ComboBoxItem typeItem = (ComboBoxItem)moveCombobox.SelectedItem;
 
-            FireDimensionChangedEvent(Global.action);
+                move = new MoveAction()
+                {
+                    Args = new MoveArgs()
+                    {
+                        startAt = int.Parse(txtStartAt.Text),
+                        length = int.Parse(txtLength.Text),
+                        moveAt = typeItem.Content.ToString()
+                    }
+                };
+                if (Global.action == null)
+                {
+                    Global.action = new BindingList<Action>();
+                }
+                Global.action.Add(move);
+
+                FireDimensionChangedEvent(Global.action);
+            }
         }
     }
 }

@@ -41,12 +41,26 @@ namespace BatchRename
                 }
             }
             public string Path { get; set; }
-            public string Error { get; set; }
+
+            public string error;
+            public string Error
+            {
+                get => error;
+                set
+                {
+                    error = value;
+                    Notify("Error");
+                }
+            }
+
+            public string errorDetail;
+
             public event PropertyChangedEventHandler PropertyChanged;
             public void Notify(string Prename)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Prename));
             }
+
         }
 
         class FileName : FolderName
@@ -89,7 +103,8 @@ namespace BatchRename
                             Extension = System.IO.Path.GetExtension(file),
                             Prename = null,
                             Path = System.IO.Path.GetDirectoryName(file),
-                            Error = null
+                            Error = null,
+                            errorDetail = null
                         };
                         result.Add(fileName);
                     }
@@ -118,7 +133,8 @@ namespace BatchRename
                             Name = System.IO.Path.GetFileName(folder),
                             Prename = null,
                             Path = System.IO.Path.GetDirectoryName(folder),
-                            Error = null
+                            Error = null,
+                            errorDetail = null
                         };
                         result.Add(folderName);
                     }
@@ -188,6 +204,7 @@ namespace BatchRename
 
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
+            
             if (Global.action != null)
             {
                 ActionList = new BindingList<Action>(Global.action);
@@ -200,11 +217,15 @@ namespace BatchRename
                     // cắt extension ra khỏi tên file: abc.txt -> abc và txt
                     var newName = item.Name.Replace(item.Extension, "");
                     var newExtension = item.Extension.Replace(".", "");
-
+                    string Error ="";
                     for (int i = 0; i < ActionList.Count; i++)
                     {
                         // thực thi action vô prename
                         var changeName = ActionList[i].Operate(newName, newExtension);
+
+                        if (changeName == newName || changeName == newExtension)
+                            Error += ActionList[i].Description + "\n";
+
                         var x = ActionList[i].GetStringName();
                         // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
                         if (ActionList[i].GetStringName() == "Extension")
@@ -221,6 +242,13 @@ namespace BatchRename
                         //MessageBox.Show(item.Prename);
                     }
                     item.Prename = newName + "." + newExtension;
+                    if (Error != "")
+                    {
+                        item.Error = "Fail";
+                        item.errorDetail = Error;
+                    }
+                    else
+                        item.Error = "Success";
                 }
             }
         }
@@ -407,6 +435,12 @@ namespace BatchRename
             {
                 AddlistListView.ItemsSource = Global.action;
             }
+        }
+
+        private void ErrorDetailMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            MessageBox.Show(item?.errorDetail, "ErrorDetail");
         }
     }
 }

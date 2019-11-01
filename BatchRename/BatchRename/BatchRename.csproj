@@ -168,5 +168,8 @@
     <Resource Include="Image\up.png" />
     <Resource Include="Image\upall.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="preset\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

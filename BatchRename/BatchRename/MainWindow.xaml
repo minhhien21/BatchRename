@@ -118,8 +118,8 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <CheckBox IsChecked="{Binding ElementName=window1, Path=Check}"/>
-                                    <TextBlock Text="{Binding Description}"/>
+                                    <CheckBox IsChecked="{Binding ElementName=window1, Path=Check}" Content="{Binding Description}"/>
+                                    
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -156,6 +156,11 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                             </Style>
                         </ListView.Resources>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Error Detail" Click="ErrorDetailMenuItem_Click"/>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Filename" Width="150" DisplayMemberBinding="{Binding Name}"/>
