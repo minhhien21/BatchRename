@@ -278,9 +278,24 @@ namespace BatchRename
 
         }
 
+        ActionMain actionSeleted = null; // variable for saving action is selected before
+
         private void Button_ShowControl(object sender, RoutedEventArgs e)
         {
             ActionMain actionMain = ActionsListView.SelectedItem as ActionMain;
+
+            if (actionSeleted != null)
+            {
+                if (actionSeleted.ClassName != actionMain.ClassName)
+                {
+                    actionSeleted.control.Visibility = Visibility.Hidden;
+                    actionSeleted.count = 0;
+                    actionSeleted.Expand = "+";
+                }
+            }
+
+            actionSeleted = actionMain;
+
             actionMain.ShowControl();
         }
 
@@ -311,7 +326,6 @@ namespace BatchRename
             Global.action = new BindingList<Action>();
         }
 
-<<<<<<< HEAD
         private void up_Clicked(object sender, RoutedEventArgs e)
         {
             var select = AddlistListView.SelectedItem; 
@@ -335,14 +349,14 @@ namespace BatchRename
         private void downall_Clicked(object sender, RoutedEventArgs e)
         {
 
-=======
+        }
+
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.Source is TabControl)
             {
                 AddlistListView.ItemsSource = Global.action;
             }
->>>>>>> 8a47ec3e9dbc0799d4d1541d4e3b515b2fd9c775
         }
     }
 }
