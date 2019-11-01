@@ -53,7 +53,7 @@ namespace BatchRename
             return "";
         }
 
-        public override string Operate(string name, string extension)
+        public override string Operate(string name, string extension, ref string Error)
         {
             var args = Args as MoveArgs;
             var startAt = args.startAt;
@@ -62,7 +62,10 @@ namespace BatchRename
             var ISBN = "";
 
             if (name.Length < startAt + length)
+            {
+                Error += this.Description + "\n";
                 return name; //không thực hiện
+            }
 
             ISBN = name.Substring(startAt, length);// lấy chuỗi ISBN tại vị trí startAt với độ dài Length
 

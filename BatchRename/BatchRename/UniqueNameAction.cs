@@ -44,7 +44,7 @@ namespace BatchRename
             return "";
         }
 
-        public override string Operate(string name, string extension)
+        public override string Operate(string name, string extension, ref string Error)
         {
             Guid id = Guid.NewGuid();
             name = id.ToString();

@@ -51,7 +51,7 @@ namespace BatchRename
             return "";
         }
 
-        public override string Operate(string name , string extension)
+        public override string Operate(string name , string extension, ref string Error)
         {
             var args = Args as FullnameNormalizeArgs;
             var choosenOption = args.option;

@@ -11,7 +11,7 @@ namespace BatchRename
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public abstract string Operate(string Name, string extension);
+        public abstract string Operate(string Name, string extension, ref string Error);
 
         public abstract string GetStringName();
 

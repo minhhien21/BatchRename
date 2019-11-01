@@ -173,7 +173,7 @@
                         </ListView.Resources>
                         <ListView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Error Detail" Click="ErrorDetailMenuItem_Click"/>
+                                <MenuItem Header="Error Detail" Click="ErrorDetailFileMenuItem_Click"/>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
@@ -216,6 +216,11 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                             </Style>
                         </ListView.Resources>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Error Detail" Click="ErrorDetailFolderMenuItem_Click"/>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Foldername" Width="150" DisplayMemberBinding="{Binding Name}"/>
