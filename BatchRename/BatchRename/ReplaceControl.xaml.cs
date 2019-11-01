@@ -46,8 +46,6 @@ namespace BatchRename
                     Global.action = new BindingList<Action>();
                 }
                 Global.action.Add(replace);
-
-                FireDimensionChangedEvent(Global.action);
             }
             else
             {

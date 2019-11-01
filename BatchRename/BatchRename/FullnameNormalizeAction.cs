@@ -5,24 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
+
 namespace BatchRename
 {
     public class FullnameNormalizeArgs : StringArgs
     {
         public string option { get; set; }
     }
-    public class FullnameNormalizeAction : Action
+    public class FullnameNormalizeAction : Action, INotifyPropertyChanged
     {
         public override string Classname => "Fullname Normalize";
 
         public override string Description => getDescription();
 
-        public override bool Check => true;
-
         public string getDescription()
         {
             var args = Args as FullnameNormalizeArgs;
             return $"{args.option}";
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public bool check = true;
+        public override bool Check
+        {
+            get => check; set
+            {
+                check = value;
+                Notify("Check");
+            }
+        }
+
+        public void Notify(String Check)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Check));
         }
 
         public override Action Clone()

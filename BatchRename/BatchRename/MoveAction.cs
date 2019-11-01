@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,20 +14,33 @@ namespace BatchRename
         public string moveAt { get; set; }
     }
 
-    public class MoveAction : Action
+    public class MoveAction : Action, INotifyPropertyChanged
     {
 
         public override string Classname => "Move";
 
-        public override string Description => GetDescription();
-
-        public override bool Check => true;
-
-        public string GetDescription()
+        public override string Description => getDescription();
+        public string getDescription()
         {
             var args = Args as MoveArgs;
             var result = $"Move {args.length} character(s) from index {args.startAt} to the {args.moveAt}";
             return result;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public bool check = true;
+        public override bool Check
+        {
+            get => check; set
+            {
+                check = value;
+                Notify("Check");
+            }
+        }
+
+        public void Notify(String Check)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Check));
         }
 
         public override Action Clone()

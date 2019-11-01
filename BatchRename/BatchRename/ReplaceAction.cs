@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,18 +14,32 @@ namespace BatchRename
         public string StringChange { get; set; }
     }
 
-    public class ReplaceAction : Action
+    public class ReplaceAction : Action, INotifyPropertyChanged
     {
         public override string Classname => "Replace";
 
-        public override string Description => GetDesciption();
+        public override string Description => getDesciption();
 
-        public override bool Check => true;
-
-        public string GetDesciption()
+        public string getDesciption()
         {
             var args = Args as ReplaceArgs;
             return $"Replace '{args.From}' to '{args.To}' in '{args.StringChange}'";
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public bool check = true;
+        public override bool Check
+        {
+            get => check; set
+            {
+                check = value;
+                Notify("Check");
+            }
+        }
+
+        public void Notify(String Check)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Check));
         }
 
         public string StringChange { get; set; }

@@ -44,7 +44,6 @@ namespace BatchRename
             }
             Global.action.Add(move);
 
-            FireDimensionChangedEvent(Global.action);
         }
     }
 }

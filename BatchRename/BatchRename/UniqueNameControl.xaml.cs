@@ -43,8 +43,6 @@ namespace BatchRename
 
             }
             Global.action.Add(changetoUniqueName);
-
-            FireDimensionChangedEvent(Global.action);
         }
     }
 }

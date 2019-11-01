@@ -10,12 +10,6 @@ namespace BatchRename
 {
     public abstract class Control: UserControl
     {
-        public delegate void DimensionDelegate(BindingList<Action> action);
-        public event DimensionDelegate DimensionChanged = null;
-        public void FireDimensionChangedEvent(BindingList<Action> action)
-        {
-            DimensionChanged?.Invoke(Global.action);
-        }
         
     }
 }

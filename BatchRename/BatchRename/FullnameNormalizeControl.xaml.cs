@@ -44,8 +44,6 @@ namespace BatchRename
             }
             Global.action.Add(normalizeFullFileName);
 
-            FireDimensionChangedEvent(Global.action);
-
         }
     }
 }
