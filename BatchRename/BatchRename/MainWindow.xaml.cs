@@ -511,6 +511,8 @@ namespace BatchRename
             var index = AddlistListView.SelectedIndex;
             Global.action[index].Check = true;
             AddlistListView.ItemsSource = Global.action;
+            indexSelect = index;
+            MessageBox.Show($"clicked on item {indexSelect}");
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -524,8 +526,8 @@ namespace BatchRename
         
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            indexSelect = AddlistListView.SelectedIndex;
-            var index = AddlistListView.SelectedIndex;
+            //indexSelect = AddlistListView.SelectedIndex;
+            //var index = AddlistListView.SelectedIndex;
         }
     }
 }
