@@ -1003,6 +1003,7 @@ namespace BatchRename
                 }
             }
             AddlistListView.ItemsSource = Global.action;
+        }
         private void Delectaction_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show($"Do you want to delect '{Global.action[indexSelect].Description}'", "Notify", MessageBoxButton.YesNo);
