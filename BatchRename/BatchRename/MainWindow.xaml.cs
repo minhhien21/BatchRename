@@ -86,7 +86,7 @@ namespace BatchRename
             {
                 BindingList<FileName> result = null;
                 //mở dialog cho người dùng chọn file
-                var screen = new CommonOpenFileDialog();
+                var screen = new CommonOpenFileDialog() { InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)};
                 screen.IsFolderPicker = true;
 
                 if (screen.ShowDialog() == CommonFileDialogResult.Ok)
@@ -112,14 +112,15 @@ namespace BatchRename
                 }
                 return result;
             }
-
+            
             public static BindingList<FolderName> GetFolderName()
             {
                 BindingList<FolderName> result = null;
                 //mở dialog cho người dùng chọn file
-                var screen = new CommonOpenFileDialog();
+                
+                var screen = new CommonOpenFileDialog() { InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
                 screen.IsFolderPicker = true;
-
+                
                 if (screen.ShowDialog() == CommonFileDialogResult.Ok)
                 {
                     var path = screen.FileName;
@@ -763,7 +764,7 @@ namespace BatchRename
 
         private void BtnOpen_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog() { InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
             openFileDialog.Filter = "Text files (*.txt)|*.txt";
             if (openFileDialog.ShowDialog() == true)
             {
@@ -947,6 +948,7 @@ namespace BatchRename
                 Filter = "Text files (*.txt)|*.txt",
                 FilterIndex = 1,
                 RestoreDirectory = true,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             };
 
             // get filename
