@@ -52,6 +52,8 @@ namespace BatchRename
             {
                 MessageBox.Show("Ô From không được để trống");
             }
+            if(to =="")
+            { }
             else if(to == "/" || to == ":" || to == "*" || to == "?" || to == "<" || to == ">" || to == "|" || (int)to[0] == 34 || (int)to[0] == 92)
             {
                 

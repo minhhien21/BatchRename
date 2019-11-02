@@ -211,6 +211,109 @@ namespace BatchRename
             fileNameListView.ItemsSource = _filenames;
         }
 
+        public void optionAfterRenamefile()
+        {
+            int flag = 0;
+            int flagoption = 0;
+            ComboBoxItem typeItem = (ComboBoxItem)OptionComboBox.SelectedItem;
+            if (typeItem.Content.ToString() == "Keep the old name")
+                flagoption = 0;
+            else
+                flagoption = 1;
+            while (flag == 0)
+            {
+                int i = 0;
+                int flag1 = 0;
+                // giữ lại tên cũ
+                if (flagoption == 0)
+                {
+                    for (i = 0; i < _filenames.Count - 1; i++)
+                    {
+                        flag1 = 0;
+                        for (int j = i + 1; j < _filenames.Count; j++)
+                        {
+                            if (_filenames[i].Path == _filenames[j].Path && (_filenames[i].Prename == _filenames[j].Prename))
+                            {
+                                if (_filenames[j].Prename != _filenames[j].Name)
+                                {
+                                    if (_filenames[j].Error == "Success")
+                                    {
+                                        _filenames[j].Error = "Fail";
+                                        _filenames[j].errorDetail = "duplicate name:" + _filenames[j].Prename;
+                                    }
+                                    else
+                                    {
+                                        _filenames[j].errorDetail += "duplicate name:" + _filenames[j].Prename;
+                                    }
+                                    _filenames[j].Prename = _filenames[j].Name;
+                                    flag1 = 1;
+                                }
+                            }
+                        }
+                        if (flag1 == 1 && _filenames[i].Prename != _filenames[i].Name)
+                        {
+                            if (_filenames[i].Error == "Success")
+                            {
+                                _filenames[i].Error = "Fail";
+                                _filenames[i].errorDetail = "duplicate name:" + _filenames[i].Prename;
+                            }
+                            else
+                            {
+                                _filenames[i].errorDetail += "duplicate name:" + _filenames[i].Prename;
+                            }
+                            _filenames[i].Prename = _filenames[i].Name;
+                        }
+
+                    }
+                }
+
+                // thêm hậu tố
+                if (flagoption == 1)
+                {
+                    int suffix = 1;
+                    for (i = 0; i < _filenames.Count - 1; i++)
+                    {
+                        flag1 = 0;
+                        for (int j = i + 1; j < _filenames.Count; j++)
+                        {
+                            if (_filenames[i].Path == _filenames[j].Path && _filenames[i].Prename == _filenames[j].Prename)
+                            {
+                                if (_filenames[j].Prename != _filenames[j].Name)
+                                {
+                                    var newName = _filenames[j].Prename.Replace(_filenames[j].Extension, "");
+                                    _filenames[j].Prename = newName + suffix.ToString() + _filenames[j].Extension;
+                                    suffix++;
+                                }
+                                flag1 = 1;
+                            }
+                        }
+                        if (flag1 == 1 && _filenames[i].Prename != _filenames[i].Name)
+                        {
+                            var newName = _filenames[i].Prename.Replace(_filenames[i].Extension, "");
+                            _filenames[i].Prename = newName + suffix.ToString() + _filenames[i].Extension;
+                            suffix++;
+                        }
+                    }
+                }
+                // kiểm tra có còn trùng hay không để tiếp tục vòng lặp
+                flag = 1;
+                for (i = 0; i < _filenames.Count - 1; i++)
+                {
+                    for (int j = i + 1; j < _filenames.Count; j++)
+                    {
+                        if (_filenames[i].Path == _filenames[j].Path)
+                        {
+                            if (_filenames[i].Prename == _filenames[j].Prename)
+                            {
+                                flag = 0;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
 
@@ -251,6 +354,7 @@ namespace BatchRename
 
                     }
                     item.Prename = newName + "." + newExtension;
+                    item.Extension = "." + newExtension;
                     if (item.errorDetail != "")
                     {
                         item.Error = "Fail";
@@ -261,6 +365,8 @@ namespace BatchRename
                         item.errorDetail = "Success";
                     }
                 }
+                optionAfterRenamefile();
+                fileNameListView.ItemsSource = _filenames;
             }
         }
 
@@ -897,6 +1003,19 @@ namespace BatchRename
                 }
             }
             AddlistListView.ItemsSource = Global.action;
+        private void Delectaction_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Do you want to delect '{Global.action[indexSelect].Description}'", "Notify", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    Global.action.RemoveAt(indexSelect);
+                    indexSelect = -1;
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+            
         }
     }
 }

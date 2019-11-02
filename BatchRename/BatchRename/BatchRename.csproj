@@ -173,6 +173,8 @@
     <None Include="preset\TestLUUUUUU.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Resource Include="Image\open.png" />
+    <Resource Include="Image\save.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
