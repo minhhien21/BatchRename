@@ -16,7 +16,8 @@
                         <TextBlock Text="Refersh" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <ComboBox Name="presetCombobox" Width="150" Height="40" SelectionChanged="PresetCombobox_SelectionChanged" VerticalContentAlignment="Center"/>
+                <TextBlock Text=" Preset: " VerticalAlignment="Center"/>
+                <ComboBox Name="presetCombobox" Width="140" Height="40" SelectionChanged="PresetCombobox_SelectionChanged" VerticalContentAlignment="Center"/>
                 <Button Width="100" Height="40">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Image/help.png"/>
