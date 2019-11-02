@@ -23,7 +23,7 @@ namespace BatchRename
         public string getDescription()
         {
             var args = Args as MoveArgs;
-            var result = $"Move {args.length} character(s) from index {args.startAt} to the {args.moveAt}";
+            var result = $"Move [{args.length}] character(s) from index [{args.startAt}] to the [{args.moveAt}]";
             return result;
         }
 

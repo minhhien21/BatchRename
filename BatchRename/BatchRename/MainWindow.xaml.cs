@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +29,6 @@ namespace BatchRename
         BindingList<FileName> _filenames = null;
 
         BindingList<FolderName> _foldernames = null;
-
 
         class FolderName : INotifyPropertyChanged
         {
@@ -160,10 +161,18 @@ namespace BatchRename
         BindingList<ActionMain> _actionlist;
         BindingList<Action> ActionList = new BindingList<Action>();
 
-
+        BindingList<string> presetList = new BindingList<string>();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
+            string presetPath = $"{AppDomain.CurrentDomain.BaseDirectory}preset\\";
+            var presets = Directory.GetFiles(presetPath);
+            foreach(var preset in presets)
+            {
+                presetList.Add(System.IO.Path.GetFileNameWithoutExtension(preset));
+            }
 
+            presetCombobox.ItemsSource = presetList;
         }
 
         private void BtnAdd_ClickFile(object sender, RoutedEventArgs e)
@@ -752,6 +761,386 @@ namespace BatchRename
             indexSelect = AddlistListView.SelectedIndex;
         }
 
+        private void BtnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var lines = File.ReadAllLines(openFileDialog.FileName);
+                if (lines == null) return;
+                //cat tung dong roi bo vo mang
+                const string nganCach = " * ";
+
+                foreach (string line in lines)
+                {
+                    string[] tokens = line.Split(new string[] { nganCach }, StringSplitOptions.None);
+                    // token[0]: class name
+                    // token[1]: description
+                        
+                    switch(tokens[0])
+                    {
+                        case "New Case":
+                            {
+                                //xử lý description
+                                if (tokens[1].Contains("Make string ")) // kiểm tra description của new case
+                                {
+                                    tokens[1] = tokens[1].Replace("Make string ", "");
+                                    // tạo action add vô global
+                                    var newcase = new NewCaseAction()
+                                    {
+                                        Args = new NewCaseArgs()
+                                        {
+                                            type = tokens[1]
+                                        }
+                                    };
+                                    if (Global.action == null)
+                                    {
+                                        Global.action = new BindingList<Action>();
+                                    }
+                                    Global.action.Add(newcase);
+                                }
+                                break;
+                            }
+                        case "Fullname Normalize":
+                            {
+                                //kiểm tra description fullname normalize
+                                if (tokens[1] == "No space at two endings" || tokens[1] == "Capitalize first letter" || tokens[1] == "No extra spaces among words")
+                                {
+                                    // tạo action add vô global
+                                    var fullnameNormalize = new FullnameNormalizeAction()
+                                    {
+                                        Args = new FullnameNormalizeArgs()
+                                        {
+                                            option = tokens[1]
+                                        }
+                                    };
+                                    if (Global.action == null)
+                                    {
+                                        Global.action = new BindingList<Action>();
+                                    }
+                                    Global.action.Add(fullnameNormalize);
+                                }
+                                break;
+                            }
+                        case "Unique Name":
+                            {
+                                // tạo action add vô global
+                                var uniquename = new UniqueNameAction()
+                                {
+                                    Args = new UniqueNameArgs()
+                                    {
+                                        option = tokens[1]
+                                    }
+                                };
+                                if (Global.action == null)
+                                {
+                                    Global.action = new BindingList<Action>();
+                                }
+                                Global.action.Add(uniquename);
+                                break;
+                            }
+                        case "Replace":
+                            {
+                                //xử lý description "Replace '{args.From}' to '{args.To}' in '{args.StringChange}'"
+                                var pos = 0;
+                                string from = "";
+                                string to = "";
+                                string strChange = "";
+                                string pattern = @"\'(.*?)\'";
+                                foreach (Match match in Regex.Matches(tokens[1], pattern))
+                                {
+                                    if (match.Success && match.Groups.Count > 0)
+                                    {
+                                        if(pos == 0)
+                                            from = match.Groups[1].Value;
+                                        if(pos == 1)
+                                            to = match.Groups[1].Value;
+                                        if(pos == 2)
+                                            strChange = match.Groups[1].Value;
+                                        pos++;
+                                    }
+                                }
+                                if (from != "" && to != "" && strChange != "") // kiểm tra description replace
+                                {
+                                    // tạo action add vô global
+                                    var replace = new ReplaceAction()
+                                    {
+                                        Args = new ReplaceArgs()
+                                        {
+                                            From = from,
+                                            To = to,
+                                            StringChange = strChange
+                                        }
+                                    };
+                                    if (Global.action == null)
+                                    {
+                                        Global.action = new BindingList<Action>();
+                                    }
+                                    Global.action.Add(replace);
+                                }
+                                break;
+                            }
+                        case "Move":
+                            {
+                                //xử lý description "Move [{args.length}] character(s) from index [{args.startAt}] to the [{args.moveAt}]";
+                                var pos = 0;
+                                int len = -1;
+                                int startat = -1;
+                                string moveat = "";
+                                var n = 0;
+                                var m = 0;
+                                string pattern = @"\[(.*?)\]";
+                                foreach (Match match in Regex.Matches(tokens[1], pattern))
+                                {
+                                    if (match.Success && match.Groups.Count > 0)
+                                    {
+                                        if (pos == 0)
+                                        {
+                                            if(int.TryParse(match.Groups[1].Value,out n))
+                                                len = int.Parse(match.Groups[1].Value);
+                                        }
+                                        if (pos == 1)
+                                        {
+                                            if(int.TryParse(match.Groups[1].Value, out m))
+                                                startat = int.Parse(match.Groups[1].Value);
+                                        }
+                                        if (pos == 2)
+                                            moveat = match.Groups[1].Value;
+                                        pos++;
+                                    }
+                                }
+                                if (len > 0 && startat > 0 && moveat == "Begin" || moveat == "End") // bắt lỗi description move
+                                {
+                                    // tạo action add vô global
+                                    var move = new MoveAction()
+                                    {
+                                        Args = new MoveArgs()
+                                        {
+                                            startAt = startat,
+                                            length = len,
+                                            moveAt = moveat
+                                        }
+                                    };
+                                    if (Global.action == null)
+                                    {
+                                        Global.action = new BindingList<Action>();
+                                    }
+                                    Global.action.Add(move);
+                                }
+                                break;
+                            }
+                    }
+                }
+                AddlistListView.ItemsSource = Global.action;
+            }
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            // save file dialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Title = "Save text Files",
+                CheckPathExists = true,
+                DefaultExt = "txt",
+                Filter = "Text files (*.txt)|*.txt",
+                FilterIndex = 1,
+                RestoreDirectory = true,
+            };
+
+            // get filename
+            var path = "";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                path = saveFileDialog.FileName;
+            }
+            if (path != "")// bắt lỗi người dùng không chọn file
+            {
+                FileStream fs = new FileStream(path, FileMode.Create);
+
+                StreamWriter sWriter = new StreamWriter(fs, Encoding.UTF8);
+
+                foreach (var act in Global.action)
+                {
+                    var str = act.Classname + " * " + act.Description;
+                    sWriter.WriteLine(str);
+                }
+
+                sWriter.Flush();
+                fs.Close();
+            }  
+        }
+
+        private void PresetCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var lines = File.ReadAllLines($"{AppDomain.CurrentDomain.BaseDirectory}preset\\{presetCombobox.SelectedItem as string}.txt");
+            if (lines == null) return;
+            //cat tung dong roi bo vo mang
+            const string nganCach = " * ";
+
+            foreach (string line in lines)
+            {
+                string[] tokens = line.Split(new string[] { nganCach }, StringSplitOptions.None);
+                // token[0]: class name
+                // token[1]: description
+
+                switch (tokens[0])
+                {
+                    case "New Case":
+                        {
+                            //xử lý description
+                            if (tokens[1].Contains("Make string ")) // kiểm tra description của new case
+                            {
+                                tokens[1] = tokens[1].Replace("Make string ", "");
+                                // tạo action add vô global
+                                var newcase = new NewCaseAction()
+                                {
+                                    Args = new NewCaseArgs()
+                                    {
+                                        type = tokens[1]
+                                    }
+                                };
+                                if (Global.action == null)
+                                {
+                                    Global.action = new BindingList<Action>();
+                                }
+                                Global.action.Add(newcase);
+                            }
+                            break;
+                        }
+                    case "Fullname Normalize":
+                        {
+                            //kiểm tra description fullname normalize
+                            if (tokens[1] == "No space at two endings" || tokens[1] == "Capitalize first letter" || tokens[1] == "No extra spaces among words")
+                            {
+                                // tạo action add vô global
+                                var fullnameNormalize = new FullnameNormalizeAction()
+                                {
+                                    Args = new FullnameNormalizeArgs()
+                                    {
+                                        option = tokens[1]
+                                    }
+                                };
+                                if (Global.action == null)
+                                {
+                                    Global.action = new BindingList<Action>();
+                                }
+                                Global.action.Add(fullnameNormalize);
+                            }
+                            break;
+                        }
+                    case "Unique Name":
+                        {
+                            // tạo action add vô global
+                            var uniquename = new UniqueNameAction()
+                            {
+                                Args = new UniqueNameArgs()
+                                {
+                                    option = tokens[1]
+                                }
+                            };
+                            if (Global.action == null)
+                            {
+                                Global.action = new BindingList<Action>();
+                            }
+                            Global.action.Add(uniquename);
+                            break;
+                        }
+                    case "Replace":
+                        {
+                            //xử lý description "Replace '{args.From}' to '{args.To}' in '{args.StringChange}'"
+                            var pos = 0;
+                            string from = "";
+                            string to = "";
+                            string strChange = "";
+                            string pattern = @"\'(.*?)\'";
+                            foreach (Match match in Regex.Matches(tokens[1], pattern))
+                            {
+                                if (match.Success && match.Groups.Count > 0)
+                                {
+                                    if (pos == 0)
+                                        from = match.Groups[1].Value;
+                                    if (pos == 1)
+                                        to = match.Groups[1].Value;
+                                    if (pos == 2)
+                                        strChange = match.Groups[1].Value;
+                                    pos++;
+                                }
+                            }
+                            if (from != "" && to != "" && strChange != "") // kiểm tra description replace
+                            {
+                                // tạo action add vô global
+                                var replace = new ReplaceAction()
+                                {
+                                    Args = new ReplaceArgs()
+                                    {
+                                        From = from,
+                                        To = to,
+                                        StringChange = strChange
+                                    }
+                                };
+                                if (Global.action == null)
+                                {
+                                    Global.action = new BindingList<Action>();
+                                }
+                                Global.action.Add(replace);
+                            }
+                            break;
+                        }
+                    case "Move":
+                        {
+                            //xử lý description "Move [{args.length}] character(s) from index [{args.startAt}] to the [{args.moveAt}]";
+                            var pos = 0;
+                            int len = -1;
+                            int startat = -1;
+                            string moveat = "";
+                            var n = 0;
+                            var m = 0;
+                            string pattern = @"\[(.*?)\]";
+                            foreach (Match match in Regex.Matches(tokens[1], pattern))
+                            {
+                                if (match.Success && match.Groups.Count > 0)
+                                {
+                                    if (pos == 0)
+                                    {
+                                        if (int.TryParse(match.Groups[1].Value, out n))
+                                            len = int.Parse(match.Groups[1].Value);
+                                    }
+                                    if (pos == 1)
+                                    {
+                                        if (int.TryParse(match.Groups[1].Value, out m))
+                                            startat = int.Parse(match.Groups[1].Value);
+                                    }
+                                    if (pos == 2)
+                                        moveat = match.Groups[1].Value;
+                                    pos++;
+                                }
+                            }
+                            if (len > 0 && startat > 0 && moveat == "Begin" || moveat == "End") // bắt lỗi description move
+                            {
+                                // tạo action add vô global
+                                var move = new MoveAction()
+                                {
+                                    Args = new MoveArgs()
+                                    {
+                                        startAt = startat,
+                                        length = len,
+                                        moveAt = moveat
+                                    }
+                                };
+                                if (Global.action == null)
+                                {
+                                    Global.action = new BindingList<Action>();
+                                }
+                                Global.action.Add(move);
+                            }
+                            break;
+                        }
+                }
+            }
+            AddlistListView.ItemsSource = Global.action;
+        }
         private void Delectaction_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show($"Do you want to delect '{Global.action[indexSelect].Description}'", "Notify", MessageBoxButton.YesNo);
