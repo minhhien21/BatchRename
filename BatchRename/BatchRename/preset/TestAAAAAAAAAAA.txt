@@ -1,0 +1,2 @@
+﻿Unique Name * Unique Name
+New Case * Make string UpperCase

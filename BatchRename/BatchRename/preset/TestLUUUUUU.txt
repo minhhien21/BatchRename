@@ -1,0 +1,3 @@
+﻿New Case * Make string UpperCase
+New Case * Make string LowerCase
+Replace * Replace 'New' to 'Test' in 'Name'
