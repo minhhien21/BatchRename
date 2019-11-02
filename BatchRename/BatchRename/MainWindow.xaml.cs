@@ -30,6 +30,10 @@ namespace BatchRename
 
         BindingList<FolderName> _foldernames = null;
 
+        int indexSelect = -1;  // vị trí khi click item trong listview addList
+        int indexSelectFilename = -1; // vị trí khi click item trong listview Rename filename
+        int indexSelectFoldername = -1; // vị trí khi click item trong listview Rename foldername
+
         class FolderName : INotifyPropertyChanged
         {
             public string Name { get; set; }
@@ -749,13 +753,14 @@ namespace BatchRename
             AddlistListView.ItemsSource = ActionList;
             Global.action = new BindingList<Action>();
 
-            actionSeleted.control.Visibility = Visibility.Hidden;
-            actionSeleted.count = 0;
-            actionSeleted.Expand = "+";
+            if (actionSeleted != null)
+            {
+                actionSeleted.control.Visibility = Visibility.Hidden;
+                actionSeleted.count = 0;
+                actionSeleted.Expand = "+";
+            }
 
         }
-
-        int indexSelect = -1;
 
         private void up_Clicked(object sender, RoutedEventArgs e)
         {
@@ -849,18 +854,6 @@ namespace BatchRename
             AddlistListView.ItemsSource = Global.action;
             indexSelect = index;
         }
-
-        private void ErrorDetailFileMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var item = fileNameListView.SelectedItem as FileName;
-            MessageBox.Show(item?.errorDetail, "ErrorDetail");
-        }
-
-        private void ErrorDetailFolderMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var item = folderNameListView.SelectedItem as FolderName;
-            MessageBox.Show(item?.errorDetail, "ErrorDetail");
-        } 
 
         private void listView_Click(object sender, MouseButtonEventArgs e)
         {
@@ -1263,5 +1256,118 @@ namespace BatchRename
             }
             
         }
+
+        private void listViewfilenameItemIsSelect_Click(object sender, MouseButtonEventArgs e)
+        {
+            indexSelectFilename = fileNameListView.SelectedIndex;
+        }
+
+        private void ErrorDetailFileMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            if (indexSelectFilename != -1)
+            {
+                MessageBox.Show(item.errorDetail);
+            }
+        }
+
+        private void fileDeleteitem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            if (indexSelectFilename != -1)
+            {
+                _filenames.RemoveAt(indexSelectFilename);
+            }
+        }
+
+        private void fileDeleteAllItemInGeneralPath_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            if (indexSelectFilename != -1)
+            {
+                for (int i = 0; i < _filenames.Count; i++)
+                {
+                    if (_filenames[i].Path == item.Path)
+                    {
+                        _filenames.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        private void fileDeleteAllItemHaveGeneralExtensionInGeneralPath_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            if (indexSelectFilename != -1)
+            {
+                for (int i = 0; i < _filenames.Count; i++)
+                {
+                    if (_filenames[i].Path == item.Path && _filenames[i].Extension == item.Extension)
+                    {
+                        _filenames.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        private void fileDeleteAllItemInList_Click(object sender, RoutedEventArgs e)
+        {
+            if (_filenames != null)
+            {
+                _filenames.Clear();
+            }
+        }
+
+        private void listViewfoldernameItemIsSelect_Click(object sender, MouseButtonEventArgs e)
+        {
+            indexSelectFoldername = folderNameListView.SelectedIndex;
+        }
+
+        private void ErrorDetailFolderMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = folderNameListView.SelectedItem as FolderName;
+            if (indexSelectFoldername != -1)
+            {
+                MessageBox.Show(item.errorDetail);
+            }
+        }
+
+
+        private void folderDeleteitem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = folderNameListView.SelectedItem as FolderName;
+            if (indexSelectFoldername != -1)
+            {
+                _foldernames.RemoveAt(indexSelectFoldername);
+            }
+        }
+
+        private void folderDeleteAllItemInGeneralPath_Click(object sender, RoutedEventArgs e)
+        {
+            var item = folderNameListView.SelectedItem as FolderName;
+            if (indexSelectFoldername != -1)
+            {
+                for (int i = 0; i < _foldernames.Count; i++)
+                {
+                    if (_foldernames[i].Path == item.Path)
+                    {
+                        _foldernames.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        private void folderDeleteAllItemInList_Click(object sender, RoutedEventArgs e)
+        {
+            if (_foldernames != null)
+            {
+                _foldernames.Clear();
+            }
+        }
+
+
     }
 }
