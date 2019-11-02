@@ -86,7 +86,7 @@ namespace BatchRename
             {
                 BindingList<FileName> result = null;
                 //mở dialog cho người dùng chọn file
-                var screen = new CommonOpenFileDialog() { InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)};
+                var screen = new CommonOpenFileDialog();
                 screen.IsFolderPicker = true;
 
                 if (screen.ShowDialog() == CommonFileDialogResult.Ok)
@@ -118,7 +118,7 @@ namespace BatchRename
                 BindingList<FolderName> result = null;
                 //mở dialog cho người dùng chọn file
                 
-                var screen = new CommonOpenFileDialog() { InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
+                var screen = new CommonOpenFileDialog();
                 screen.IsFolderPicker = true;
                 
                 if (screen.ShowDialog() == CommonFileDialogResult.Ok)
@@ -939,15 +939,16 @@ namespace BatchRename
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (Global.action == null)
+            {
+                MessageBox.Show("There isn't currently action on the list. Please add action before save!");
+                return;
+            }
             // save file dialog
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = "Save text Files",
-                CheckPathExists = true,
-                DefaultExt = "txt",
                 Filter = "Text files (*.txt)|*.txt",
-                FilterIndex = 1,
-                RestoreDirectory = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             };
 
