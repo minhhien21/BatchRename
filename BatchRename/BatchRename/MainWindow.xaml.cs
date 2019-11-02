@@ -346,6 +346,9 @@ namespace BatchRename
                     }
                     item.Prename = newName + "." + newExtension;
                     item.Extension = "." + newExtension;
+
+
+
                     if (item.errorDetail != "")
                     {
                         item.Error = "Fail";
@@ -363,7 +366,79 @@ namespace BatchRename
 
         private void BtnStartBatch_File(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Bạn muốn thực hiện thay đổi?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                return;
+            }
+            else
+            {
 
+                if (Global.action != null)
+                {
+                    ActionList = new BindingList<Action>(Global.action);
+                }
+                AddlistListView.ItemsSource = Global.action;
+                List<string> oldname = new List<string>();
+
+                if (_filenames != null)
+                {
+                    int idx = 0;
+                    foreach (var item in _filenames)
+                    {
+                        oldname.Add(item.Path + @"\" + item.Name);
+                        idx++;
+                    }
+
+                    int index = 0;
+                    foreach (var item in _filenames)
+                    {
+                        //  var newName = item.Name.Replace(item.Extension, "");
+                        var newName = item.Name.Replace(item.Extension, "");    // cắt extension ra khỏi tên file: abc.txt -> abc và txt
+                        var newExtension = item.Extension.Replace(".", "");
+                        item.errorDetail = "";                        //string Error ="";
+
+                        for (int i = 0; i < ActionList.Count; i++)
+                        {
+                            if (ActionList[i].Check == true)
+                            {
+                                var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);  // thực thi action vô prename
+
+                                if (ActionList[i].GetStringName() == "Extension")  // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
+                                {
+                                    newExtension = changeName;                        // cập nhật lại newExtension mới nếu có sự thay đổi
+                                }
+                                else
+                                {
+                                    newName = changeName;                            // cập nhật lại newName mới nếu có sự thay đổi
+                                }
+                            }
+
+                        }
+
+                        item.Prename = item.Path + @"\" + newName + "." + newExtension;  //Lấy đường dẫn đầy đủ của file hiện tại
+                        FileInfo fi = new FileInfo(oldname.ElementAt(index));            //Lấy thông tin file
+                        fi.MoveTo(item.Prename);                                        //Đổi tên file
+                        index++;
+
+                        item.Prename = newName + "." + newExtension;                  //Cập nhật lại để hiển thị
+                        item.Extension = "." + newExtension;
+
+                        if (item.errorDetail != "")
+                        {
+                            item.Error = "Fail";
+                        }
+                        else
+                        {
+                            item.Error = "Success";
+                            item.errorDetail = "Success";
+                        }
+
+                    }
+
+                    optionAfterRenamefile();
+                    fileNameListView.ItemsSource = _filenames;
+                }
+            }
         }
 
         private void BtnAdd_ClickFolder(object sender, RoutedEventArgs e)
@@ -426,6 +501,7 @@ namespace BatchRename
                         }
 
                     }
+
                     item.Prename = newName;
                     if (item.errorDetail != "")
                     {
@@ -442,6 +518,67 @@ namespace BatchRename
 
         private void BtnStartPatch_ClickFolder(object sender, RoutedEventArgs e)
         {
+
+            if (MessageBox.Show("Bạn muốn thực hiện thay đổi?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                return;
+            }
+            else
+            {
+
+                if (Global.action != null)
+                {
+                    ActionList = new BindingList<Action>(Global.action);
+                }
+                AddlistListView.ItemsSource = Global.action;
+                List<string> oldname = new List<string>();
+
+                if (_foldernames != null)
+                {
+
+                    int idx = 0;
+                    foreach (var item in _foldernames)
+                    {
+                        oldname.Add(item.Path + @"\" + item.Name);
+                        idx++;
+                    }
+                    int index = 0;
+                    foreach (var item in _foldernames)
+                    {
+                        var newName = item.Name;
+                        item.errorDetail = "";
+
+                        for (int i = 0; i < ActionList.Count; i++)
+                        {
+                            if (ActionList[i].Check == true)
+                            {
+                                // thực thi action vô prename
+                                var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
+
+                                // cập nhật lại newName mới nếu có sự thay đổi
+                                newName = changeName;
+                            }
+
+                        }
+
+                        item.Prename = item.Path + @"\" + newName;
+                        FileInfo fi = new FileInfo(oldname.ElementAt(index));
+                        fi.MoveTo(item.Prename);
+                        index++;
+                        item.Prename = newName;
+
+                        if (item.errorDetail != "")
+                        {
+                            item.Error = "Fail";
+                        }
+                        else
+                        {
+                            item.Error = "Success";
+                            item.errorDetail = "Success";
+                        }
+                    }
+                }
+            }
 
         }
 
