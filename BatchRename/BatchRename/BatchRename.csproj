@@ -171,5 +171,9 @@
     <Resource Include="Image\up.png" />
     <Resource Include="Image\upall.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\open.png" />
+    <Resource Include="Image\save.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

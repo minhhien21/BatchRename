@@ -97,25 +97,30 @@
                                 <Image Source="Image/down.png"/>
                             </StackPanel>
                         </Button>
+                        <ComboBox Name="OptionComboBox" Width="160" Margin="10,0,0,0">
+                            <ComboBoxItem Content="Keep the old name" IsSelected="True"/>
+                            <ComboBoxItem Content="Add suffix"/>
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="40" HorizontalAlignment="Right"
                                        VerticalAlignment="Bottom"
                                         DockPanel.Dock="Bottom" Margin="0,10,0,0" Width="244">
                         <Button Width="80" Height="25" Margin="0,0,5,0">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="Image/refresh.png"/>
+                                <Image Source="Image/open.png"/>
                                 <TextBlock Text=" Open" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                         <Button Width="80" Height="25" Margin="0,0,5,0">
                             <StackPanel Orientation="Horizontal">
-                                <Image Source="Image/refresh.png"/>
+                                <Image Source="Image/save.png"/>
                                 <TextBlock Text=" Save" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
                     </StackPanel>
                     <ListView Name="AddlistListView" ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                              ScrollViewer.VerticalScrollBarVisibility="Visible" PreviewMouseLeftButtonUp="listView_Click">
+                              ScrollViewer.VerticalScrollBarVisibility="Visible" PreviewMouseLeftButtonUp="listView_Click"
+                              PreviewMouseRightButtonUp="listView_Click">
                         <ListView.Resources>
                             <Style TargetType="ListViewItem">
                                 <Style.Triggers>
@@ -126,6 +131,11 @@
                                 </Style.Triggers>
                             </Style>
                         </ListView.Resources>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Delete" Click="Delectaction_Click"/>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock>
