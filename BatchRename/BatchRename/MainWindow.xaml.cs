@@ -381,12 +381,7 @@ namespace BatchRename
             }
             else
             {
-
-                if (Global.action != null)
-                {
-                    ActionList = new BindingList<Action>(Global.action);
-                }
-                AddlistListView.ItemsSource = Global.action;
+                
                 List<string> oldname = new List<string>();
 
                 if (_filenames != null)
@@ -408,8 +403,7 @@ namespace BatchRename
 
                         for (int i = 0; i < ActionList.Count; i++)
                         {
-                            if (ActionList[i].Check == true)
-                            {
+                          
                                 var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);  // thực thi action vô prename
 
                                 if (ActionList[i].GetStringName() == "Extension")  // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
@@ -420,7 +414,7 @@ namespace BatchRename
                                 {
                                     newName = changeName;                            // cập nhật lại newName mới nếu có sự thay đổi
                                 }
-                            }
+                            
 
                         }
 
@@ -534,12 +528,6 @@ namespace BatchRename
             }
             else
             {
-
-                if (Global.action != null)
-                {
-                    ActionList = new BindingList<Action>(Global.action);
-                }
-                AddlistListView.ItemsSource = Global.action;
                 List<string> oldname = new List<string>();
 
                 if (_foldernames != null)
@@ -559,15 +547,11 @@ namespace BatchRename
 
                         for (int i = 0; i < ActionList.Count; i++)
                         {
-                            if (ActionList[i].Check == true)
-                            {
                                 // thực thi action vô prename
                                 var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
 
                                 // cập nhật lại newName mới nếu có sự thay đổi
                                 newName = changeName;
-                            }
-
                         }
 
                         item.Prename = item.Path + @"\" + newName;
