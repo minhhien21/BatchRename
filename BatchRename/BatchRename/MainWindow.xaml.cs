@@ -594,7 +594,6 @@ namespace BatchRename
                 foreach (var item in _foldernames)
                 {
                     var newName = item.Name;
-                    var newExtension = "";
                     item.errorDetail = "";
 
                     for (int i = 0; i < ActionList.Count; i++)
@@ -602,7 +601,7 @@ namespace BatchRename
                         if (ActionList[i].Check == true)
                         {
                             // thực thi action vô prename
-                            var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);
+                            var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
                             // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
                             if (ActionList[i].GetStringName() == "Extension")
                             {
@@ -657,7 +656,6 @@ namespace BatchRename
                     foreach (var item in _foldernames)
                     {
                         var newName = item.Name;
-                        var newExtension = "";
                         item.errorDetail = "";
 
                         for (int i = 0; i < ActionList.Count; i++)
@@ -665,7 +663,7 @@ namespace BatchRename
                             if (ActionList[i].Check == true)
                             {
                                 // thực thi action vô prename
-                                var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);
+                                var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
                                 // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
                                 if (ActionList[i].GetStringName() == "Extension")
                                 {
