@@ -322,7 +322,6 @@ namespace BatchRename
             {
                 ActionList = new BindingList<Action>(Global.action);
             }
-            AddlistListView.ItemsSource = Global.action;
             if (_filenames != null)
             {
                 foreach (var item in _filenames)
@@ -380,12 +379,10 @@ namespace BatchRename
             }
             else
             {
-
                 if (Global.action != null)
                 {
                     ActionList = new BindingList<Action>(Global.action);
                 }
-                AddlistListView.ItemsSource = Global.action;
                 List<string> oldname = new List<string>();
                 List<string> newname = new List<string>();
                 if (_filenames != null)
@@ -405,8 +402,7 @@ namespace BatchRename
 
                         for (int i = 0; i < ActionList.Count; i++)
                         {
-                            if (ActionList[i].Check == true)
-                            {
+                          
                                 var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);  // thực thi action vô prename
 
                                 if (ActionList[i].GetStringName() == "Extension")  // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
@@ -417,7 +413,7 @@ namespace BatchRename
                                 {
                                     newName = changeName;                            // cập nhật lại newName mới nếu có sự thay đổi
                                 }
-                            }
+                            
 
                         }
 
@@ -593,7 +589,6 @@ namespace BatchRename
             {
                 ActionList = new BindingList<Action>(Global.action);
             }
-            AddlistListView.ItemsSource = Global.action;
             if (_foldernames != null)
             {
                 foreach (var item in _foldernames)
@@ -639,12 +634,10 @@ namespace BatchRename
             }
             else
             {
-
                 if (Global.action != null)
                 {
                     ActionList = new BindingList<Action>(Global.action);
                 }
-                AddlistListView.ItemsSource = Global.action;
                 List<string> oldname = new List<string>();
                 List<string> newname = new List<string>();
                 if (_foldernames != null)
@@ -662,15 +655,11 @@ namespace BatchRename
 
                         for (int i = 0; i < ActionList.Count; i++)
                         {
-                            if (ActionList[i].Check == true)
-                            {
                                 // thực thi action vô prename
                                 var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
 
                                 // cập nhật lại newName mới nếu có sự thay đổi
                                 newName = changeName;
-                            }
-
                         }
                         item.Prename = newName;
 
@@ -860,6 +849,63 @@ namespace BatchRename
             indexSelect = AddlistListView.SelectedIndex;
         }
 
+        private void Delectaction_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Do you want to delect '{Global.action[indexSelect].Description}'", "Notify", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    Global.action.RemoveAt(indexSelect);
+                    indexSelect = -1;
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+
+        }
+
+        private void DelectactionNoCheck_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Do you want to delect all action no check", "Notify", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    for (int i = 0; i < Global.action.Count; i++)
+                    {
+                        if (Global.action[i].Check == false)
+                        {
+                            Global.action.RemoveAt(i);
+                            i--;
+                        }
+                    }
+                    indexSelect = -1;
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+
+
+        private void DelectactionCheck_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show($"Do you want to delect all action check", "Notify", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    for (int i = 0; i < Global.action.Count; i++)
+                    {
+                        if (Global.action[i].Check == true)
+                        {
+                            Global.action.RemoveAt(i);
+                            i--;
+                        }
+                    }
+                    indexSelect = -1;
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
         private void BtnOpen_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog() { InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
@@ -1245,20 +1291,6 @@ namespace BatchRename
             }
             AddlistListView.ItemsSource = Global.action;
         }
-        private void Delectaction_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show($"Do you want to delect '{Global.action[indexSelect].Description}'", "Notify", MessageBoxButton.YesNo);
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-                    Global.action.RemoveAt(indexSelect);
-                    indexSelect = -1;
-                    break;
-                case MessageBoxResult.No:
-                    break;
-            }
-            
-        }
 
         private void listViewfilenameItemIsSelect_Click(object sender, MouseButtonEventArgs e)
         {
@@ -1279,7 +1311,16 @@ namespace BatchRename
             var item = fileNameListView.SelectedItem as FileName;
             if (indexSelectFilename != -1)
             {
-                _filenames.RemoveAt(indexSelectFilename);
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect item", "Notify", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        _filenames.RemoveAt(indexSelectFilename);
+                        break;
+                    case MessageBoxResult.No:
+                        indexSelectFilename = -1;
+                        break;
+                }
             }
         }
 
@@ -1288,30 +1329,49 @@ namespace BatchRename
             var item = fileNameListView.SelectedItem as FileName;
             if (indexSelectFilename != -1)
             {
-                for (int i = 0; i < _filenames.Count; i++)
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item in general path", "Notify", MessageBoxButton.YesNo);
+                switch (result)
                 {
-                    if (_filenames[i].Path == item.Path)
-                    {
-                        _filenames.RemoveAt(i);
-                        i--;
-                    }
+                    case MessageBoxResult.Yes:
+                        for (int i = 0; i < _filenames.Count; i++)
+                        {
+                            if (_filenames[i].Path == item.Path)
+                            {
+                                _filenames.RemoveAt(i);
+                                i--;
+                            }
+                        }
+                        break;
+                    case MessageBoxResult.No:
+                        indexSelectFilename = -1;
+                        break;
                 }
+
             }
         }
-
         private void fileDeleteAllItemHaveGeneralExtensionInGeneralPath_Click(object sender, RoutedEventArgs e)
         {
             var item = fileNameListView.SelectedItem as FileName;
             if (indexSelectFilename != -1)
             {
-                for (int i = 0; i < _filenames.Count; i++)
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item have general extension in general path", "Notify", MessageBoxButton.YesNo);
+                switch (result)
                 {
-                    if (_filenames[i].Path == item.Path && _filenames[i].Extension == item.Extension)
-                    {
-                        _filenames.RemoveAt(i);
-                        i--;
-                    }
+                    case MessageBoxResult.Yes:
+                        for (int i = 0; i < _filenames.Count; i++)
+                        {
+                            if (_filenames[i].Path == item.Path && _filenames[i].Extension == item.Extension)
+                            {
+                                _filenames.RemoveAt(i);
+                                i--;
+                            }
+                        }
+                        break;
+                    case MessageBoxResult.No:
+                        indexSelectFilename = -1;
+                        break;
                 }
+
             }
         }
 
@@ -1319,7 +1379,16 @@ namespace BatchRename
         {
             if (_filenames != null)
             {
-                _filenames.Clear();
+                MessageBoxResult result = MessageBox.Show($"Do you want to delete all item in list", "Notify", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        _filenames.Clear();
+                        break;
+                    case MessageBoxResult.No:
+                        indexSelectFilename = -1;
+                        break;
+                }
             }
         }
 
@@ -1343,7 +1412,17 @@ namespace BatchRename
             var item = folderNameListView.SelectedItem as FolderName;
             if (indexSelectFoldername != -1)
             {
-                _foldernames.RemoveAt(indexSelectFoldername);
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect item", "Notify", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        _foldernames.RemoveAt(indexSelectFoldername);
+                        break;
+                    case MessageBoxResult.No:
+                        indexSelectFoldername = -1;
+                        break;
+                }
+                
             }
         }
 
@@ -1352,13 +1431,22 @@ namespace BatchRename
             var item = folderNameListView.SelectedItem as FolderName;
             if (indexSelectFoldername != -1)
             {
-                for (int i = 0; i < _foldernames.Count; i++)
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item in general path", "Notify", MessageBoxButton.YesNo);
+                switch (result)
                 {
-                    if (_foldernames[i].Path == item.Path)
-                    {
-                        _foldernames.RemoveAt(i);
-                        i--;
-                    }
+                    case MessageBoxResult.Yes:
+                        for (int i = 0; i < _foldernames.Count; i++)
+                        {
+                            if (_foldernames[i].Path == item.Path)
+                            {
+                                _foldernames.RemoveAt(i);
+                                i--;
+                            }
+                        }
+                        break;
+                    case MessageBoxResult.No:
+                        indexSelectFoldername = -1;
+                        break;
                 }
             }
         }
@@ -1367,10 +1455,17 @@ namespace BatchRename
         {
             if (_foldernames != null)
             {
-                _foldernames.Clear();
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item in list", "Notify", MessageBoxButton.YesNo);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        _foldernames.Clear();
+                        break;
+                    case MessageBoxResult.No:
+                        indexSelectFoldername = -1;
+                        break;
+                }
             }
         }
-
-
     }
 }

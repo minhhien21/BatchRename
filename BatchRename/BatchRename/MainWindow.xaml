@@ -135,6 +135,8 @@
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Delete" Click="Delectaction_Click"/>
+                                <MenuItem Header="Delete all action no check" Click="DelectactionNoCheck_Click"/>
+                                <MenuItem Header="Delete all action check" Click="DelectactionCheck_Click"/>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.ItemTemplate>
