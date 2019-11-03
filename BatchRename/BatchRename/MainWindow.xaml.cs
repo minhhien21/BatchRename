@@ -1064,8 +1064,11 @@ namespace BatchRename
 
                 foreach (var act in Global.action)
                 {
-                    var str = act.Classname + " * " + act.Description;
-                    sWriter.WriteLine(str);
+                    if (act.Check == true)
+                    {
+                        var str = act.Classname + " * " + act.Description;
+                        sWriter.WriteLine(str);
+                    }
                 }
 
                 sWriter.Flush();
