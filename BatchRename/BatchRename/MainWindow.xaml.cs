@@ -30,6 +30,10 @@ namespace BatchRename
 
         BindingList<FolderName> _foldernames = null;
 
+        int indexSelect = -1;  // vị trí khi click item trong listview addList
+        int indexSelectFilename = -1; // vị trí khi click item trong listview Rename filename
+        int indexSelectFoldername = -1; // vị trí khi click item trong listview Rename foldername
+
         class FolderName : INotifyPropertyChanged
         {
             public string Name { get; set; }
@@ -112,14 +116,15 @@ namespace BatchRename
                 }
                 return result;
             }
-
+            
             public static BindingList<FolderName> GetFolderName()
             {
                 BindingList<FolderName> result = null;
                 //mở dialog cho người dùng chọn file
+                
                 var screen = new CommonOpenFileDialog();
                 screen.IsFolderPicker = true;
-
+                
                 if (screen.ShowDialog() == CommonFileDialogResult.Ok)
                 {
                     var path = screen.FileName;
@@ -204,10 +209,6 @@ namespace BatchRename
                     _filenames = files;
                 }
             }
-            //binding 
-            //Binding binding = new Binding("_filenames");
-            //binding.Source = _filenames;
-            //fileNameListView.SetBinding(ListView.ItemsSourceProperty, binding);
             fileNameListView.ItemsSource = _filenames;
         }
 
@@ -356,8 +357,6 @@ namespace BatchRename
                     item.Prename = newName + "." + newExtension;
                     item.Extension = "." + newExtension;
 
-
-
                     if (item.errorDetail != "")
                     {
                         item.Error = "Fail";
@@ -383,21 +382,19 @@ namespace BatchRename
             {
                 
                 List<string> oldname = new List<string>();
-
+                List<string> newname = new List<string>();
                 if (_filenames != null)
                 {
-                    int idx = 0;
                     foreach (var item in _filenames)
                     {
                         oldname.Add(item.Path + @"\" + item.Name);
-                        idx++;
                     }
 
                     int index = 0;
                     foreach (var item in _filenames)
                     {
-                        //  var newName = item.Name.Replace(item.Extension, "");
-                        var newName = item.Name.Replace(item.Extension, "");    // cắt extension ra khỏi tên file: abc.txt -> abc và txt
+                        // cắt extension ra khỏi tên file: abc.txt -> abc và txt
+                        var newName = item.Name.Replace(item.Extension, "");   
                         var newExtension = item.Extension.Replace(".", "");
                         item.errorDetail = "";                        //string Error ="";
 
@@ -418,11 +415,6 @@ namespace BatchRename
 
                         }
 
-                        item.Prename = item.Path + @"\" + newName + "." + newExtension;  //Lấy đường dẫn đầy đủ của file hiện tại
-                        FileInfo fi = new FileInfo(oldname.ElementAt(index));            //Lấy thông tin file
-                        fi.MoveTo(item.Prename);                                        //Đổi tên file
-                        index++;
-
                         item.Prename = newName + "." + newExtension;                  //Cập nhật lại để hiển thị
                         item.Extension = "." + newExtension;
 
@@ -439,6 +431,16 @@ namespace BatchRename
                     }
 
                     optionAfterRenamefile();
+                    foreach (var item in _filenames)
+                    {
+                        newname.Add(item.Path + @"\" + item.Prename);
+                    }
+                    for (int i = 0; i < oldname.Count; i++)
+                    {
+                        FileInfo fileInfo = new FileInfo(oldname[i]);
+                        fileInfo.MoveTo(newname[i]);
+                    }
+                    _filenames.Clear();
                     fileNameListView.ItemsSource = _filenames;
                 }
             }
@@ -476,6 +478,107 @@ namespace BatchRename
 
             //binding
             folderNameListView.ItemsSource = _foldernames;
+        }
+
+        public void optionAfterRenamefolder()
+        {
+            int flag = 0;
+            int flagoption = 0;
+            ComboBoxItem typeItem = (ComboBoxItem)OptionComboBox.SelectedItem;
+            if (typeItem.Content.ToString() == "Keep the old name")
+                flagoption = 0;
+            else
+                flagoption = 1;
+            while (flag == 0)
+            {
+                int i = 0;
+                int flag1 = 0;
+                // giữ lại tên cũ
+                if (flagoption == 0)
+                {
+                    for (i = 0; i < _foldernames.Count - 1; i++)
+                    {
+                        flag1 = 0;
+                        for (int j = i + 1; j < _foldernames.Count; j++)
+                        {
+                            if (_foldernames[i].Path == _foldernames[j].Path && (_foldernames[i].Prename == _foldernames[j].Prename))
+                            {
+                                if (_foldernames[j].Prename != _foldernames[j].Name)
+                                {
+                                    if (_foldernames[j].Error == "Success")
+                                    {
+                                        _foldernames[j].Error = "Fail";
+                                        _foldernames[j].errorDetail = "duplicate name:" + _foldernames[j].Prename;
+                                    }
+                                    else
+                                    {
+                                        _foldernames[j].errorDetail += "duplicate name:" + _foldernames[j].Prename;
+                                    }
+                                    _foldernames[j].Prename = _foldernames[j].Name;
+                                    flag1 = 1;
+                                }
+                            }
+                        }
+                        if (flag1 == 1 && _foldernames[i].Prename != _foldernames[i].Name)
+                        {
+                            if (_foldernames[i].Error == "Success")
+                            {
+                                _foldernames[i].Error = "Fail";
+                                _foldernames[i].errorDetail = "duplicate name:" + _foldernames[i].Prename;
+                            }
+                            else
+                            {
+                                _foldernames[i].errorDetail += "duplicate name:" + _foldernames[i].Prename;
+                            }
+                            _foldernames[i].Prename = _foldernames[i].Name;
+                        }
+
+                    }
+                }
+
+                // thêm hậu tố
+                if (flagoption == 1)
+                {
+                    int suffix = 1;
+                    for (i = 0; i < _foldernames.Count - 1; i++)
+                    {
+                        flag1 = 0;
+                        for (int j = i + 1; j < _foldernames.Count; j++)
+                        {
+                            if (_foldernames[i].Path == _foldernames[j].Path && _foldernames[i].Prename == _foldernames[j].Prename)
+                            {
+                                if (_foldernames[j].Prename != _foldernames[j].Name)
+                                {
+                                    _foldernames[j].Prename += suffix.ToString();
+                                    suffix++;
+                                }
+                                flag1 = 1;
+                            }
+                        }
+                        if (flag1 == 1 && _foldernames[i].Prename != _foldernames[i].Name)
+                        {
+                            _foldernames[i].Prename += suffix.ToString();
+                            suffix++;
+                        }
+                    }
+                }
+                // kiểm tra có còn trùng hay không để tiếp tục vòng lặp
+                flag = 1;
+                for (i = 0; i < _foldernames.Count - 1; i++)
+                {
+                    for (int j = i + 1; j < _foldernames.Count; j++)
+                    {
+                        if (_foldernames[i].Path == _foldernames[j].Path)
+                        {
+                            if (_foldernames[i].Prename == _foldernames[j].Prename)
+                            {
+                                flag = 0;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void BtnPreview_ClickFolder(object sender, RoutedEventArgs e)
@@ -516,6 +619,8 @@ namespace BatchRename
                         item.errorDetail = "Success";
                     }
                 }
+                optionAfterRenamefolder();
+                folderNameListView.ItemsSource = _foldernames;
             }
         }
 
@@ -529,15 +634,13 @@ namespace BatchRename
             else
             {
                 List<string> oldname = new List<string>();
-
+                List<string> newname = new List<string>();
                 if (_foldernames != null)
                 {
 
-                    int idx = 0;
                     foreach (var item in _foldernames)
                     {
                         oldname.Add(item.Path + @"\" + item.Name);
-                        idx++;
                     }
                     int index = 0;
                     foreach (var item in _foldernames)
@@ -553,11 +656,6 @@ namespace BatchRename
                                 // cập nhật lại newName mới nếu có sự thay đổi
                                 newName = changeName;
                         }
-
-                        item.Prename = item.Path + @"\" + newName;
-                        FileInfo fi = new FileInfo(oldname.ElementAt(index));
-                        fi.MoveTo(item.Prename);
-                        index++;
                         item.Prename = newName;
 
                         if (item.errorDetail != "")
@@ -570,6 +668,18 @@ namespace BatchRename
                             item.errorDetail = "Success";
                         }
                     }
+                    optionAfterRenamefolder();
+                    foreach (var item in _foldernames)
+                    {
+                        newname.Add(item.Path + @"\" + item.Prename);
+                    }
+                    for (int i = 0; i < oldname.Count; i++)
+                    {
+                        DirectoryInfo directoryInfo = new DirectoryInfo(oldname[i]);
+                        //directoryInfo.MoveTo(newname[i]); Đang lỗi ở đây
+                    }
+                    _foldernames.Clear();
+                    folderNameListView.ItemsSource = _foldernames;
                 }
             }
 
@@ -627,13 +737,14 @@ namespace BatchRename
             AddlistListView.ItemsSource = ActionList;
             Global.action = new BindingList<Action>();
 
-            actionSeleted.control.Visibility = Visibility.Hidden;
-            actionSeleted.count = 0;
-            actionSeleted.Expand = "+";
+            if (actionSeleted != null)
+            {
+                actionSeleted.control.Visibility = Visibility.Hidden;
+                actionSeleted.count = 0;
+                actionSeleted.Expand = "+";
+            }
 
         }
-
-        int indexSelect = -1;
 
         private void up_Clicked(object sender, RoutedEventArgs e)
         {
@@ -728,18 +839,6 @@ namespace BatchRename
             indexSelect = index;
         }
 
-        private void ErrorDetailFileMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var item = fileNameListView.SelectedItem as FileName;
-            MessageBox.Show(item?.errorDetail, "ErrorDetail");
-        }
-
-        private void ErrorDetailFolderMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var item = folderNameListView.SelectedItem as FolderName;
-            MessageBox.Show(item?.errorDetail, "ErrorDetail");
-        } 
-
         private void listView_Click(object sender, MouseButtonEventArgs e)
         {
             indexSelect = AddlistListView.SelectedIndex;
@@ -747,7 +846,7 @@ namespace BatchRename
 
         private void BtnOpen_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog() { InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
             openFileDialog.Filter = "Text files (*.txt)|*.txt";
             if (openFileDialog.ShowDialog() == true)
             {
@@ -922,15 +1021,17 @@ namespace BatchRename
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (Global.action == null)
+            {
+                MessageBox.Show("There isn't currently action on the list. Please add action before save!");
+                return;
+            }
             // save file dialog
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
                 Title = "Save text Files",
-                CheckPathExists = true,
-                DefaultExt = "txt",
                 Filter = "Text files (*.txt)|*.txt",
-                FilterIndex = 1,
-                RestoreDirectory = true,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             };
 
             // get filename
@@ -1139,5 +1240,118 @@ namespace BatchRename
             }
             
         }
+
+        private void listViewfilenameItemIsSelect_Click(object sender, MouseButtonEventArgs e)
+        {
+            indexSelectFilename = fileNameListView.SelectedIndex;
+        }
+
+        private void ErrorDetailFileMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            if (indexSelectFilename != -1)
+            {
+                MessageBox.Show(item.errorDetail);
+            }
+        }
+
+        private void fileDeleteitem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            if (indexSelectFilename != -1)
+            {
+                _filenames.RemoveAt(indexSelectFilename);
+            }
+        }
+
+        private void fileDeleteAllItemInGeneralPath_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            if (indexSelectFilename != -1)
+            {
+                for (int i = 0; i < _filenames.Count; i++)
+                {
+                    if (_filenames[i].Path == item.Path)
+                    {
+                        _filenames.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        private void fileDeleteAllItemHaveGeneralExtensionInGeneralPath_Click(object sender, RoutedEventArgs e)
+        {
+            var item = fileNameListView.SelectedItem as FileName;
+            if (indexSelectFilename != -1)
+            {
+                for (int i = 0; i < _filenames.Count; i++)
+                {
+                    if (_filenames[i].Path == item.Path && _filenames[i].Extension == item.Extension)
+                    {
+                        _filenames.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        private void fileDeleteAllItemInList_Click(object sender, RoutedEventArgs e)
+        {
+            if (_filenames != null)
+            {
+                _filenames.Clear();
+            }
+        }
+
+        private void listViewfoldernameItemIsSelect_Click(object sender, MouseButtonEventArgs e)
+        {
+            indexSelectFoldername = folderNameListView.SelectedIndex;
+        }
+
+        private void ErrorDetailFolderMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = folderNameListView.SelectedItem as FolderName;
+            if (indexSelectFoldername != -1)
+            {
+                MessageBox.Show(item.errorDetail);
+            }
+        }
+
+
+        private void folderDeleteitem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = folderNameListView.SelectedItem as FolderName;
+            if (indexSelectFoldername != -1)
+            {
+                _foldernames.RemoveAt(indexSelectFoldername);
+            }
+        }
+
+        private void folderDeleteAllItemInGeneralPath_Click(object sender, RoutedEventArgs e)
+        {
+            var item = folderNameListView.SelectedItem as FolderName;
+            if (indexSelectFoldername != -1)
+            {
+                for (int i = 0; i < _foldernames.Count; i++)
+                {
+                    if (_foldernames[i].Path == item.Path)
+                    {
+                        _foldernames.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        private void folderDeleteAllItemInList_Click(object sender, RoutedEventArgs e)
+        {
+            if (_foldernames != null)
+            {
+                _foldernames.Clear();
+            }
+        }
+
+
     }
 }

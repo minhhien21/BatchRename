@@ -16,7 +16,8 @@
                         <TextBlock Text="Refersh" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <ComboBox Name="presetCombobox" Width="150" Height="40" SelectionChanged="PresetCombobox_SelectionChanged" VerticalContentAlignment="Center"/>
+                <TextBlock Text=" Preset: " VerticalAlignment="Center"/>
+                <ComboBox Name="presetCombobox" Width="140" Height="40" SelectionChanged="PresetCombobox_SelectionChanged" VerticalContentAlignment="Center"/>
                 <Button Width="100" Height="40">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Image/help.png"/>
@@ -174,7 +175,7 @@
                             </StackPanel>
                         </Button>
                     </StackPanel>
-                    <ListView  Name="fileNameListView">
+                    <ListView  Name="fileNameListView" PreviewMouseRightButtonUp="listViewfilenameItemIsSelect_Click">
                         <ListView.Resources>
                             <Style TargetType="{x:Type GridViewColumnHeader}">
                                 <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -183,6 +184,10 @@
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Error Detail" Click="ErrorDetailFileMenuItem_Click"/>
+                                <MenuItem Header="Delete item" Click="fileDeleteitem_Click"/>
+                                <MenuItem Header="Delete all item in general path" Click="fileDeleteAllItemInGeneralPath_Click"/>
+                                <MenuItem Header="Delete all item have general extension in general path" Click="fileDeleteAllItemHaveGeneralExtensionInGeneralPath_Click"/>
+                                <MenuItem Header="Delete all item in list" Click="fileDeleteAllItemInList_Click"/>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
@@ -219,7 +224,7 @@
                             </StackPanel>
                         </Button>
                     </StackPanel>
-                    <ListView Name="folderNameListView">
+                    <ListView Name="folderNameListView" PreviewMouseRightButtonUp="listViewfoldernameItemIsSelect_Click">
                         <ListView.Resources>
                             <Style TargetType="{x:Type GridViewColumnHeader}">
                                 <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -228,6 +233,9 @@
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Error Detail" Click="ErrorDetailFolderMenuItem_Click"/>
+                                <MenuItem Header="Delete item" Click="folderDeleteitem_Click"/>
+                                <MenuItem Header="Delete all item in general path" Click="folderDeleteAllItemInGeneralPath_Click"/>
+                                <MenuItem Header="Delete all item in list" Click="folderDeleteAllItemInList_Click"/>
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
