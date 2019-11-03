@@ -594,6 +594,7 @@ namespace BatchRename
                 foreach (var item in _foldernames)
                 {
                     var newName = item.Name;
+                    var newExtension = "";
                     item.errorDetail = "";
 
                     for (int i = 0; i < ActionList.Count; i++)
@@ -601,10 +602,16 @@ namespace BatchRename
                         if (ActionList[i].Check == true)
                         {
                             // thực thi action vô prename
-                            var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
-
-                            // cập nhật lại newName mới nếu có sự thay đổi
-                            newName = changeName;
+                            var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);
+                            // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
+                            if (ActionList[i].GetStringName() == "Extension")
+                            {
+                            }
+                            else
+                            {
+                                // cập nhật lại newName mới nếu có sự thay đổi
+                                newName = changeName;
+                            }
                         }
 
                     }
@@ -647,19 +654,28 @@ namespace BatchRename
                     {
                         oldname.Add(item.Path + @"\" + item.Name);
                     }
-                    int index = 0;
                     foreach (var item in _foldernames)
                     {
                         var newName = item.Name;
+                        var newExtension = "";
                         item.errorDetail = "";
 
                         for (int i = 0; i < ActionList.Count; i++)
                         {
+                            if (ActionList[i].Check == true)
+                            {
                                 // thực thi action vô prename
-                                var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
-
-                                // cập nhật lại newName mới nếu có sự thay đổi
-                                newName = changeName;
+                                var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);
+                                // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
+                                if (ActionList[i].GetStringName() == "Extension")
+                                {
+                                }
+                                else
+                                {
+                                    // cập nhật lại newName mới nếu có sự thay đổi
+                                    newName = changeName;
+                                }
+                            }
                         }
                         item.Prename = newName;
 
@@ -680,8 +696,8 @@ namespace BatchRename
                     }
                     for (int i = 0; i < oldname.Count; i++)
                     {
-                        DirectoryInfo directoryInfo = new DirectoryInfo(oldname[i]);
-                        //directoryInfo.MoveTo(newname[i]); Đang lỗi ở đây
+                        FileInfo fileInfo = new FileInfo(oldname[i]);
+                        fileInfo.MoveTo(newname[i]);
                     }
                     _foldernames.Clear();
                     folderNameListView.ItemsSource = _foldernames;
@@ -1311,7 +1327,7 @@ namespace BatchRename
             var item = fileNameListView.SelectedItem as FileName;
             if (indexSelectFilename != -1)
             {
-                MessageBoxResult result = MessageBox.Show($"Do you want to delect item", "Notify", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect '{item.Name}'", "Notify", MessageBoxButton.YesNo);
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
@@ -1329,7 +1345,7 @@ namespace BatchRename
             var item = fileNameListView.SelectedItem as FileName;
             if (indexSelectFilename != -1)
             {
-                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item in general path", "Notify", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item in path: '{item.Path}'", "Notify", MessageBoxButton.YesNo);
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
@@ -1354,7 +1370,7 @@ namespace BatchRename
             var item = fileNameListView.SelectedItem as FileName;
             if (indexSelectFilename != -1)
             {
-                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item have general extension in general path", "Notify", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item have extension: '{item.Extension}' in path: '{item.Path}'", "Notify", MessageBoxButton.YesNo);
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
@@ -1412,7 +1428,7 @@ namespace BatchRename
             var item = folderNameListView.SelectedItem as FolderName;
             if (indexSelectFoldername != -1)
             {
-                MessageBoxResult result = MessageBox.Show($"Do you want to delect item", "Notify", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect '{item.Name}'", "Notify", MessageBoxButton.YesNo);
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
@@ -1431,7 +1447,7 @@ namespace BatchRename
             var item = folderNameListView.SelectedItem as FolderName;
             if (indexSelectFoldername != -1)
             {
-                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item in general path", "Notify", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show($"Do you want to delect all item in path: '{item.Path}'", "Notify", MessageBoxButton.YesNo);
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
