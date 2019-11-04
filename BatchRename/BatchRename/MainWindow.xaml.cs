@@ -102,6 +102,12 @@ namespace BatchRename
                     //cắt file path
                     foreach (var file in files)
                     {
+                        //kiểm tra độ dài path của file nếu quá dài thì bỏ qua!
+                        if(file.Length > 260)
+                        {
+                            MessageBox.Show($"file {System.IO.Path.GetFileName(file)} co path qua dai!");
+                            continue;
+                        }
                         var fileName = new FileName()
                         {
                             Name = System.IO.Path.GetFileName(file),
@@ -134,6 +140,7 @@ namespace BatchRename
                     //cắt folder path
                     foreach (var folder in folders)
                     {
+                        //không cần kiểm tra path của folder vì windows sẽ không cho tạo folder lồng trong folder khi tên quá dài
                         var folderName = new FolderName()
                         {
                             Name = System.IO.Path.GetFileName(folder),
