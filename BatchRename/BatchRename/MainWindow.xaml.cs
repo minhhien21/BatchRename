@@ -317,8 +317,12 @@ namespace BatchRename
 
         private void BtnPreview_ClickFile(object sender, RoutedEventArgs e)
         {
-
-            if (Global.action != null)
+            if (Global.action == null)
+            {
+                MessageBox.Show("Action list doesn's have action. Please select action!");
+                return;
+            }
+            else
             {
                 ActionList = new BindingList<Action>(Global.action);
             }
@@ -373,6 +377,11 @@ namespace BatchRename
 
         private void BtnStartBatch_File(object sender, RoutedEventArgs e)
         {
+            if (Global.action == null)
+            {
+                MessageBox.Show("Action list doesn's have action. Please select action!");
+                return;
+            }
             if (MessageBox.Show("Bạn muốn thực hiện thay đổi?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
                 return;
@@ -585,7 +594,12 @@ namespace BatchRename
 
         private void BtnPreview_ClickFolder(object sender, RoutedEventArgs e)
         {
-            if (Global.action != null)
+            if (Global.action == null)
+            {
+                MessageBox.Show("Action list doesn's have action. Please select action!");
+                return;
+            }
+            else
             {
                 ActionList = new BindingList<Action>(Global.action);
             }
@@ -633,6 +647,12 @@ namespace BatchRename
 
         private void BtnStartPatch_ClickFolder(object sender, RoutedEventArgs e)
         {
+
+            if (Global.action == null)
+            {
+                MessageBox.Show("Action list doesn's have action. Please select action!");
+                return;
+            }
 
             if (MessageBox.Show("Bạn muốn thực hiện thay đổi?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
@@ -899,7 +919,6 @@ namespace BatchRename
             }
         }
 
-
         private void DelectactionCheck_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show($"Do you want to delect all action check", "Notify", MessageBoxButton.YesNo);
@@ -920,6 +939,7 @@ namespace BatchRename
                     break;
             }
         }
+
         private void BtnOpen_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog() { InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
@@ -1363,6 +1383,7 @@ namespace BatchRename
 
             }
         }
+
         private void fileDeleteAllItemHaveGeneralExtensionInGeneralPath_Click(object sender, RoutedEventArgs e)
         {
             var item = fileNameListView.SelectedItem as FileName;
@@ -1419,7 +1440,6 @@ namespace BatchRename
                 MessageBox.Show(item.errorDetail);
             }
         }
-
 
         private void folderDeleteitem_Click(object sender, RoutedEventArgs e)
         {
