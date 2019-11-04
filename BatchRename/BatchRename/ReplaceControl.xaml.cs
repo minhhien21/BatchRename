@@ -28,9 +28,34 @@ namespace BatchRename
 
         private void Add_to_list(object sender, RoutedEventArgs e)
         {
+            int check = 1;
             var from = TextBoxFrom.Text;
             var to = TextBoxTo.Text;
-            if (from != "")
+            if(from == "")
+            {
+                check = 0;
+                MessageBox.Show("Ô From không được để trống");
+            }
+            if(to !="")
+            {
+                int flag = 0;
+                for (int i = 0; i < to.Length; i++) 
+                {
+                    if (to[i] == '/' || to[i] == ':' || to[i] == '*' || to[i] == '?' || to[i] == '<'
+                        || to[i] == '>' || to[i] == '|' || (int)to[i] == 34 || (int)to[i] == 92)
+                    {
+                        flag = 1;
+                        break;
+                    }
+                }
+                if (flag == 1)
+                {
+                    //to chứa kí tự không được đặt tên file: \/:*?"<>|
+                    check = 0;
+                    MessageBox.Show($"Tên file không chứa kí tự {(char)92} / : * ? {(char)34} < > |");
+                }
+            }
+            if(check == 1)
             {
                 ComboBoxItem typeItem = (ComboBoxItem)CbbApplyTo.SelectedItem;
                 replace = new ReplaceAction()
@@ -47,18 +72,6 @@ namespace BatchRename
                     Global.action = new BindingList<Action>();
                 }
                 Global.action.Add(replace);
-            }
-            if(from == "")
-            {
-                MessageBox.Show("Ô From không được để trống");
-            }
-            if(to =="")
-            { }
-            else if(to == "/" || to == ":" || to == "*" || to == "?" || to == "<" || to == ">" || to == "|" || (int)to[0] == 34 || (int)to[0] == 92)
-            {
-                
-                //to chứa kí tự không được đặt tên file: \/:*?"<>|
-                MessageBox.Show($"Tên file không chứa kí tự {(char)92} / : * ? {(char)34} < > |");
             }
         }
     }

@@ -281,18 +281,32 @@ namespace BatchRename
                             {
                                 if (_filenames[j].Prename != _filenames[j].Name)
                                 {
-                                    var newName = _filenames[j].Prename.Replace(_filenames[j].Extension, "");
-                                    _filenames[j].Prename = newName + suffix.ToString() + _filenames[j].Extension;
-                                    suffix++;
+                                    if (_filenames[j].Path.Length + 1 + _filenames[j].Prename.Length + suffix.ToString().Length >= 260)
+                                    {
+                                        _filenames[j].Prename = _filenames[j].Name;
+                                    }
+                                    else
+                                    {
+                                        var newName = _filenames[j].Prename.Replace(_filenames[j].Extension, "");
+                                        _filenames[j].Prename = newName + suffix.ToString() + _filenames[j].Extension;
+                                        suffix++;
+                                        flag1 = 1;
+                                    }
                                 }
-                                flag1 = 1;
                             }
                         }
                         if (flag1 == 1 && _filenames[i].Prename != _filenames[i].Name)
                         {
-                            var newName = _filenames[i].Prename.Replace(_filenames[i].Extension, "");
-                            _filenames[i].Prename = newName + suffix.ToString() + _filenames[i].Extension;
-                            suffix++;
+                            if (_filenames[i].Path.Length + 1 + _filenames[i].Prename.Length + suffix.ToString().Length >= 260)
+                            {
+                                _filenames[i].Prename = _filenames[i].Name;
+                            }
+                            else
+                            {
+                                var newName = _filenames[i].Prename.Replace(_filenames[i].Extension, "");
+                                _filenames[i].Prename = newName + suffix.ToString() + _filenames[i].Extension;
+                                suffix++;
+                            }
                         }
                     }
                 }
@@ -326,7 +340,11 @@ namespace BatchRename
             {
                 ActionList = new BindingList<Action>(Global.action);
             }
-            if (_filenames != null)
+            if(_filenames == null)
+            {
+                MessageBox.Show("List filename doesn's have file. Please select add filename!");
+            }
+            else
             {
                 foreach (var item in _filenames)
                 {
@@ -360,6 +378,12 @@ namespace BatchRename
                     item.Prename = newName + "." + newExtension;
                     item.Extension = "." + newExtension;
 
+                    // cách đặt tên của một file trong winodws tối đa là 259 ký tự
+                    if (item.Path.Length + 1 + item.Prename.Length >= 260) 
+                    {
+                        item.errorDetail += "The fully qualified file name must be less than 260 characters";
+                        item.Prename = item.Name;
+                    }
                     if (item.errorDetail != "")
                     {
                         item.Error = "Fail";
@@ -382,6 +406,11 @@ namespace BatchRename
                 MessageBox.Show("Action list doesn's have action. Please select action!");
                 return;
             }
+            if (_filenames == null)
+            {
+                MessageBox.Show("List filename doesn's have file. Please select add filename!");
+                return;
+            }
             if (MessageBox.Show("Bạn muốn thực hiện thay đổi?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
                 return;
@@ -394,66 +423,56 @@ namespace BatchRename
                 }
                 List<string> oldname = new List<string>();
                 List<string> newname = new List<string>();
-                if (_filenames != null)
+
+                foreach (var item in _filenames)
                 {
-                    foreach (var item in _filenames)
+                    oldname.Add(item.Path + @"\" + item.Name);
+                }
+                foreach (var item in _filenames)
+                {
+                    // cắt extension ra khỏi tên file: abc.txt -> abc và txt
+                    var newName = item.Name.Replace(item.Extension, "");
+                    var newExtension = item.Extension.Replace(".", "");
+                    item.errorDetail = "";                        //string Error ="";
+
+                    for (int i = 0; i < ActionList.Count; i++)
                     {
-                        oldname.Add(item.Path + @"\" + item.Name);
-                    }
 
-                    int index = 0;
-                    foreach (var item in _filenames)
-                    {
-                        // cắt extension ra khỏi tên file: abc.txt -> abc và txt
-                        var newName = item.Name.Replace(item.Extension, "");   
-                        var newExtension = item.Extension.Replace(".", "");
-                        item.errorDetail = "";                        //string Error ="";
+                        var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);  // thực thi action vô prename
 
-                        for (int i = 0; i < ActionList.Count; i++)
+                        if (ActionList[i].GetStringName() == "Extension")  // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
                         {
-                          
-                                var changeName = ActionList[i].Operate(newName, newExtension, ref item.errorDetail);  // thực thi action vô prename
-
-                                if (ActionList[i].GetStringName() == "Extension")  // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
-                                {
-                                    newExtension = changeName;                        // cập nhật lại newExtension mới nếu có sự thay đổi
-                                }
-                                else
-                                {
-                                    newName = changeName;                            // cập nhật lại newName mới nếu có sự thay đổi
-                                }
-                            
-
-                        }
-
-                        item.Prename = newName + "." + newExtension;                  //Cập nhật lại để hiển thị
-                        item.Extension = "." + newExtension;
-
-                        if (item.errorDetail != "")
-                        {
-                            item.Error = "Fail";
+                            newExtension = changeName;                        // cập nhật lại newExtension mới nếu có sự thay đổi
                         }
                         else
                         {
-                            item.Error = "Success";
-                            item.errorDetail = "Success";
+                            newName = changeName;                            // cập nhật lại newName mới nếu có sự thay đổi
                         }
-
                     }
 
-                    optionAfterRenamefile();
-                    foreach (var item in _filenames)
+                    item.Prename = newName + "." + newExtension;                  //Cập nhật lại để hiển thị
+                    item.Extension = "." + newExtension;
+                    if (item.Path.Length + 1 + item.Prename.Length >= 260)
                     {
-                        newname.Add(item.Path + @"\" + item.Prename);
+                        item.Prename = item.Name;
                     }
-                    for (int i = 0; i < oldname.Count; i++)
+                }
+
+                optionAfterRenamefile();
+                foreach (var item in _filenames)
+                {
+                    newname.Add(item.Path + @"\" + item.Prename);
+                }
+                for (int i = 0; i < oldname.Count; i++)
+                {
+                    if (System.IO.File.Exists(oldname[i]))
                     {
                         FileInfo fileInfo = new FileInfo(oldname[i]);
                         fileInfo.MoveTo(newname[i]);
                     }
-                    _filenames.Clear();
-                    fileNameListView.ItemsSource = _filenames;
                 }
+                _filenames.Clear();
+                fileNameListView.ItemsSource = _filenames;
             }
         }
 
@@ -560,14 +579,25 @@ namespace BatchRename
                             {
                                 if (_foldernames[j].Prename != _foldernames[j].Name)
                                 {
-                                    _foldernames[j].Prename += suffix.ToString();
-                                    suffix++;
+                                    if (_foldernames[j].Path.Length + 1 + _foldernames[j].Prename.Length + suffix.ToString().Length >= 248)
+                                    {
+                                        _foldernames[j].Prename = _foldernames[j].Name;
+                                    }
+                                    else
+                                    {
+                                        _foldernames[j].Prename += suffix.ToString();
+                                        suffix++;
+                                        flag1 = 1;
+                                    }
                                 }
-                                flag1 = 1;
                             }
                         }
                         if (flag1 == 1 && _foldernames[i].Prename != _foldernames[i].Name)
                         {
+                            if (_foldernames[i].Path.Length + 1 + _foldernames[i].Prename.Length + suffix.ToString().Length >= 248)
+                            {
+                                _foldernames[i].Prename = _foldernames[i].Name;
+                            }
                             _foldernames[i].Prename += suffix.ToString();
                             suffix++;
                         }
@@ -603,7 +633,11 @@ namespace BatchRename
             {
                 ActionList = new BindingList<Action>(Global.action);
             }
-            if (_foldernames != null)
+            if (_foldernames == null)
+            {
+                MessageBox.Show("List foldername doesn's have folder. Please select add foldername!");
+            }
+            else
             {
                 foreach (var item in _foldernames)
                 {
@@ -630,6 +664,11 @@ namespace BatchRename
                     }
 
                     item.Prename = newName;
+                    if (item.Path.Length + 1 + item.Prename.Length >= 248)
+                    {
+                        item.errorDetail += "The directory name must be less than 248 characters";
+                        item.Prename = item.Name;
+                    }
                     if (item.errorDetail != "")
                     {
                         item.Error = "Fail";
@@ -653,7 +692,11 @@ namespace BatchRename
                 MessageBox.Show("Action list doesn's have action. Please select action!");
                 return;
             }
-
+            if (_foldernames == null)
+            {
+                MessageBox.Show("List foldername doesn's have folder. Please select add foldername!");
+                return;
+            }
             if (MessageBox.Show("Bạn muốn thực hiện thay đổi?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
                 return;
@@ -666,60 +709,54 @@ namespace BatchRename
                 }
                 List<string> oldname = new List<string>();
                 List<string> newname = new List<string>();
-                if (_foldernames != null)
+
+                foreach (var item in _foldernames)
                 {
+                    oldname.Add(item.Path + @"\" + item.Name);
+                }
+                foreach (var item in _foldernames)
+                {
+                    var newName = item.Name;
+                    item.errorDetail = "";
 
-                    foreach (var item in _foldernames)
+                    for (int i = 0; i < ActionList.Count; i++)
                     {
-                        oldname.Add(item.Path + @"\" + item.Name);
-                    }
-                    foreach (var item in _foldernames)
-                    {
-                        var newName = item.Name;
-                        item.errorDetail = "";
-
-                        for (int i = 0; i < ActionList.Count; i++)
+                        if (ActionList[i].Check == true)
                         {
-                            if (ActionList[i].Check == true)
+                            // thực thi action vô prename
+                            var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
+                            // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
+                            if (ActionList[i].GetStringName() == "Extension")
                             {
-                                // thực thi action vô prename
-                                var changeName = ActionList[i].Operate(newName, "", ref item.errorDetail);
-                                // Nếu thay đổi là đuôi ( chỉ đối với trường hợp replace đuôi)
-                                if (ActionList[i].GetStringName() == "Extension")
-                                {
-                                }
-                                else
-                                {
-                                    // cập nhật lại newName mới nếu có sự thay đổi
-                                    newName = changeName;
-                                }
+                            }
+                            else
+                            {
+                                // cập nhật lại newName mới nếu có sự thay đổi
+                                newName = changeName;
                             }
                         }
-                        item.Prename = newName;
-
-                        if (item.errorDetail != "")
-                        {
-                            item.Error = "Fail";
-                        }
-                        else
-                        {
-                            item.Error = "Success";
-                            item.errorDetail = "Success";
-                        }
                     }
-                    optionAfterRenamefolder();
-                    foreach (var item in _foldernames)
+                    item.Prename = newName;
+                    if (item.Path.Length + 1 + item.Prename.Length >= 248)
                     {
-                        newname.Add(item.Path + @"\" + item.Prename);
+                        item.Prename = item.Name;
                     }
-                    for (int i = 0; i < oldname.Count; i++)
+                }
+                optionAfterRenamefolder();
+                foreach (var item in _foldernames)
+                {
+                    newname.Add(item.Path + @"\" + item.Prename);
+                }
+                for (int i = 0; i < oldname.Count; i++)
+                {
+                    if (System.IO.Directory.Exists(newname[i]))
                     {
                         FileInfo fileInfo = new FileInfo(oldname[i]);
                         fileInfo.MoveTo(newname[i]);
                     }
-                    _foldernames.Clear();
-                    folderNameListView.ItemsSource = _foldernames;
                 }
+                _foldernames.Clear();
+                folderNameListView.ItemsSource = _foldernames;
             }
 
         }
