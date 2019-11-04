@@ -356,9 +356,10 @@ namespace BatchRename
                 foreach (var item in _filenames)
                 {
                     // cắt extension ra khỏi tên file: abc.txt -> abc và txt
+
                     var newName = item.Name.Replace(item.Extension, "");
                     var newExtension = item.Extension.Replace(".", "");
-                    //string Error ="";
+                    
                     item.errorDetail = "";
 
                     for (int i = 0; i < ActionList.Count; i++)
@@ -382,8 +383,15 @@ namespace BatchRename
                         }
 
                     }
-                    item.Prename = newName + "." + newExtension;
-                    item.Extension = "." + newExtension;
+                    if (newName == "" && newExtension == "")
+                    {
+                        item.Prename = item.Name;
+                        item.errorDetail += "Name và Extension không thể đồng thời là chuỗi rỗng";
+                    }
+                    else
+                    {
+                        item.Prename = newName + "." + newExtension;
+                    }
 
                     // cách đặt tên của một file trong winodws tối đa là 259 ký tự
                     if (item.Path.Length + 1 + item.Prename.Length >= 260) 
@@ -401,7 +409,7 @@ namespace BatchRename
                         item.errorDetail = "Success";
                     }
                 }
-                optionAfterRenamefile();
+                //optionAfterRenamefile();
                 fileNameListView.ItemsSource = _filenames;
             }
         }
@@ -456,9 +464,14 @@ namespace BatchRename
                             newName = changeName;                            // cập nhật lại newName mới nếu có sự thay đổi
                         }
                     }
-
-                    item.Prename = newName + "." + newExtension;                  //Cập nhật lại để hiển thị
-                    item.Extension = "." + newExtension;
+                    if (newName == "" && newExtension == "")
+                    {
+                        item.Prename = item.Name;
+                    }
+                    else
+                    {
+                        item.Prename = newName + "." + newExtension;                  //Cập nhật lại để hiển thị
+                    }
                     if (item.Path.Length + 1 + item.Prename.Length >= 260)
                     {
                         item.Prename = item.Name;
