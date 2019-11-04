@@ -103,7 +103,7 @@ namespace BatchRename
                     foreach (var file in files)
                     {
                         //kiểm tra độ dài path của file nếu quá dài thì bỏ qua!
-                        if(file.Length > 260)
+                        if(file.Length >= 260)
                         {
                             MessageBox.Show($"file {System.IO.Path.GetFileName(file)} co path qua dai!");
                             continue;
