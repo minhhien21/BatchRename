@@ -1575,5 +1575,11 @@ namespace BatchRename
                 }
             }
         }
+
+        private void BtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Batch Rename V.1.0.0\nBy:\nVo Minh Hien\nTrinh Hoang Khanh Duy\nVu Hoang Hieu");
+
+        }
     }
 }
