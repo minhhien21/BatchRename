@@ -1582,7 +1582,7 @@ namespace BatchRename
 
         private void BtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Batch Rename V.1.0.0\nBy:\nVo Minh Hien\nTrinh Hoang Khanh Duy\nVu Hoang Hieu");
+            MessageBox.Show("Batch Rename V.1.0.0\nBy:\nVo Minh Hien 1712426\nTrinh Hoang Khanh Duy 1712393\nVu Hoang Hieu 1712444");
 
         }
     }
