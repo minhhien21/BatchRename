@@ -356,9 +356,17 @@ namespace BatchRename
                 foreach (var item in _filenames)
                 {
                     // cắt extension ra khỏi tên file: abc.txt -> abc và txt
-
-                    var newName = item.Name.Replace(item.Extension, "");
-                    var newExtension = item.Extension.Replace(".", "");
+                    string newName = "";
+                    string newExtension = "";
+                    if (item.Extension != "")
+                    {
+                        newName = item.Name.Replace(item.Extension, "");
+                        newExtension = item.Extension.Replace(".", "");
+                    }
+                    else
+                    {
+                        newName = item.Name;
+                    }
                     
                     item.errorDetail = "";
 
@@ -409,7 +417,7 @@ namespace BatchRename
                         item.errorDetail = "Success";
                     }
                 }
-                //optionAfterRenamefile();
+                optionAfterRenamefile();
                 fileNameListView.ItemsSource = _filenames;
             }
         }
@@ -446,8 +454,17 @@ namespace BatchRename
                 foreach (var item in _filenames)
                 {
                     // cắt extension ra khỏi tên file: abc.txt -> abc và txt
-                    var newName = item.Name.Replace(item.Extension, "");
-                    var newExtension = item.Extension.Replace(".", "");
+                    string newName = "";
+                    string newExtension = "";
+                    if (item.Extension != "")
+                    {
+                        newName = item.Name.Replace(item.Extension, "");
+                        newExtension = item.Extension.Replace(".", "");
+                    }
+                    else
+                    {
+                        newName = item.Name;
+                    }
                     item.errorDetail = "";                        //string Error ="";
 
                     for (int i = 0; i < ActionList.Count; i++)
