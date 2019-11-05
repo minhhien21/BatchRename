@@ -247,11 +247,11 @@ namespace BatchRename
                                     if (_filenames[j].Error == "Success")
                                     {
                                         _filenames[j].Error = "Fail";
-                                        _filenames[j].errorDetail = "duplicate name:" + _filenames[j].Prename;
+                                        _filenames[j].errorDetail = "duplicate name:" + _filenames[j].Prename + "\n";
                                     }
                                     else
                                     {
-                                        _filenames[j].errorDetail += "duplicate name:" + _filenames[j].Prename;
+                                        _filenames[j].errorDetail += "duplicate name:" + _filenames[j].Prename + "\n";
                                     }
                                     _filenames[j].Prename = _filenames[j].Name;
                                     flag1 = 1;
@@ -263,11 +263,11 @@ namespace BatchRename
                             if (_filenames[i].Error == "Success")
                             {
                                 _filenames[i].Error = "Fail";
-                                _filenames[i].errorDetail = "duplicate name:" + _filenames[i].Prename;
+                                _filenames[i].errorDetail = "duplicate name:" + _filenames[i].Prename + "\n";
                             }
                             else
                             {
-                                _filenames[i].errorDetail += "duplicate name:" + _filenames[i].Prename;
+                                _filenames[i].errorDetail += "duplicate name:" + _filenames[i].Prename + "\n";
                             }
                             _filenames[i].Prename = _filenames[i].Name;
                         }
@@ -291,6 +291,7 @@ namespace BatchRename
                                     if (_filenames[j].Path.Length + 1 + _filenames[j].Prename.Length + suffix.ToString().Length >= 260)
                                     {
                                         _filenames[j].Prename = _filenames[j].Name;
+                                        _filenames[j].errorDetail += "The fully qualified file name must be less than 260 characters\n";
                                     }
                                     else
                                     {
@@ -307,6 +308,7 @@ namespace BatchRename
                             if (_filenames[i].Path.Length + 1 + _filenames[i].Prename.Length + suffix.ToString().Length >= 260)
                             {
                                 _filenames[i].Prename = _filenames[i].Name;
+                                _filenames[i].errorDetail += "The fully qualified file name must be less than 260 characters\n";
                             }
                             else
                             {
@@ -394,7 +396,7 @@ namespace BatchRename
                     if (newName == "" && newExtension == "")
                     {
                         item.Prename = item.Name;
-                        item.errorDetail += "Name và Extension không thể đồng thời là chuỗi rỗng";
+                        item.errorDetail += "Name và Extension không thể đồng thời là chuỗi rỗng\n";
                     }
                     else
                     {
@@ -404,7 +406,7 @@ namespace BatchRename
                     // cách đặt tên của một file trong winodws tối đa là 259 ký tự
                     if (item.Path.Length + 1 + item.Prename.Length >= 260) 
                     {
-                        item.errorDetail += "The fully qualified file name must be less than 260 characters";
+                        item.errorDetail += "The fully qualified file name must be less than 260 characters\n";
                         item.Prename = item.Name;
                     }
                     if (item.errorDetail != "")
@@ -575,11 +577,11 @@ namespace BatchRename
                                     if (_foldernames[j].Error == "Success")
                                     {
                                         _foldernames[j].Error = "Fail";
-                                        _foldernames[j].errorDetail = "duplicate name:" + _foldernames[j].Prename;
+                                        _foldernames[j].errorDetail = "duplicate name:" + _foldernames[j].Prename + "\n";
                                     }
                                     else
                                     {
-                                        _foldernames[j].errorDetail += "duplicate name:" + _foldernames[j].Prename;
+                                        _foldernames[j].errorDetail += "duplicate name:" + _foldernames[j].Prename + "\n";
                                     }
                                     _foldernames[j].Prename = _foldernames[j].Name;
                                     flag1 = 1;
@@ -591,11 +593,11 @@ namespace BatchRename
                             if (_foldernames[i].Error == "Success")
                             {
                                 _foldernames[i].Error = "Fail";
-                                _foldernames[i].errorDetail = "duplicate name:" + _foldernames[i].Prename;
+                                _foldernames[i].errorDetail = "duplicate name:" + _foldernames[i].Prename + "\n";
                             }
                             else
                             {
-                                _foldernames[i].errorDetail += "duplicate name:" + _foldernames[i].Prename;
+                                _foldernames[i].errorDetail += "duplicate name:" + _foldernames[i].Prename + "\n";
                             }
                             _foldernames[i].Prename = _foldernames[i].Name;
                         }
@@ -619,6 +621,7 @@ namespace BatchRename
                                     if (_foldernames[j].Path.Length + 1 + _foldernames[j].Prename.Length + suffix.ToString().Length >= 248)
                                     {
                                         _foldernames[j].Prename = _foldernames[j].Name;
+                                        _foldernames[j].errorDetail += "The directory name must be less than 248 characters\n";
                                     }
                                     else
                                     {
@@ -634,6 +637,7 @@ namespace BatchRename
                             if (_foldernames[i].Path.Length + 1 + _foldernames[i].Prename.Length + suffix.ToString().Length >= 248)
                             {
                                 _foldernames[i].Prename = _foldernames[i].Name;
+                                _foldernames[i].errorDetail += "The directory name must be less than 248 characters\n";
                             }
                             _foldernames[i].Prename += suffix.ToString();
                             suffix++;
@@ -703,7 +707,7 @@ namespace BatchRename
                     item.Prename = newName;
                     if (item.Path.Length + 1 + item.Prename.Length >= 248)
                     {
-                        item.errorDetail += "The directory name must be less than 248 characters";
+                        item.errorDetail += "The directory name must be less than 248 characters\n";
                         item.Prename = item.Name;
                     }
                     if (item.errorDetail != "")
