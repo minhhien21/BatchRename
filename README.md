@@ -31,7 +31,6 @@ Các điểm nổi bật:
 -Phần đổi vị trí chuỗi cho việc quản lý được nâng cấp lên trường hợp tổng quát. Có thể thực hiện ở vị trí bất kỳ, với số ký tự bất kỳ. (không bị giới hạn ở 13)
 -Xử lý khi danh sách hành động trống sẽ không tạo Preset
 -Giao diện đẹp, thân thiện với người dùng.
--Khi đổi tên, nếu phần tên file dài hơn tên gốc sẽ giữ nguyên tên cũ
 -Phần tab AddList hỗ trợ cac nút di chuyển để thay đổi thứ tự ưu tiên của các hành động.
 -Đặc biệt, có thêm danh sách tùy chọn ở AddList khi tập tin bị trùng tên. Người dùng có thể chọn giữ nguyên tên cũ (Keep the old name) hoặc thêm hậu tố để tránh bị trùng
 -Hỗ trợ xem chi tiết lỗi khi bấm chuột phải vào ở mỗi file. (errorDetail  sẽ hiện ra các action không thực hiện được hoặc các trường hợp như trùng tên file, tên file quá dài)
