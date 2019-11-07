@@ -504,7 +504,7 @@ namespace BatchRename
                 }
                 for (int i = 0; i < oldname.Count; i++)
                 {
-                    if (System.IO.File.Exists(oldname[i]))
+                    if (System.IO.File.Exists(oldname[i]) && System.IO.Directory.Exists(newname[i]) == false)
                     {
                         FileInfo fileInfo = new FileInfo(oldname[i]);
                         fileInfo.MoveTo(newname[i]);
@@ -790,7 +790,7 @@ namespace BatchRename
                 }
                 for (int i = 0; i < oldname.Count; i++)
                 {
-                    if (System.IO.Directory.Exists(newname[i]))
+                    if (System.IO.Directory.Exists(oldname[i]) && System.IO.Directory.Exists(newname[i]) == false)
                     {
                         FileInfo fileInfo = new FileInfo(oldname[i]);
                         fileInfo.MoveTo(newname[i]);
