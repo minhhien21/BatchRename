@@ -1,0 +1,3 @@
+﻿New Case * Make string UpperCase
+Replace * Replace 'New' to 'Old' in 'Name'
+Fullname Normalize * No extra spaces among words

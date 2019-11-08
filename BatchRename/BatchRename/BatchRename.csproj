@@ -162,7 +162,11 @@
   <ItemGroup>
     <Resource Include="Image\add.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="preset\Her Favourite.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\down.png" />
     <Resource Include="Image\downall.png" />
@@ -175,6 +179,11 @@
     </None>
     <Resource Include="Image\open.png" />
     <Resource Include="Image\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="preset\My Favourite.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
