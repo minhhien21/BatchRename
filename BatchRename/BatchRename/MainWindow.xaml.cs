@@ -231,13 +231,11 @@ namespace BatchRename
             while (flag == 0)
             {
                 int i = 0;
-                int flag1 = 0;
                 // giữ lại tên cũ
                 if (flagoption == 0)
                 {
                     for (i = 0; i < _filenames.Count - 1; i++)
                     {
-                        flag1 = 0;
                         for (int j = i + 1; j < _filenames.Count; j++)
                         {
                             if (_filenames[i].Path == _filenames[j].Path && (_filenames[i].Prename == _filenames[j].Prename))
@@ -254,11 +252,10 @@ namespace BatchRename
                                         _filenames[j].errorDetail += "duplicate name:" + _filenames[j].Prename + "\n";
                                     }
                                     _filenames[j].Prename = _filenames[j].Name;
-                                    flag1 = 1;
                                 }
                             }
                         }
-                        if (flag1 == 1 && _filenames[i].Prename != _filenames[i].Name)
+                        if (_filenames[i].Prename != _filenames[i].Name)
                         {
                             if (_filenames[i].Error == "Success")
                             {
@@ -281,7 +278,6 @@ namespace BatchRename
                     int suffix = 1;
                     for (i = 0; i < _filenames.Count - 1; i++)
                     {
-                        flag1 = 0;
                         for (int j = i + 1; j < _filenames.Count; j++)
                         {
                             if (_filenames[i].Path == _filenames[j].Path && _filenames[i].Prename == _filenames[j].Prename)
@@ -298,12 +294,11 @@ namespace BatchRename
                                         var newName = _filenames[j].Prename.Replace(_filenames[j].Extension, "");
                                         _filenames[j].Prename = newName + suffix.ToString() + _filenames[j].Extension;
                                         suffix++;
-                                        flag1 = 1;
                                     }
                                 }
                             }
                         }
-                        if (flag1 == 1 && _filenames[i].Prename != _filenames[i].Name)
+                        if (_filenames[i].Prename != _filenames[i].Name)
                         {
                             if (_filenames[i].Path.Length + 1 + _filenames[i].Prename.Length + suffix.ToString().Length >= 260)
                             {
@@ -561,13 +556,11 @@ namespace BatchRename
             while (flag == 0)
             {
                 int i = 0;
-                int flag1 = 0;
                 // giữ lại tên cũ
                 if (flagoption == 0)
                 {
                     for (i = 0; i < _foldernames.Count - 1; i++)
                     {
-                        flag1 = 0;
                         for (int j = i + 1; j < _foldernames.Count; j++)
                         {
                             if (_foldernames[i].Path == _foldernames[j].Path && (_foldernames[i].Prename == _foldernames[j].Prename))
@@ -584,11 +577,10 @@ namespace BatchRename
                                         _foldernames[j].errorDetail += "duplicate name:" + _foldernames[j].Prename + "\n";
                                     }
                                     _foldernames[j].Prename = _foldernames[j].Name;
-                                    flag1 = 1;
                                 }
                             }
                         }
-                        if (flag1 == 1 && _foldernames[i].Prename != _foldernames[i].Name)
+                        if (_foldernames[i].Prename != _foldernames[i].Name)
                         {
                             if (_foldernames[i].Error == "Success")
                             {
@@ -611,7 +603,6 @@ namespace BatchRename
                     int suffix = 1;
                     for (i = 0; i < _foldernames.Count - 1; i++)
                     {
-                        flag1 = 0;
                         for (int j = i + 1; j < _foldernames.Count; j++)
                         {
                             if (_foldernames[i].Path == _foldernames[j].Path && _foldernames[i].Prename == _foldernames[j].Prename)
@@ -627,12 +618,11 @@ namespace BatchRename
                                     {
                                         _foldernames[j].Prename += suffix.ToString();
                                         suffix++;
-                                        flag1 = 1;
                                     }
                                 }
                             }
                         }
-                        if (flag1 == 1 && _foldernames[i].Prename != _foldernames[i].Name)
+                        if (_foldernames[i].Prename != _foldernames[i].Name)
                         {
                             if (_foldernames[i].Path.Length + 1 + _foldernames[i].Prename.Length + suffix.ToString().Length >= 248)
                             {

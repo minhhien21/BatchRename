@@ -37,3 +37,4 @@ Các điểm nổi bật:
 -Hỗ trợ nhiều tùy chọn xóa cho người dùng khi muốn bỏ hành động ra khỏi danh sách. (Xóa hành động hiện tại, xóa những mục đã check, xóa những mục chưa check)
 -Hỗ trợ nhiều tùy chọn xóa ở danh sách các tập tin/ thư mục. (xóa tên file hiện tại khỏi danh sách, xóa tất cả mục cùng định dạng, xóa tất cả file ở cùng 1 thư mục)
 -Hỏi lại người dùng trước khi thực hiện hành động xóa và thay đổi.
+-Khi click StartBatch có kiểm tra các lỗi như người dùng đang chạy chương trình nhưng vào thư mục xóa file/folder hay rename file/folder hay thêm file/folder có trên trùng với kết quả preview
