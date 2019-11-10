@@ -1,0 +1,3 @@
+﻿Replace * Replace 'jpg' to 'jpeg' in 'Extension'
+Replace * Replace 'unsplash' to 'mywebsite' in 'Name'
+Replace * Replace '1920x1080' to '' in 'Name'
