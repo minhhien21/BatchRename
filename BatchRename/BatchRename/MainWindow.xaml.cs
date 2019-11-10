@@ -222,6 +222,7 @@ namespace BatchRename
         public void optionAfterRenamefile()
         {
             int flag = 0;
+            int flag1 = 0;
             int flagoption = 0;
             ComboBoxItem typeItem = (ComboBoxItem)OptionComboBox.SelectedItem;
             if (typeItem.Content.ToString() == "Keep the old name")
@@ -236,10 +237,12 @@ namespace BatchRename
                 {
                     for (i = 0; i < _filenames.Count - 1; i++)
                     {
+                        flag1 = 0;
                         for (int j = i + 1; j < _filenames.Count; j++)
                         {
                             if (_filenames[i].Path == _filenames[j].Path && (_filenames[i].Prename == _filenames[j].Prename))
                             {
+                                flag1 = 1;
                                 if (_filenames[j].Prename != _filenames[j].Name)
                                 {
                                     if (_filenames[j].Error == "Success")
@@ -255,7 +258,7 @@ namespace BatchRename
                                 }
                             }
                         }
-                        if (_filenames[i].Prename != _filenames[i].Name)
+                        if (flag1 == 1 && _filenames[i].Prename != _filenames[i].Name)
                         {
                             if (_filenames[i].Error == "Success")
                             {
@@ -278,10 +281,12 @@ namespace BatchRename
                     int suffix = 1;
                     for (i = 0; i < _filenames.Count - 1; i++)
                     {
+                        flag1 = 0;
                         for (int j = i + 1; j < _filenames.Count; j++)
                         {
                             if (_filenames[i].Path == _filenames[j].Path && _filenames[i].Prename == _filenames[j].Prename)
                             {
+                                flag1 = 1;
                                 if (_filenames[j].Prename != _filenames[j].Name)
                                 {
                                     if (_filenames[j].Path.Length + 1 + _filenames[j].Prename.Length + suffix.ToString().Length >= 260)
@@ -298,7 +303,7 @@ namespace BatchRename
                                 }
                             }
                         }
-                        if (_filenames[i].Prename != _filenames[i].Name)
+                        if (flag1 == 1 && _filenames[i].Prename != _filenames[i].Name)
                         {
                             if (_filenames[i].Path.Length + 1 + _filenames[i].Prename.Length + suffix.ToString().Length >= 260)
                             {
@@ -547,6 +552,7 @@ namespace BatchRename
         public void optionAfterRenamefolder()
         {
             int flag = 0;
+            int flag1 = 0;
             int flagoption = 0;
             ComboBoxItem typeItem = (ComboBoxItem)OptionComboBox.SelectedItem;
             if (typeItem.Content.ToString() == "Keep the old name")
@@ -561,10 +567,12 @@ namespace BatchRename
                 {
                     for (i = 0; i < _foldernames.Count - 1; i++)
                     {
+                        flag1 = 0;
                         for (int j = i + 1; j < _foldernames.Count; j++)
                         {
                             if (_foldernames[i].Path == _foldernames[j].Path && (_foldernames[i].Prename == _foldernames[j].Prename))
                             {
+                                flag1 = 1;
                                 if (_foldernames[j].Prename != _foldernames[j].Name)
                                 {
                                     if (_foldernames[j].Error == "Success")
@@ -580,7 +588,7 @@ namespace BatchRename
                                 }
                             }
                         }
-                        if (_foldernames[i].Prename != _foldernames[i].Name)
+                        if (flag1 == 1 && _foldernames[i].Prename != _foldernames[i].Name)
                         {
                             if (_foldernames[i].Error == "Success")
                             {
@@ -603,10 +611,12 @@ namespace BatchRename
                     int suffix = 1;
                     for (i = 0; i < _foldernames.Count - 1; i++)
                     {
+                        flag1 = 0;
                         for (int j = i + 1; j < _foldernames.Count; j++)
                         {
                             if (_foldernames[i].Path == _foldernames[j].Path && _foldernames[i].Prename == _foldernames[j].Prename)
                             {
+                                flag1 = 1;
                                 if (_foldernames[j].Prename != _foldernames[j].Name)
                                 {
                                     if (_foldernames[j].Path.Length + 1 + _foldernames[j].Prename.Length + suffix.ToString().Length >= 248)
@@ -622,7 +632,7 @@ namespace BatchRename
                                 }
                             }
                         }
-                        if (_foldernames[i].Prename != _foldernames[i].Name)
+                        if (flag1 == 1 && _foldernames[i].Prename != _foldernames[i].Name)
                         {
                             if (_foldernames[i].Path.Length + 1 + _foldernames[i].Prename.Length + suffix.ToString().Length >= 248)
                             {
